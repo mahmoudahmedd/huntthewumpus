@@ -5,6 +5,6 @@ import view.WumpusGameDTO;
 public interface WumpusPresenter {
     void startNewGame();
     void move();
-    void shoot();
+    void shoot(int room);
     WumpusGameDTO getWumpusGameDTO();
 }

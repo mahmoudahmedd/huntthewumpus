@@ -88,7 +88,7 @@ public class WumpusPresenterImpl implements WumpusPresenter{
     }
 
     @Override
-    public void shoot() {
+    public void shoot(int room) {
 
     }
 
