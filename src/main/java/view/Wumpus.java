@@ -27,20 +27,21 @@ public class Wumpus extends JPanel implements WumpusView{
         setFocusable(true);
 
         addMouseListener(new MouseAdapter() {
-
+            WumpusGameDTO wumpusDTO = wumpusPresenter.getWumpusGameDTO();
 
             @Override
             public void mousePressed(MouseEvent e) {
-
-                if (gameOver) {
-                    startNewGame();
+                if (wumpusDTO.isGameOver()) {
+                    wumpusPresenter.startNewGame();
 
                 } else {
                     int selectedRoom = -1;
                     int ex = e.getX();
                     int ey = e.getY();
+                    int[][] links = wumpusDTO.getLinks();
+                    int[][] rooms = wumpusDTO.getRooms();
 
-                    for (int link : links[currRoom]) {
+                    for (int link : links[wumpusDTO.getCurrRoom()]) {
                         int cx = rooms[link][0];
                         int cy = rooms[link][1];
                         if (insideRoom(ex, ey, cx, cy)) {
@@ -53,6 +54,7 @@ public class Wumpus extends JPanel implements WumpusView{
                         return;
 
                     if (isLeftMouseButton(e)) {
+                        // TODO write presenter.updateRoom(int room) ?????
                         currRoom = selectedRoom;
                         situation();
 
@@ -64,6 +66,7 @@ public class Wumpus extends JPanel implements WumpusView{
             }
 
             boolean insideRoom(int ex, int ey, int cx, int cy) {
+                int roomSize = wumpusDTO.getRoomSize();
                 return ((ex > cx && ex < cx + roomSize)
                         && (ey > cy && ey < cy + roomSize));
             }
