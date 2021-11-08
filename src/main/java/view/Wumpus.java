@@ -18,7 +18,7 @@ public class Wumpus extends JPanel implements WumpusView{
     Graphics2D g;
 
     public Wumpus() {
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl();
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(this);
 
         setPreferredSize(new Dimension(721, 687));
         setBackground(Color.white);

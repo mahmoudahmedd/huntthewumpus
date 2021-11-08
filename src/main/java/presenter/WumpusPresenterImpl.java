@@ -2,6 +2,7 @@ package presenter;
 
 import view.Wumpus;
 import view.WumpusGameDTO;
+import view.WumpusView;
 
 import java.util.*;
 
@@ -38,8 +39,11 @@ public class WumpusPresenterImpl implements WumpusPresenter{
     Set<Hazard>[] hazards;
 
     WumpusGameDTO wumpusGameDTO;
+    private final WumpusView view;
 
-    public WumpusPresenterImpl(){
+    public WumpusPresenterImpl(WumpusView view){
+        this.view = view;
+
         wumpusGameDTO = new WumpusGameDTO();
         wumpusGameDTO.setGameOver(gameOver);
         wumpusGameDTO.setWumpusRoom(wumpusRoom);
