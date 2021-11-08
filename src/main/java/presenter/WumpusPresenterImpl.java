@@ -48,10 +48,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         this.view = view;
         wumpusGameDTO = new WumpusGameDTO();
         updateDTO();
-
     }
 
-    private void updateDTO(){
+    private void updateDTO() {
         wumpusGameDTO.setGameOver(gameOver);
         wumpusGameDTO.setWumpusRoom(wumpusRoom);
         wumpusGameDTO.setCurrRoom(currRoom);
@@ -62,8 +61,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         wumpusGameDTO.setRooms(rooms);
         wumpusGameDTO.setRoomSize(roomSize);
     }
-
-
 
     @Override
     public void startNewGame() {
@@ -167,6 +164,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
             }
         }
         updateDTO();
+        view.render();
     }
 
     private boolean insideRoom(int ex, int ey, int cx, int cy) {

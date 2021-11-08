@@ -15,9 +15,11 @@ import static javax.swing.SwingUtilities.*;
 public class Wumpus extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
+
     {
         wumpusPresenter = new WumpusPresenterImpl(this);
     }
+
     Graphics2D g;
 
     public Wumpus() {
@@ -34,7 +36,6 @@ public class Wumpus extends JPanel implements WumpusView {
                 int ex = e.getX();
                 int ey = e.getY();
                 wumpusPresenter.handlePlayerPosition(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
-                repaint();
             }
 
         });
@@ -161,7 +162,7 @@ public class Wumpus extends JPanel implements WumpusView {
     }
 
     @Override
-    public void onMouseClick() {
-
+    public void render() {
+        repaint();
     }
 }
