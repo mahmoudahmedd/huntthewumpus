@@ -17,6 +17,7 @@ public class WumpusPresenterImpl implements WumpusPresenter{
             {10, 2, 12}, {13, 19, 11}, {14, 3, 12}, {5, 15, 13}, {14, 16, 19},
             {6, 17, 15}, {16, 8, 18}, {19, 10, 17}, {15, 12, 18}};
 
+
     enum Hazard {
         Wumpus("there's an awful smell"),
         Bat("you hear a rustling"),
@@ -35,6 +36,22 @@ public class WumpusPresenterImpl implements WumpusPresenter{
     int currRoom, numArrows, wumpusRoom;
     List<String> messages;
     Set<Hazard>[] hazards;
+
+    WumpusGameDTO wumpusGameDTO;
+
+    public WumpusPresenterImpl(){
+        wumpusGameDTO = new WumpusGameDTO();
+        wumpusGameDTO.setGameOver(gameOver);
+        wumpusGameDTO.setWumpusRoom(wumpusRoom);
+        wumpusGameDTO.setCurrRoom(currRoom);
+        wumpusGameDTO.setLinks(links);
+        wumpusGameDTO.setMessages(messages);
+        wumpusGameDTO.setNumArrows(numArrows);
+        wumpusGameDTO.setPlayerSize(playerSize);
+        wumpusGameDTO.setRooms(rooms);
+        wumpusGameDTO.setRoomSize(roomSize);
+    }
+
 
     @Override
     public void startNewGame() {
@@ -77,16 +94,6 @@ public class WumpusPresenterImpl implements WumpusPresenter{
 
     @Override
     public WumpusGameDTO getWumpusGameDTO() {
-        WumpusGameDTO wumpusGameDTO = new WumpusGameDTO();
-        wumpusGameDTO.setGameOver(gameOver);
-        wumpusGameDTO.setWumpusRoom(wumpusRoom);
-        wumpusGameDTO.setCurrRoom(currRoom);
-        wumpusGameDTO.setLinks(links);
-        wumpusGameDTO.setMessages(messages);
-        wumpusGameDTO.setNumArrows(numArrows);
-        wumpusGameDTO.setPlayerSize(playerSize);
-        wumpusGameDTO.setRooms(rooms);
-        wumpusGameDTO.setRoomSize(roomSize);
         return wumpusGameDTO;
     }
 

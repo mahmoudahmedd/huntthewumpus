@@ -70,7 +70,6 @@ public class Wumpus extends JPanel implements WumpusView{
 
     // don't place hazards close to the starting room
 
-
     void situation() {
         Set<Hazard> set = hazards[currRoom];
 
@@ -249,7 +248,7 @@ public class Wumpus extends JPanel implements WumpusView{
     public void drawMap(WumpusGameDTO wumpusGameDTO) {
         drawRooms(wumpusGameDTO);
         if (wumpusGameDTO.isGameOver()) {
-            drawStartScreen(wumpusGameDTO);
+            drawStartScreen(wumpusGameDTO)g;
         } else {
             drawPlayer(wumpusGameDTO);
         }
