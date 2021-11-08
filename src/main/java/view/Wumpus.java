@@ -18,6 +18,8 @@ public class Wumpus extends JPanel implements WumpusView{
     Graphics2D g;
 
     public Wumpus() {
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl();
+
         setPreferredSize(new Dimension(721, 687));
         setBackground(Color.white);
         setForeground(Color.lightGray);
@@ -248,7 +250,7 @@ public class Wumpus extends JPanel implements WumpusView{
     public void drawMap(WumpusGameDTO wumpusGameDTO) {
         drawRooms(wumpusGameDTO);
         if (wumpusGameDTO.isGameOver()) {
-            drawStartScreen(wumpusGameDTO)g;
+            drawStartScreen();
         } else {
             drawPlayer(wumpusGameDTO);
         }
