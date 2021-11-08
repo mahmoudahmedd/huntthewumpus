@@ -113,30 +113,7 @@ public class Wumpus extends JPanel implements WumpusView{
     }
 
     void shoot(int room) {
-        if (hazards[room].contains(Hazard.Wumpus)) {
-            messages.add("You win! You've killed the view.Wumpus!");
-            gameOver = true;
-
-        } else {
-            numArrows--;
-            if (numArrows == 0) {
-                messages.add("You ran out of arrows.");
-                gameOver = true;
-
-            } else if (rand.nextInt(4) != 0) { // 75 %
-                hazards[wumpusRoom].remove(Hazard.Wumpus);
-                wumpusRoom = links[wumpusRoom][rand.nextInt(3)];
-
-                if (wumpusRoom == currRoom) {
-                    messages.add("You woke the view.Wumpus and he ate you");
-                    gameOver = true;
-
-                } else {
-                    messages.add("You woke the view.Wumpus and he moved");
-                    hazards[wumpusRoom].add(Hazard.Wumpus);
-                }
-            }
-        }
+        wumpusPresenter.shoot(room);
     }
 
     void drawPlayer(WumpusGameDTO wumpusGameDTO) {
