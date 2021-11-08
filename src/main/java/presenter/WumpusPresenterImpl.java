@@ -85,6 +85,43 @@ public class WumpusPresenterImpl implements WumpusPresenter{
     @Override
     public void move() {
 
+        Set<Hazard> set = hazards[currRoom];
+
+        if (set.contains(Hazard.Wumpus)) {
+            messages.add("you've been eaten by the view.Wumpus");
+            gameOver = true;
+
+        } else if (set.contains(Hazard.Pit)) {
+            messages.add("you fell into a pit");
+            gameOver = true;
+
+        } else if (set.contains(Hazard.Bat)) {
+            messages.add("a bat dropped you in a random room");
+
+            // teleport, but avoid 2 teleports in a row
+            do {
+                currRoom = rand.nextInt(rooms.length);
+            } while (hazards[currRoom].contains(Hazard.Bat));
+
+            // relocate the bat, but not to the player room or a room with a bat
+            set.remove(Hazard.Bat);
+            int newRoom;
+            do {
+                newRoom = rand.nextInt(rooms.length);
+            } while (newRoom == currRoom || hazards[newRoom].contains(Hazard.Bat));
+            hazards[newRoom].add(Hazard.Bat);
+
+            // re-evaluate
+            move();
+
+        } else {
+
+            // look around
+            for (int link : links[currRoom]) {
+                for (Hazard hazard : hazards[link])
+                    messages.add(hazard.warning);
+            }
+        }
     }
 
     @Override
