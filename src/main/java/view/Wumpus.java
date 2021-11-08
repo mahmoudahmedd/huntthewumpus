@@ -14,7 +14,7 @@ import static javax.swing.SwingUtilities.*;
 
 public class Wumpus extends JPanel implements WumpusView{
 
-    WumpusPresenter wumpusPresenter = new WumpusPresenterImpl();
+    WumpusPresenter wumpusPresenter;
     Graphics2D g;
 
     public Wumpus() {
