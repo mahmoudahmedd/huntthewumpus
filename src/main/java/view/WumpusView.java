@@ -1,6 +1,6 @@
 package view;
 
 public interface WumpusView {
-    void drawMap(WumpusGameDTO wumpusGameDTO);
+    void drawMap();
     void onMouseClick();
 }

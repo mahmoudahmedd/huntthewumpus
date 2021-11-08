@@ -15,7 +15,7 @@ public class WumpusGameDTO {
     int wumpusRoom;
     List<String> messages;
 
-        public int[][] getRooms() {
+    public int[][] getRooms() {
         return rooms;
     }
 

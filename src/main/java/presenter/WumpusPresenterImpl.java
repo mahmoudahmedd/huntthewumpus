@@ -6,7 +6,10 @@ import view.WumpusView;
 
 import java.util.*;
 
-public class WumpusPresenterImpl implements WumpusPresenter{
+import static javax.swing.SwingUtilities.isLeftMouseButton;
+import static javax.swing.SwingUtilities.isRightMouseButton;
+
+public class WumpusPresenterImpl implements WumpusPresenter {
 
     int[][] rooms = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
             {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
@@ -23,11 +26,14 @@ public class WumpusPresenterImpl implements WumpusPresenter{
         Wumpus("there's an awful smell"),
         Bat("you hear a rustling"),
         Pit("you feel a draft");
+
         Hazard(String warning) {
             this.warning = warning;
         }
+
         final String warning;
     }
+
     static final Random rand = new Random();
 
     final int roomSize = 45;
@@ -41,7 +47,7 @@ public class WumpusPresenterImpl implements WumpusPresenter{
     WumpusGameDTO wumpusGameDTO;
     private final WumpusView view;
 
-    public WumpusPresenterImpl(WumpusView view){
+    public WumpusPresenterImpl(WumpusView view) {
         this.view = view;
 
         wumpusGameDTO = new WumpusGameDTO();
@@ -55,6 +61,7 @@ public class WumpusPresenterImpl implements WumpusPresenter{
         wumpusGameDTO.setRooms(rooms);
         wumpusGameDTO.setRoomSize(roomSize);
     }
+
 
 
     @Override
@@ -83,6 +90,7 @@ public class WumpusPresenterImpl implements WumpusPresenter{
         }
 
         gameOver = false;
+        wumpusGameDTO.setGameOver(gameOver);
 
     }
 
@@ -126,6 +134,42 @@ public class WumpusPresenterImpl implements WumpusPresenter{
                     messages.add(hazard.warning);
             }
         }
+    }
+
+    @Override
+    public void handlePlayerPosition(int ex, int ey, boolean leftClick, boolean rightClick) {
+        if (gameOver) {
+            startNewGame();
+        } else {
+            int selectedRoom = -1;
+
+            for (int link : links[currRoom]) {
+                int cx = rooms[link][0];
+                int cy = rooms[link][1];
+                if (insideRoom(ex, ey, cx, cy)) {
+                    selectedRoom = link;
+                    break;
+                }
+            }
+
+            if (selectedRoom == -1)
+                return;
+
+            if (leftClick) {
+                // TODO write presenter.updateRoom(int room) ?????
+                currRoom = selectedRoom;
+                move();
+
+            } else if (rightClick) {
+                shoot(selectedRoom);
+            }
+        }
+
+    }
+
+    private boolean insideRoom(int ex, int ey, int cx, int cy) {
+        return ((ex > cx && ex < cx + roomSize)
+                && (ey > cy && ey < cy + roomSize));
     }
 
     @Override

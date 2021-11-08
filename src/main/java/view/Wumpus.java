@@ -9,16 +9,19 @@ import java.awt.geom.Path2D;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
+
 import static java.util.stream.Collectors.*;
 import static javax.swing.SwingUtilities.*;
 
-public class Wumpus extends JPanel implements WumpusView{
+public class Wumpus extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
+    {
+        wumpusPresenter = new WumpusPresenterImpl(this);
+    }
     Graphics2D g;
 
     public Wumpus() {
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(this);
 
         setPreferredSize(new Dimension(721, 687));
         setBackground(Color.white);
@@ -27,49 +30,14 @@ public class Wumpus extends JPanel implements WumpusView{
         setFocusable(true);
 
         addMouseListener(new MouseAdapter() {
-            WumpusGameDTO wumpusDTO = wumpusPresenter.getWumpusGameDTO();
-
             @Override
             public void mousePressed(MouseEvent e) {
-                if (wumpusDTO.isGameOver()) {
-                    wumpusPresenter.startNewGame();
-
-                } else {
-                    int selectedRoom = -1;
-                    int ex = e.getX();
-                    int ey = e.getY();
-                    int[][] links = wumpusDTO.getLinks();
-                    int[][] rooms = wumpusDTO.getRooms();
-
-                    for (int link : links[wumpusDTO.getCurrRoom()]) {
-                        int cx = rooms[link][0];
-                        int cy = rooms[link][1];
-                        if (insideRoom(ex, ey, cx, cy)) {
-                            selectedRoom = link;
-                            break;
-                        }
-                    }
-
-                    if (selectedRoom == -1)
-                        return;
-
-                    if (isLeftMouseButton(e)) {
-                        // TODO write presenter.updateRoom(int room) ?????
-                        currRoom = selectedRoom;
-                        situation();
-
-                    } else if (isRightMouseButton(e)) {
-                        shoot(selectedRoom);
-                    }
-                }
+                int ex = e.getX();
+                int ey = e.getY();
+                wumpusPresenter.handlePlayerPosition(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
                 repaint();
             }
 
-            boolean insideRoom(int ex, int ey, int cx, int cy) {
-                int roomSize = wumpusDTO.getRoomSize();
-                return ((ex > cx && ex < cx + roomSize)
-                        && (ey > cy && ey < cy + roomSize));
-            }
         });
     }
 
@@ -85,8 +53,8 @@ public class Wumpus extends JPanel implements WumpusView{
     }
 
     void drawPlayer(WumpusGameDTO wumpusGameDTO) {
-        int x = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][0] + ( wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) / 2;
-        int y = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][1] + ( wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) - 2;
+        int x = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][0] + (wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) / 2;
+        int y = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][1] + (wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
@@ -174,8 +142,7 @@ public class Wumpus extends JPanel implements WumpusView{
         g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
-        drawMap(this.wumpusPresenter.getWumpusGameDTO());
+        drawMap();
     }
 
     public static void main(String[] args) {
@@ -191,8 +158,8 @@ public class Wumpus extends JPanel implements WumpusView{
         });
     }
 
-    @Override
-    public void drawMap(WumpusGameDTO wumpusGameDTO) {
+    public void drawMap() {
+        WumpusGameDTO wumpusGameDTO = wumpusPresenter.getWumpusGameDTO();
         drawRooms(wumpusGameDTO);
         if (wumpusGameDTO.isGameOver()) {
             drawStartScreen();
