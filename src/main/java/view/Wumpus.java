@@ -6,7 +6,6 @@ import presenter.WumpusPresenterImpl;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Path2D;
-import java.util.*;
 import java.util.List;
 import javax.swing.*;
 
@@ -43,14 +42,6 @@ public class Wumpus extends JPanel implements WumpusView {
 
 
     // don't place hazards close to the starting room
-
-    void situation() {
-        this.wumpusPresenter.move();
-    }
-
-    void shoot(int room) {
-        this.wumpusPresenter.shoot(room);
-    }
 
     void drawPlayer(WumpusGameDTO wumpusGameDTO) {
         int x = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][0] + (wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) / 2;

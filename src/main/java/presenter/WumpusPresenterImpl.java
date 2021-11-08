@@ -1,13 +1,10 @@
 package presenter;
 
-import view.Wumpus;
 import view.WumpusGameDTO;
 import view.WumpusView;
 
 import java.util.*;
 
-import static javax.swing.SwingUtilities.isLeftMouseButton;
-import static javax.swing.SwingUtilities.isRightMouseButton;
 
 public class WumpusPresenterImpl implements WumpusPresenter {
 
