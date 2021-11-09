@@ -34,7 +34,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
             public void mousePressed(MouseEvent e) {
                 int ex = e.getX();
                 int ey = e.getY();
-                //wumpusPresenter.handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
+                handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
             }
 
         });
@@ -152,33 +152,54 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         repaint();
     }
 
-    public void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
+    private void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
         if (wumpusPresenter.isGameOver()) {
             wumpusPresenter.startNewGame();
-        } else {
-            int selectedRoom = -1;
-
-            for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()]) {
-                int cx = wumpusPresenter.getRooms()[link][0];
-                int cy = wumpusPresenter.getRooms()[link][1];
-                if (((ex > cx && ex < cx + wumpusPresenter.getRoomSize())
-                        && (ey > cy && ey < cy + wumpusPresenter.getRoomSize()))) {
-                    selectedRoom = link;
-                    break;
-                }
-            }
-
-            if (selectedRoom == -1)
-                return;
-
-            if (leftClick) {
-                wumpusPresenter.setCurrRoom(selectedRoom);
-                wumpusPresenter.move();
-
-            } else if (rightClick) {
-                wumpusPresenter.shoot(selectedRoom);
-            }
+        } else  {
+            continueGame(ex, ey, leftClick, rightClick) ;
         }
         render();
+    }
+
+    private void continueGame(int ex, int ey, boolean leftClick, boolean rightClick) {
+        int selectedRoom = getSelectedRoom(ex, ey);
+        executeMouseClickActionBasedOnSelectedRoom(leftClick, rightClick, selectedRoom);
+    }
+
+    private void executeMouseClickActionBasedOnSelectedRoom(boolean leftClick, boolean rightClick, int selectedRoom) {
+        final int invalidRoom = -1;
+        if (selectedRoom == invalidRoom){
+            return;
+        } else{
+            executeActionBasedOnMouseButtonClick(leftClick, rightClick, selectedRoom);
+        }
+    }
+
+    private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedRoom) {
+        if (leftClick) {
+            // TODO refactor move signature to take a room and setCurrRoom inside move function!
+            wumpusPresenter.setCurrRoom(selectedRoom);
+            wumpusPresenter.move();
+        } else if (rightClick) {
+            wumpusPresenter.shoot(selectedRoom);
+        }
+    }
+
+    private int getSelectedRoom(int ex, int ey) {
+        int selectedRoom = -1;
+        for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()]) {
+            int cx = wumpusPresenter.getRooms()[link][0];
+            int cy = wumpusPresenter.getRooms()[link][1];
+            if (isMouseClickWithinCorrectRoom(ex, ey, cx, cy)) {
+                selectedRoom = link;
+                break;
+            }
+        }
+        return selectedRoom;
+    }
+
+    private boolean isMouseClickWithinCorrectRoom(int ex, int ey, int cx, int cy) {
+        return (ex > cx && ex < cx + wumpusPresenter.getRoomSize())
+                && (ey > cy && ey < cy + wumpusPresenter.getRoomSize());
     }
 }
