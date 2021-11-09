@@ -16,13 +16,12 @@ public class Wumpus extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
 
-    {
-        wumpusPresenter = new WumpusPresenterImpl(this);
-    }
 
     Graphics2D g;
 
     public Wumpus() {
+
+        wumpusPresenter = new WumpusPresenterImpl(this);
 
         setPreferredSize(new Dimension(721, 687));
         setBackground(Color.white);
@@ -35,7 +34,7 @@ public class Wumpus extends JPanel implements WumpusView {
             public void mousePressed(MouseEvent e) {
                 int ex = e.getX();
                 int ey = e.getY();
-                wumpusPresenter.handlePlayerPosition(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
+                wumpusPresenter.handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
             }
 
         });
@@ -134,7 +133,18 @@ public class Wumpus extends JPanel implements WumpusView {
         g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        drawMap();
+        WumpusGameDTO wumpusGameDTO = wumpusPresenter.getWumpusGameDTO();
+        drawRooms(wumpusGameDTO);
+        drawMap(wumpusGameDTO);
+        drawMessage(wumpusGameDTO);
+    }
+
+    private void drawMap(WumpusGameDTO wumpusGameDTO) {
+        if (wumpusGameDTO.isGameOver()) {
+            drawStartScreen();
+        } else {
+            drawPlayer(wumpusGameDTO);
+        }
     }
 
     public static void main(String[] args) {
@@ -148,17 +158,6 @@ public class Wumpus extends JPanel implements WumpusView {
             f.setLocationRelativeTo(null);
             f.setVisible(true);
         });
-    }
-
-    public void drawMap() {
-        WumpusGameDTO wumpusGameDTO = wumpusPresenter.getWumpusGameDTO();
-        drawRooms(wumpusGameDTO);
-        if (wumpusGameDTO.isGameOver()) {
-            drawStartScreen();
-        } else {
-            drawPlayer(wumpusGameDTO);
-        }
-        drawMessage(wumpusGameDTO);
     }
 
     @Override

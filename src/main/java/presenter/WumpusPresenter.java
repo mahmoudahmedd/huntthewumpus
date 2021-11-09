@@ -7,7 +7,7 @@ public interface WumpusPresenter {
 
     void move();
 
-    void handlePlayerPosition(int ex, int ey, boolean leftClick, boolean rightClick);
+    void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick);
 
     void shoot(int room);
 

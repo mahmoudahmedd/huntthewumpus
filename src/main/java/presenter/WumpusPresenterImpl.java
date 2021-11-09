@@ -136,7 +136,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public void handlePlayerPosition(int ex, int ey, boolean leftClick, boolean rightClick) {
+    public void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
         if (gameOver) {
             startNewGame();
         } else {
