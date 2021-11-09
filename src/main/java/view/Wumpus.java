@@ -34,7 +34,7 @@ public class Wumpus extends JPanel implements WumpusView {
             public void mousePressed(MouseEvent e) {
                 int ex = e.getX();
                 int ey = e.getY();
-                wumpusPresenter.handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
+                //wumpusPresenter.handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
             }
 
         });
@@ -43,14 +43,14 @@ public class Wumpus extends JPanel implements WumpusView {
 
     // don't place hazards close to the starting room
 
-    void drawPlayer(WumpusGameDTO wumpusGameDTO) {
-        int x = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][0] + (wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) / 2;
-        int y = wumpusGameDTO.getRooms()[wumpusGameDTO.getCurrRoom()][1] + (wumpusGameDTO.getRoomSize() - wumpusGameDTO.getPlayerSize()) - 2;
+    void drawPlayer() {
+        int x = wumpusPresenter.getRooms()[wumpusPresenter.getCurrRoom()][0] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) / 2;
+        int y = wumpusPresenter.getRooms()[wumpusPresenter.getCurrRoom()][1] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
-        player.lineTo(x + wumpusGameDTO.getPlayerSize(), y);
-        player.lineTo(x + wumpusGameDTO.getPlayerSize() / 2, y - wumpusGameDTO.getPlayerSize());
+        player.lineTo(x + wumpusPresenter.getPlayerSize(), y);
+        player.lineTo(x + wumpusPresenter.getPlayerSize() / 2, y - wumpusPresenter.getPlayerSize());
         player.closePath();
 
         g.setColor(Color.white);
@@ -74,43 +74,44 @@ public class Wumpus extends JPanel implements WumpusView {
         g.drawString("click to start", 310, 380);
     }
 
-    void drawRooms(WumpusGameDTO wumpusGameDTO) {
+    void drawRooms() {
+
         g.setColor(Color.darkGray);
         g.setStroke(new BasicStroke(2));
 
-        for (int i = 0; i < wumpusGameDTO.getLinks().length; i++) {
-            for (int link : wumpusGameDTO.getLinks()[i]) {
-                int x1 = wumpusGameDTO.getRooms()[i][0] + wumpusGameDTO.getRoomSize() / 2;
-                int y1 = wumpusGameDTO.getRooms()[i][1] + wumpusGameDTO.getRoomSize() / 2;
-                int x2 = wumpusGameDTO.getRooms()[link][0] + wumpusGameDTO.getRoomSize() / 2;
-                int y2 = wumpusGameDTO.getRooms()[link][1] + wumpusGameDTO.getRoomSize() / 2;
+        for (int i = 0; i < wumpusPresenter.getLinks().length; i++) {
+            for (int link : wumpusPresenter.getLinks()[i]) {
+                int x1 = wumpusPresenter.getRooms()[i][0] + wumpusPresenter.getRoomSize() / 2;
+                int y1 = wumpusPresenter.getRooms()[i][1] + wumpusPresenter.getRoomSize() / 2;
+                int x2 = wumpusPresenter.getRooms()[link][0] + wumpusPresenter.getRoomSize() / 2;
+                int y2 = wumpusPresenter.getRooms()[link][1] + wumpusPresenter.getRoomSize() / 2;
                 g.drawLine(x1, y1, x2, y2);
             }
         }
 
         g.setColor(Color.orange);
-        for (int[] r : wumpusGameDTO.getRooms())
-            g.fillOval(r[0], r[1], wumpusGameDTO.getRoomSize(), wumpusGameDTO.getRoomSize());
+        for (int[] r : wumpusPresenter.getRooms())
+            g.fillOval(r[0], r[1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
 
-        if (!wumpusGameDTO.isGameOver()) {
+        if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
-            for (int link : wumpusGameDTO.getLinks()[wumpusGameDTO.getCurrRoom()])
-                g.fillOval(wumpusGameDTO.getRooms()[link][0], wumpusGameDTO.getRooms()[link][1], wumpusGameDTO.getRoomSize(), wumpusGameDTO.getRoomSize());
+            for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()])
+                g.fillOval(wumpusPresenter.getRooms()[link][0], wumpusPresenter.getRooms()[link][1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
         }
 
         g.setColor(Color.darkGray);
-        for (int[] r : wumpusGameDTO.getRooms())
-            g.drawOval(r[0], r[1], wumpusGameDTO.getRoomSize(), wumpusGameDTO.getRoomSize());
+        for (int[] r : wumpusPresenter.getRooms())
+            g.drawOval(r[0], r[1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
     }
 
-    void drawMessage(WumpusGameDTO wumpusGameDTO) {
-        if (!wumpusGameDTO.isGameOver())
-            g.drawString("arrows  " + wumpusGameDTO.getNumArrows(), 610, 30);
+    void drawMessage() {
+        if (!wumpusPresenter.isGameOver())
+            g.drawString("arrows  " + wumpusPresenter.getNumArrows(), 610, 30);
 
-        if (wumpusGameDTO.getMessages() != null) {
+        if (wumpusPresenter.getMessages() != null) {
             g.setColor(Color.black);
 
-            List<String> messages = wumpusGameDTO.getMessages();
+            List<String> messages = wumpusPresenter.getMessages();
             // collapse identical messages
             messages = messages.stream().distinct().collect(toList());
 
@@ -133,17 +134,16 @@ public class Wumpus extends JPanel implements WumpusView {
         g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        WumpusGameDTO wumpusGameDTO = wumpusPresenter.getWumpusGameDTO();
-        drawRooms(wumpusGameDTO);
-        drawMap(wumpusGameDTO);
-        drawMessage(wumpusGameDTO);
+        drawRooms();
+        drawMap();
+        drawMessage();
     }
 
-    private void drawMap(WumpusGameDTO wumpusGameDTO) {
-        if (wumpusGameDTO.isGameOver()) {
+    private void drawMap() {
+        if (wumpusPresenter.isGameOver()) {
             drawStartScreen();
         } else {
-            drawPlayer(wumpusGameDTO);
+            drawPlayer();
         }
     }
 
@@ -163,5 +163,35 @@ public class Wumpus extends JPanel implements WumpusView {
     @Override
     public void render() {
         repaint();
+    }
+
+    public void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
+        if (wumpusPresenter.isGameOver()) {
+            wumpusPresenter.startNewGame();
+        } else {
+            int selectedRoom = -1;
+
+            for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()]) {
+                int cx = wumpusPresenter.getRooms()[link][0];
+                int cy = wumpusPresenter.getRooms()[link][1];
+                if (((ex > cx && ex < cx + wumpusPresenter.getRoomSize())
+                        && (ey > cy && ey < cy + wumpusPresenter.getRoomSize()))) {
+                    selectedRoom = link;
+                    break;
+                }
+            }
+
+            if (selectedRoom == -1)
+                return;
+
+            if (leftClick) {
+                wumpusPresenter.setCurrRoom(selectedRoom);
+                wumpusPresenter.move();
+
+            } else if (rightClick) {
+                wumpusPresenter.shoot(selectedRoom);
+            }
+        }
+        render();
     }
 }

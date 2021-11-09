@@ -31,6 +31,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         final String warning;
     }
 
+
     static final Random rand = new Random();
 
     final int roomSize = 45;
@@ -41,35 +42,21 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     List<String> messages;
     Set<Hazard>[] hazards;
 
-    WumpusGameDTO wumpusGameDTO;
     private final WumpusView view;
 
     public WumpusPresenterImpl(WumpusView view) {
         this.view = view;
-        wumpusGameDTO = new WumpusGameDTO();
-        updateDTO();
     }
 
-    private void updateDTO() {
-        wumpusGameDTO.setGameOver(gameOver);
-        wumpusGameDTO.setWumpusRoom(wumpusRoom);
-        wumpusGameDTO.setCurrRoom(currRoom);
-        wumpusGameDTO.setLinks(links);
-        wumpusGameDTO.setMessages(messages);
-        wumpusGameDTO.setNumArrows(numArrows);
-        wumpusGameDTO.setPlayerSize(playerSize);
-        wumpusGameDTO.setRooms(rooms);
-        wumpusGameDTO.setRoomSize(roomSize);
-    }
 
     @Override
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        currRoom = rand.nextInt(rooms.length);
+        setCurrRoom(rand.nextInt(getRooms().length));
 
-        hazards = new Set[rooms.length];
-        for (int i = 0; i < rooms.length; i++)
+        hazards = new Set[getRooms().length];
+        for (int i = 0; i < getRooms().length; i++)
             hazards[i] = EnumSet.noneOf(Hazard.class);
 
         // hazards can share rooms (unless they are identical)
@@ -78,7 +65,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         for (int ord : ordinals) {
             int room;
             do {
-                room = rand.nextInt(rooms.length);
+                room = rand.nextInt(getRooms().length);
             } while (tooClose(room) || hazards[room].contains(values[ord]));
 
             if (ord == 0)
@@ -88,14 +75,13 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         }
 
         gameOver = false;
-        wumpusGameDTO.setGameOver(gameOver);
-        updateDTO();
+
     }
 
     @Override
     public void move() {
 
-        Set<Hazard> set = hazards[currRoom];
+        Set<Hazard> set = hazards[getCurrRoom()];
 
         if (set.contains(Hazard.Wumpus)) {
             messages.add("you've been eaten by the view.Wumpus");
@@ -110,15 +96,15 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                currRoom = rand.nextInt(rooms.length);
-            } while (hazards[currRoom].contains(Hazard.Bat));
+                setCurrRoom(rand.nextInt(getRooms().length));
+            } while (hazards[getCurrRoom()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player room or a room with a bat
             set.remove(Hazard.Bat);
             int newRoom;
             do {
-                newRoom = rand.nextInt(rooms.length);
-            } while (newRoom == currRoom || hazards[newRoom].contains(Hazard.Bat));
+                newRoom = rand.nextInt(getRooms().length);
+            } while (newRoom == getCurrRoom() || hazards[newRoom].contains(Hazard.Bat));
             hazards[newRoom].add(Hazard.Bat);
 
             // re-evaluate
@@ -127,49 +113,37 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         } else {
 
             // look around
-            for (int link : links[currRoom]) {
+            for (int link : getLinks()[getCurrRoom()]) {
                 for (Hazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
         }
-        updateDTO();
+
     }
 
     @Override
-    public void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
-        if (gameOver) {
-            startNewGame();
-        } else {
-            int selectedRoom = -1;
-
-            for (int link : links[currRoom]) {
-                int cx = rooms[link][0];
-                int cy = rooms[link][1];
-                if (insideRoom(ex, ey, cx, cy)) {
-                    selectedRoom = link;
-                    break;
-                }
-            }
-
-            if (selectedRoom == -1)
-                return;
-
-            if (leftClick) {
-                // TODO write presenter.updateRoom(int room) ?????
-                currRoom = selectedRoom;
-                move();
-
-            } else if (rightClick) {
-                shoot(selectedRoom);
-            }
-        }
-        updateDTO();
-        view.render();
+    public void setCurrRoom(int selectedRoom) {
+        currRoom = selectedRoom;
     }
 
-    private boolean insideRoom(int ex, int ey, int cx, int cy) {
-        return ((ex > cx && ex < cx + roomSize)
-                && (ey > cy && ey < cy + roomSize));
+    @Override
+    public int[][] getRooms() {
+        return rooms;
+    }
+
+    @Override
+    public int[][] getLinks() {
+        return links;
+    }
+
+    @Override
+    public int getCurrRoom() {
+        return currRoom;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     @Override
@@ -186,9 +160,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             } else if (rand.nextInt(4) != 0) { // 75 %
                 hazards[wumpusRoom].remove(Hazard.Wumpus);
-                wumpusRoom = links[wumpusRoom][rand.nextInt(3)];
+                wumpusRoom = getLinks()[wumpusRoom][rand.nextInt(3)];
 
-                if (wumpusRoom == currRoom) {
+                if (wumpusRoom == getCurrRoom()) {
                     messages.add("You woke the view.Wumpus and he ate you");
                     gameOver = true;
 
@@ -198,20 +172,36 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 }
             }
         }
-        updateDTO();
+
     }
 
-    @Override
-    public WumpusGameDTO getWumpusGameDTO() {
-        return wumpusGameDTO;
-    }
 
     private boolean tooClose(int room) {
-        if (currRoom == room)
+        if (getCurrRoom() == room)
             return true;
-        for (int link : links[currRoom])
+        for (int link : getLinks()[getCurrRoom()])
             if (room == link)
                 return true;
         return false;
+    }
+
+    @Override
+    public int getRoomSize() {
+        return roomSize;
+    }
+
+    @Override
+    public int getPlayerSize() {
+        return playerSize;
+    }
+
+    @Override
+    public int getNumArrows() {
+        return numArrows;
+    }
+
+    @Override
+    public List<String> getMessages() {
+        return messages;
     }
 }
