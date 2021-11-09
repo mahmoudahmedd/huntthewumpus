@@ -1,7 +1,5 @@
 package presenter;
 
-import view.WumpusGameDTO;
-
 import java.util.List;
 
 public interface WumpusPresenter {

@@ -1,6 +1,5 @@
 package presenter;
 
-import view.WumpusGameDTO;
 import view.WumpusView;
 
 import java.util.*;
