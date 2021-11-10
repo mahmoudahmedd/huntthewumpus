@@ -1,5 +1,6 @@
 package presenter;
 
+import model.Game;
 import utilities.RandomNumberGenerator;
 import view.WumpusView;
 
@@ -32,7 +33,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-    static final Random rand = new Random();
 
     final int roomSize = 45;
     final int playerSize = 16;
@@ -44,17 +44,23 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     RandomNumberGenerator randomNumberGenerator;
 
-    public  WumpusPresenterImpl(){
+    private Game game;
+
+    public WumpusPresenterImpl(){
         this.randomNumberGenerator=new RandomNumberGenerator();
+        this.game = new Game();
     }
 
-    public  WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
+    public WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
         this.randomNumberGenerator=randomNumberGenerator;
+        this.game = new Game();
     }
 
 
     @Override
     public void startNewGame() {
+        this.game.startGame();
+
         messages = new ArrayList<>();
         numArrows = 5;
         final int numberOfRooms = getRooms().length;
