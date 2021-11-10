@@ -1,5 +1,6 @@
 package presenter;
 
+import utilities.RandomNumberGenerator;
 import view.WumpusView;
 
 import java.util.*;
@@ -41,10 +42,14 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     List<String> messages;
     Set<Hazard>[] hazards;
 
-    private final WumpusView view;
+    RandomNumberGenerator randomNumberGenerator;
 
-    public WumpusPresenterImpl(WumpusView view) {
-        this.view = view;
+    public  WumpusPresenterImpl(){
+        this.randomNumberGenerator=new RandomNumberGenerator();
+    }
+
+    public  WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
+        this.randomNumberGenerator=randomNumberGenerator;
     }
 
 
@@ -52,10 +57,11 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        setCurrRoom(rand.nextInt(getRooms().length));
+        final int numberOfRooms = getRooms().length;
+        setCurrRoom(getRandomRoom(numberOfRooms));
 
-        hazards = new Set[getRooms().length];
-        for (int i = 0; i < getRooms().length; i++)
+        hazards = new Set[numberOfRooms];
+        for (int i = 0; i < numberOfRooms; i++)
             hazards[i] = EnumSet.noneOf(Hazard.class);
 
         // hazards can share rooms (unless they are identical)
@@ -64,7 +70,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         for (int ord : ordinals) {
             int room;
             do {
-                room = rand.nextInt(getRooms().length);
+                room = getRandomRoom(numberOfRooms);
             } while (tooClose(room) || hazards[room].contains(values[ord]));
 
             if (ord == 0)
@@ -75,6 +81,10 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
         gameOver = false;
 
+    }
+
+    private int getRandomRoom(int numberOfRooms) {
+        return randomNumberGenerator.generateNumber(numberOfRooms);
     }
 
     @Override
@@ -95,14 +105,14 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrRoom(rand.nextInt(getRooms().length));
+                setCurrRoom(getRandomRoom(getRooms().length));
             } while (hazards[getCurrRoom()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player room or a room with a bat
             set.remove(Hazard.Bat);
             int newRoom;
             do {
-                newRoom = rand.nextInt(getRooms().length);
+                newRoom = getRandomRoom(getRooms().length);
             } while (newRoom == getCurrRoom() || hazards[newRoom].contains(Hazard.Bat));
             hazards[newRoom].add(Hazard.Bat);
 
@@ -157,9 +167,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 messages.add("You ran out of arrows.");
                 gameOver = true;
 
-            } else if (rand.nextInt(4) != 0) { // 75 %
+            } else if (getRandomRoom(4) != 0) { // 75 %
                 hazards[wumpusRoom].remove(Hazard.Wumpus);
-                wumpusRoom = getLinks()[wumpusRoom][rand.nextInt(3)];
+                wumpusRoom = getLinks()[wumpusRoom][getRandomRoom(3)];
 
                 if (wumpusRoom == getCurrRoom()) {
                     messages.add("You woke the view.Wumpus and he ate you");
