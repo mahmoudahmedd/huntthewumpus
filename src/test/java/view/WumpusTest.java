@@ -1,5 +1,10 @@
 package view;
 
-class WumpusTest {
+import org.junit.jupiter.api.Test;
 
+class WumpusTest {
+    @Test
+    void test() {
+
+    }
 }
