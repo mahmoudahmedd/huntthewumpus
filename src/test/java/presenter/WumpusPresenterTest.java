@@ -54,7 +54,7 @@ class WumpusPresenterTest {
 
         wumpusPresenter.move(playerNextCave);
 
-        final int playerCurrentRoom=wumpusPresenter.getCurrRoom();
+        final int playerCurrentRoom=wumpusPresenter.getCurrentCave();
         final boolean isGameOver=wumpusPresenter.isGameOver();
 
         assertEquals(playerNextCave,playerCurrentRoom);
@@ -81,7 +81,7 @@ class WumpusPresenterTest {
 
         wumpusPresenter.move(playerNextCave);
 
-        final int playerCurrentRoom = wumpusPresenter.getCurrRoom();
+        final int playerCurrentRoom = wumpusPresenter.getCurrentCave();
         final boolean isGameOver = wumpusPresenter.isGameOver();
 
         assertEquals(playerStartingCave, playerCurrentRoom);

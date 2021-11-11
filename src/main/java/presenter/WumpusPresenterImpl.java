@@ -1,8 +1,6 @@
 package presenter;
 
-import model.Game;
 import utilities.RandomNumberGenerator;
-import view.WumpusView;
 
 import java.util.*;
 
@@ -34,7 +32,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     int currRoom, numArrows, wumpusRoom;
     List<String> messages;
     Set<Hazard>[] hazards;
-    final int numberOfRooms=20;
+    final int numberOfCaves =20;
 
     RandomNumberGenerator randomNumberGenerator;
 
@@ -51,8 +49,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        final int numberOfRooms = getNumberOfRooms();
-        setCurrRoom(getRandomRoom(numberOfRooms));
+        final int numberOfRooms = getNumberOfCaves();
+        setCurrentCave(getRandomRoom(numberOfRooms));
 
         hazards = new Set[numberOfRooms];
         for (int i = 0; i < numberOfRooms; i++)
@@ -77,8 +75,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     }
 
-    private int getNumberOfRooms() {
-        return this.numberOfRooms;
+    private int getNumberOfCaves() {
+        return this.numberOfCaves;
     }
 
     private int getRandomRoom(int numberOfRooms) {
@@ -87,7 +85,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     public void move() {
 
-        Set<Hazard> set = hazards[getCurrRoom()];
+        Set<Hazard> set = hazards[getCurrentCave()];
 
         if (set.contains(Hazard.Wumpus)) {
             messages.add("you've been eaten by the view.Wumpus");
@@ -102,15 +100,15 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrRoom(getRandomRoom(getNumberOfRooms()));
-            } while (hazards[getCurrRoom()].contains(Hazard.Bat));
+                setCurrentCave(getRandomRoom(getNumberOfCaves()));
+            } while (hazards[getCurrentCave()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player room or a room with a bat
             set.remove(Hazard.Bat);
             int newRoom;
             do {
-                newRoom = getRandomRoom(getNumberOfRooms());
-            } while (newRoom == getCurrRoom() || hazards[newRoom].contains(Hazard.Bat));
+                newRoom = getRandomRoom(getNumberOfCaves());
+            } while (newRoom == getCurrentCave() || hazards[newRoom].contains(Hazard.Bat));
             hazards[newRoom].add(Hazard.Bat);
 
             // re-evaluate
@@ -119,7 +117,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         } else {
 
             // look around
-            for (int link : getLinks()[getCurrRoom()]) {
+            for (int link : getLinks()[getCurrentCave()]) {
                 for (Hazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
@@ -128,9 +126,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public void move(int room) {
-        validateThatRoomIsCorrect(room);
-        setCurrRoom(room);
+    public void move(int cave) {
+        validateThatRoomIsCorrect(cave);
+        setCurrentCave(cave);
         move();
     }
 
@@ -138,8 +136,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public void setCurrRoom(int selectedRoom) {
-        currRoom = selectedRoom;
+    public void setCurrentCave(int selectedCave) {
+        currRoom = selectedCave;
     }
 
 
@@ -149,7 +147,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public int getCurrRoom() {
+    public int getCurrentCave() {
         return currRoom;
     }
 
@@ -174,7 +172,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 hazards[wumpusRoom].remove(Hazard.Wumpus);
                 wumpusRoom = getLinks()[wumpusRoom][getRandomRoom(3)];
 
-                if (wumpusRoom == getCurrRoom()) {
+                if (wumpusRoom == getCurrentCave()) {
                     messages.add("You woke the view.Wumpus and he ate you");
                     gameOver = true;
 
@@ -189,16 +187,16 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     private boolean tooClose(int room) {
-        if (getCurrRoom() == room)
+        if (getCurrentCave() == room)
             return true;
-        for (int link : getLinks()[getCurrRoom()])
+        for (int link : getLinks()[getCurrentCave()])
             if (room == link)
                 return true;
         return false;
     }
 
     @Override
-    public int getRoomSize() {
+    public int getCaveCount() {
         return roomSize;
     }
 
