@@ -10,14 +10,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
-TODO
+TODO Test list
 1- move to non connected cave.
 2- room has Wumpus.
 3- room has bat
 4- kill wumpus
 5- cave has pit
+*/
 
- */
 @ExtendWith(MockitoExtension.class)
 class WumpusPresenterTest {
 
@@ -37,7 +37,7 @@ class WumpusPresenterTest {
     @Test
     public void testMovingPlayerToCave() {
 
-        final int playNextCave = 7;
+        final int playerNextCave = 7;
         final boolean gameIsNotOver = false;
 
         Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
@@ -52,20 +52,20 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter=new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
-        wumpusPresenter.setCurrRoom(playNextCave);
+        wumpusPresenter.setCurrRoom(playerNextCave);
         wumpusPresenter.move();
 
         final int playCurrentRoom=wumpusPresenter.getCurrRoom();
         final boolean isGameOver=wumpusPresenter.isGameOver();
 
-        assertEquals(playNextCave,playCurrentRoom);
+        assertEquals(playerNextCave,playCurrentRoom);
         assertEquals(isGameOver,gameIsNotOver);
 
     }
 
     @Test
     public void testMoveToNonConnectedCave() {
-        final int playNextCave = 16;
+        final int playerNextCave = 16;
         final boolean gameIsNotOver = false;
 
         Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
@@ -80,7 +80,7 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
-        wumpusPresenter.setCurrRoom(playNextCave);
+        wumpusPresenter.setCurrRoom(playerNextCave);
         wumpusPresenter.move();
 
         final int playCurrentRoom = wumpusPresenter.getCurrRoom();
