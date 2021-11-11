@@ -7,6 +7,9 @@ import org.mockito.Mockito;
 import utilities.RandomNumberGenerator;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -113,7 +116,31 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus(){
+        final boolean gameIsOver = false;
+        final int[] journeyPath = {1, 9, 10};
 
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+                playerStartingCave,
+                wumpusStartingCave,
+                firstBatStartingCave,
+                secondBatStartingCave,
+                thirdBatStartingCave,
+                firstPitCave,
+                secondPitCave);
+
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        wumpusPresenter.startNewGame();
+
+        for(int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        List<String> messages = wumpusPresenter.getMessages();
+
+        // Assert
+        assertTrue(messages.contains(WumpusPresenterImpl.Hazard.Wumpus.warning));
+        assertEquals(actualGameState, gameIsOver);
     }
 
 }
