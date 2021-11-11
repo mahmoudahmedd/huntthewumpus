@@ -22,7 +22,7 @@ class WumpusPresenterTest {
 
     @Mock
     RandomNumberGenerator randomNumberGenerator;
-    
+
     final int playerStartingCave = 0;
     final int wumpusStartingCave = 18;
     final int firstBatStartingCave = 19;
