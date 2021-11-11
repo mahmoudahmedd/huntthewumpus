@@ -258,7 +258,7 @@ class WumpusPresenterTest {
     }
 
     @Test
-    public void testThatPlayerShootsAnArrowThatMissesTheWumpus() {
+    public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusRemainsSleeping() {
         final boolean gameIsOver = false;
         final int[] journeyPath = {1, 9, 10};
         final int shootToCave = 11;
@@ -294,6 +294,11 @@ class WumpusPresenterTest {
         assertEquals(actualGameState, gameIsOver);
 
         assertEquals(wumpusCaveLocation, wumpusStartingCave);
+    }
+
+    @Test
+    public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusMoves() {
+
     }
 
 }
