@@ -5,7 +5,7 @@ import java.awt.*;
 
 import static javax.swing.SwingUtilities.invokeLater;
 
-public class PlayHuntTheWumusGame {
+public class  PlayHuntTheWumusGame {
     public static void main(String[] args) {
         // Main function
         invokeLater(() -> {
