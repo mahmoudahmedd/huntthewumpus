@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /*
 TODO
-(1) Test that player enter cave 13 with bats and pit.
-The expected behavior that the player will fall in the pit and game will be over
+
 
 (2) Test that player shoots an arrow and does not kill the Wumpus.
 Wumpus should wake up and move to another room but not eat the player
@@ -257,4 +256,37 @@ class WumpusPresenterTest {
 
         assertEquals(actualGameState, gameIsOver);
     }
+
+    @Test
+    public void testThatPlayerShootsAnArrowThatMissesTheWumpus() {
+        final boolean gameIsOver = false;
+        final int[] journeyPath = {1, 9, 10};
+        final int shootToCave = 11;
+
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+                playerStartingCave,
+                wumpusStartingCave,
+                firstBatStartingCave,
+                secondBatStartingCave,
+                thirdBatStartingCave,
+                firstPitCave,
+                secondPitCave);
+
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        wumpusPresenter.startNewGame();
+
+        for(int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
+
+        wumpusPresenter.shoot(shootToCave);
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        final int wumpusCaveLocation = wumpusPresenter.getWumpusCave();
+
+        assertEquals(actualGameState, gameIsOver);
+
+        assertEquals(wumpusCaveLocation, gameIsOver);
+    }
+
 }

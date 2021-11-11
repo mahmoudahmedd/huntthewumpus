@@ -12,4 +12,6 @@ public interface WumpusPresenter {
     void shoot(int cave);
     int getNumArrows();
     List<String> getMessages();
+
+    int getWumpusCave();
 }

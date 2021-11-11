@@ -27,7 +27,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     boolean gameOver = true;
-    int currentCave, numArrows, wumpusCave;
+    int currentCave;
+    int numArrows;
+    int wumpusCave;
     List<String> messages;
     Set<Hazard>[] hazards;
     final int numberOfCaves =20;
@@ -137,6 +139,10 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         currentCave = selectedCave;
     }
 
+    @Override
+    public int getWumpusCave() {
+        return wumpusCave;
+    }
 
     @Override
     public int[][] getCavesLinks() {
