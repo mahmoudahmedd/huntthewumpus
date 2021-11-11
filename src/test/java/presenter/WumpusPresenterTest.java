@@ -263,6 +263,9 @@ class WumpusPresenterTest {
         final int[] journeyPath = {1, 9, 10};
         final int shootToCave = 11;
 
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillRemainSleeping = 0;
+
         Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -271,6 +274,10 @@ class WumpusPresenterTest {
                 thirdBatStartingCave,
                 firstPitCave,
                 secondPitCave);
+
+
+        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
+                numberAtWhichWumpusWillRemainSleeping);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
@@ -286,7 +293,7 @@ class WumpusPresenterTest {
 
         assertEquals(actualGameState, gameIsOver);
 
-        assertEquals(wumpusCaveLocation, gameIsOver);
+        assertEquals(wumpusCaveLocation, wumpusStartingCave);
     }
 
 }
