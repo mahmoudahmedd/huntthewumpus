@@ -24,7 +24,7 @@ class WumpusPresenterTest {
         final int thirdBatStartingCave = 14;
         final int firstPitCave = 3;
         final int secondPitCave = 13;
-        final int playNextCave = 7;
+        final int playerNextCave = 7;
         final int numberOfCaves = 20;
         final boolean gameIsNotOver=false;
 
@@ -40,13 +40,13 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter=new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
-        wumpusPresenter.setCurrRoom(playNextCave);
+        wumpusPresenter.setCurrRoom(playerNextCave);
         wumpusPresenter.move();
 
         final int playCurrentRoom=wumpusPresenter.getCurrRoom();
         final boolean isGameOver=wumpusPresenter.isGameOver();
 
-        assertEquals(playNextCave,playCurrentRoom);
+        assertEquals(playerNextCave,playCurrentRoom);
         assertEquals(isGameOver,gameIsNotOver);
 
     }
