@@ -49,8 +49,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        final int numberOfCaves = getNumberOfCaves();
-        setCurrentCave(getRandomCave(numberOfCaves));
+
+        setCurrentCave(getRandomCave());
 
         hazards = new Set[numberOfCaves];
         for (int i = 0; i < numberOfCaves; i++)
@@ -62,7 +62,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         for (int ord : ordinals) {
             int cave;
             do {
-                cave = getRandomCave(numberOfCaves);
+                cave = getRandomCave();
             } while (tooClose(cave) || hazards[cave].contains(values[ord]));
 
             if (ord == 0)
@@ -75,11 +75,11 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     }
 
-    private int getNumberOfCaves() {
-        return this.numberOfCaves;
+    private int getRandomCave(int numberOfCaves) {
+        return randomNumberGenerator.generateNumber(numberOfCaves);
     }
 
-    private int getRandomCave(int numberOfCaves) {
+    private int getRandomCave() {
         return randomNumberGenerator.generateNumber(numberOfCaves);
     }
 
@@ -100,14 +100,14 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrentCave(getRandomCave(getNumberOfCaves()));
+                setCurrentCave(getRandomCave());
             } while (hazards[getCurrentCave()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player cave or a cave with a bat
             set.remove(Hazard.Bat);
             int newCave;
             do {
-                newCave = getRandomCave(getNumberOfCaves());
+                newCave = getRandomCave();
             } while (newCave == getCurrentCave() || hazards[newCave].contains(Hazard.Bat));
             hazards[newCave].add(Hazard.Bat);
 
