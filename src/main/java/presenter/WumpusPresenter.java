@@ -6,10 +6,10 @@ public interface WumpusPresenter {
     void startNewGame();
     void move(int cave);
     void setCurrentCave(int selectedCave);
-    int[][] getLinks();
+    int[][] getCavesLinks();
     int getCurrentCave();
     boolean isGameOver();
-    void shoot(int room);
+    void shoot(int cave);
     int getCaveCount();
     int getPlayerSize();
     int getNumArrows();

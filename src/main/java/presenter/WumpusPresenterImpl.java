@@ -7,7 +7,7 @@ import java.util.*;
 
 public class WumpusPresenterImpl implements WumpusPresenter {
 
-    int[][] links = {{4, 7, 1}, {0, 9, 2}, {1, 11, 3}, {4, 13, 2}, {0, 5, 3},
+    int[][] caveslinks = {{4, 7, 1}, {0, 9, 2}, {1, 11, 3}, {4, 13, 2}, {0, 5, 3},
             {4, 6, 14}, {7, 16, 5}, {6, 0, 8}, {7, 17, 9}, {8, 1, 10}, {9, 18, 11},
             {10, 2, 12}, {13, 19, 11}, {14, 3, 12}, {5, 15, 13}, {14, 16, 19},
             {6, 17, 15}, {16, 8, 18}, {19, 10, 17}, {15, 12, 18}};
@@ -26,10 +26,10 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-    final int roomSize = 45;
+    final int caveSize = 45;
     final int playerSize = 16;
     boolean gameOver = true;
-    int currRoom, numArrows, wumpusRoom;
+    int currentCave, numArrows, wumpusCave;
     List<String> messages;
     Set<Hazard>[] hazards;
     final int numberOfCaves =20;
@@ -49,26 +49,26 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        final int numberOfRooms = getNumberOfCaves();
-        setCurrentCave(getRandomRoom(numberOfRooms));
+        final int numberOfCaves = getNumberOfCaves();
+        setCurrentCave(getRandomCave(numberOfCaves));
 
-        hazards = new Set[numberOfRooms];
-        for (int i = 0; i < numberOfRooms; i++)
+        hazards = new Set[numberOfCaves];
+        for (int i = 0; i < numberOfCaves; i++)
             hazards[i] = EnumSet.noneOf(Hazard.class);
 
-        // hazards can share rooms (unless they are identical)
+        // hazards can share caves (unless they are identical)
         int[] ordinals = {0, 1, 1, 1, 2, 2};
         Hazard[] values = Hazard.values();
         for (int ord : ordinals) {
-            int room;
+            int cave;
             do {
-                room = getRandomRoom(numberOfRooms);
-            } while (tooClose(room) || hazards[room].contains(values[ord]));
+                cave = getRandomCave(numberOfCaves);
+            } while (tooClose(cave) || hazards[cave].contains(values[ord]));
 
             if (ord == 0)
-                wumpusRoom = room;
+                wumpusCave = cave;
 
-            hazards[room].add(values[ord]);
+            hazards[cave].add(values[ord]);
         }
 
         gameOver = false;
@@ -79,8 +79,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         return this.numberOfCaves;
     }
 
-    private int getRandomRoom(int numberOfRooms) {
-        return randomNumberGenerator.generateNumber(numberOfRooms);
+    private int getRandomCave(int numberOfCaves) {
+        return randomNumberGenerator.generateNumber(numberOfCaves);
     }
 
     public void move() {
@@ -96,20 +96,20 @@ public class WumpusPresenterImpl implements WumpusPresenter {
             gameOver = true;
 
         } else if (set.contains(Hazard.Bat)) {
-            messages.add("a bat dropped you in a random room");
+            messages.add("a bat dropped you in a random cave");
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrentCave(getRandomRoom(getNumberOfCaves()));
+                setCurrentCave(getRandomCave(getNumberOfCaves()));
             } while (hazards[getCurrentCave()].contains(Hazard.Bat));
 
-            // relocate the bat, but not to the player room or a room with a bat
+            // relocate the bat, but not to the player cave or a cave with a bat
             set.remove(Hazard.Bat);
-            int newRoom;
+            int newCave;
             do {
-                newRoom = getRandomRoom(getNumberOfCaves());
-            } while (newRoom == getCurrentCave() || hazards[newRoom].contains(Hazard.Bat));
-            hazards[newRoom].add(Hazard.Bat);
+                newCave = getRandomCave(getNumberOfCaves());
+            } while (newCave == getCurrentCave() || hazards[newCave].contains(Hazard.Bat));
+            hazards[newCave].add(Hazard.Bat);
 
             // re-evaluate
             move();
@@ -117,7 +117,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         } else {
 
             // look around
-            for (int link : getLinks()[getCurrentCave()]) {
+            for (int link : getCavesLinks()[getCurrentCave()]) {
                 for (Hazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
@@ -127,28 +127,28 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     @Override
     public void move(int cave) {
-        validateThatRoomIsCorrect(cave);
+        validateThatCaveIsCorrect(cave);
         setCurrentCave(cave);
         move();
     }
 
-    private void validateThatRoomIsCorrect(int room) {
+    private void validateThatCaveIsCorrect(int cave) {
     }
 
     @Override
     public void setCurrentCave(int selectedCave) {
-        currRoom = selectedCave;
+        currentCave = selectedCave;
     }
 
 
     @Override
-    public int[][] getLinks() {
-        return links;
+    public int[][] getCavesLinks() {
+        return caveslinks;
     }
 
     @Override
     public int getCurrentCave() {
-        return currRoom;
+        return currentCave;
     }
 
     @Override
@@ -157,8 +157,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public void shoot(int room) {
-        if (hazards[room].contains(Hazard.Wumpus)) {
+    public void shoot(int cave) {
+        if (hazards[cave].contains(Hazard.Wumpus)) {
             messages.add("You win! You've killed the view.Wumpus!");
             gameOver = true;
 
@@ -168,17 +168,17 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 messages.add("You ran out of arrows.");
                 gameOver = true;
 
-            } else if (getRandomRoom(4) != 0) { // 75 %
-                hazards[wumpusRoom].remove(Hazard.Wumpus);
-                wumpusRoom = getLinks()[wumpusRoom][getRandomRoom(3)];
+            } else if (getRandomCave(4) != 0) { // 75 %
+                hazards[wumpusCave].remove(Hazard.Wumpus);
+                wumpusCave = getCavesLinks()[wumpusCave][getRandomCave(3)];
 
-                if (wumpusRoom == getCurrentCave()) {
+                if (wumpusCave == getCurrentCave()) {
                     messages.add("You woke the view.Wumpus and he ate you");
                     gameOver = true;
 
                 } else {
                     messages.add("You woke the view.Wumpus and he moved");
-                    hazards[wumpusRoom].add(Hazard.Wumpus);
+                    hazards[wumpusCave].add(Hazard.Wumpus);
                 }
             }
         }
@@ -186,18 +186,18 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-    private boolean tooClose(int room) {
-        if (getCurrentCave() == room)
+    private boolean tooClose(int cave) {
+        if (getCurrentCave() == cave)
             return true;
-        for (int link : getLinks()[getCurrentCave()])
-            if (room == link)
+        for (int link : getCavesLinks()[getCurrentCave()])
+            if (cave == link)
                 return true;
         return false;
     }
 
     @Override
     public int getCaveCount() {
-        return roomSize;
+        return caveSize;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
 
-    int[][] rooms = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
+    int[][] cavesLocations = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
             {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
             {435, 447}, {334, 480}, {232, 447}, {169, 361}, {254, 336}, {285, 238},
             {387, 238}, {418, 336}, {334, 393}};
@@ -44,13 +44,13 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         });
     }
 
-    public int[][] getRooms() {
-        return rooms;
+    public int[][] getCaves() {
+        return cavesLocations;
     }
 
     void drawPlayer() {
-        int x = getRooms()[wumpusPresenter.getCurrentCave()][0] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) / 2;
-        int y = getRooms()[wumpusPresenter.getCurrentCave()][1] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) - 2;
+        int x = getCaves()[wumpusPresenter.getCurrentCave()][0] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) / 2;
+        int y = getCaves()[wumpusPresenter.getCurrentCave()][1] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
@@ -75,37 +75,37 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         g.setFont(getFont());
         g.drawString("left-click to move, right-click to shoot", 210, 310);
-        g.drawString("be aware that hazards may be in the same room", 175, 345);
+        g.drawString("be aware that hazards may be in the same cave", 175, 345);
         g.drawString("click to start", 310, 380);
     }
 
-    void drawRooms() {
+    void drawCaves() {
 
         g.setColor(Color.darkGray);
         g.setStroke(new BasicStroke(2));
 
-        for (int i = 0; i < wumpusPresenter.getLinks().length; i++) {
-            for (int link : wumpusPresenter.getLinks()[i]) {
-                int x1 = getRooms()[i][0] + wumpusPresenter.getCaveCount() / 2;
-                int y1 = getRooms()[i][1] + wumpusPresenter.getCaveCount() / 2;
-                int x2 = getRooms()[link][0] + wumpusPresenter.getCaveCount() / 2;
-                int y2 = getRooms()[link][1] + wumpusPresenter.getCaveCount() / 2;
+        for (int i = 0; i < wumpusPresenter.getCavesLinks().length; i++) {
+            for (int link : wumpusPresenter.getCavesLinks()[i]) {
+                int x1 = getCaves()[i][0] + wumpusPresenter.getCaveCount() / 2;
+                int y1 = getCaves()[i][1] + wumpusPresenter.getCaveCount() / 2;
+                int x2 = getCaves()[link][0] + wumpusPresenter.getCaveCount() / 2;
+                int y2 = getCaves()[link][1] + wumpusPresenter.getCaveCount() / 2;
                 g.drawLine(x1, y1, x2, y2);
             }
         }
 
         g.setColor(Color.orange);
-        for (int[] r : getRooms())
+        for (int[] r : getCaves())
             g.fillOval(r[0], r[1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
 
         if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
-            for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrentCave()])
-                g.fillOval(getRooms()[link][0], getRooms()[link][1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
+            for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()])
+                g.fillOval(getCaves()[link][0], getCaves()[link][1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
         }
 
         g.setColor(Color.darkGray);
-        for (int[] r : getRooms())
+        for (int[] r : getCaves())
             g.drawOval(r[0], r[1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
     }
 
@@ -139,7 +139,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        drawRooms();
+        drawCaves();
         drawMap();
         drawMessage();
     }
@@ -167,41 +167,41 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     }
 
     private void continueGame(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
-        int selectedRoom = getSelectedRoomBasedOnMouseClickLocation(mouseClickXAxis, mouseClickYAxis);
-        executeMouseClickActionBasedOnSelectedRoom(leftClick, rightClick, selectedRoom);
+        int selectedCave = getSelectedCaveBasedOnMouseClickLocation(mouseClickXAxis, mouseClickYAxis);
+        executeMouseClickActionBasedOnSelectedCave(leftClick, rightClick, selectedCave);
     }
 
-    private void executeMouseClickActionBasedOnSelectedRoom(boolean leftClick, boolean rightClick, int selectedRoom) {
-        final int invalidRoom = -1;
-        if (selectedRoom == invalidRoom){
+    private void executeMouseClickActionBasedOnSelectedCave(boolean leftClick, boolean rightClick, int selectedCave) {
+        final int invalidCave = -1;
+        if (selectedCave == invalidCave){
             return;
         } else{
-            executeActionBasedOnMouseButtonClick(leftClick, rightClick, selectedRoom);
+            executeActionBasedOnMouseButtonClick(leftClick, rightClick, selectedCave);
         }
     }
 
-    private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedRoom) {
+    private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedCave) {
         if (leftClick) {
-            wumpusPresenter.move(selectedRoom);
+            wumpusPresenter.move(selectedCave);
         } else if (rightClick) {
-            wumpusPresenter.shoot(selectedRoom);
+            wumpusPresenter.shoot(selectedCave);
         }
     }
 
-    private int getSelectedRoomBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
-        int selectedRoom = -1;
-        for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrentCave()]) {
-            int cx = getRooms()[link][0];
-            int cy = getRooms()[link][1];
-            if (isMouseClickWithinCorrectRoom(mouseClickXAxis, mouseClickYAxis, cx, cy)) {
-                selectedRoom = link;
+    private int getSelectedCaveBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
+        int selectedCave = -1;
+        for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()]) {
+            int cx = getCaves()[link][0];
+            int cy = getCaves()[link][1];
+            if (isMouseClickWithinCorrectCave(mouseClickXAxis, mouseClickYAxis, cx, cy)) {
+                selectedCave = link;
                 break;
             }
         }
-        return selectedRoom;
+        return selectedCave;
     }
 
-    private boolean isMouseClickWithinCorrectRoom(int ex, int ey, int cx, int cy) {
+    private boolean isMouseClickWithinCorrectCave(int ex, int ey, int cx, int cy) {
         return (ex > cx && ex < cx + wumpusPresenter.getCaveCount())
                 && (ey > cy && ey < cy + wumpusPresenter.getCaveCount());
     }
