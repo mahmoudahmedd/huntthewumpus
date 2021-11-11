@@ -36,9 +36,9 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int ex = e.getX();
-                int ey = e.getY();
-                handleMouseClick(ex, ey, isLeftMouseButton(e), isRightMouseButton(e));
+                int mouseClickXAxis = e.getX();
+                int mouseClickYAxis = e.getY();
+                handleMouseClick(mouseClickXAxis, mouseClickYAxis, isLeftMouseButton(e), isRightMouseButton(e));
             }
 
         });
@@ -157,17 +157,17 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         repaint();
     }
 
-    private void handleMouseClick(int ex, int ey, boolean leftClick, boolean rightClick) {
+    private void handleMouseClick(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
         if (wumpusPresenter.isGameOver()) {
             wumpusPresenter.startNewGame();
         } else  {
-            continueGame(ex, ey, leftClick, rightClick) ;
+            continueGame(mouseClickXAxis, mouseClickYAxis, leftClick, rightClick) ;
         }
         render();
     }
 
-    private void continueGame(int ex, int ey, boolean leftClick, boolean rightClick) {
-        int selectedRoom = getSelectedRoom(ex, ey);
+    private void continueGame(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
+        int selectedRoom = getSelectedRoomBasedOnMouseClickLocation(mouseClickXAxis, mouseClickYAxis);
         executeMouseClickActionBasedOnSelectedRoom(leftClick, rightClick, selectedRoom);
     }
 
@@ -188,12 +188,12 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         }
     }
 
-    private int getSelectedRoom(int ex, int ey) {
+    private int getSelectedRoomBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
         int selectedRoom = -1;
         for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()]) {
             int cx = getRooms()[link][0];
             int cy = getRooms()[link][1];
-            if (isMouseClickWithinCorrectRoom(ex, ey, cx, cy)) {
+            if (isMouseClickWithinCorrectRoom(mouseClickXAxis, mouseClickYAxis, cx, cy)) {
                 selectedRoom = link;
                 break;
             }
