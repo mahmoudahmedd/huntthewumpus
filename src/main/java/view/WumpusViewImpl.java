@@ -24,6 +24,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     final int caveSize = 45;
     final int playerSize = 16;
 
+    final int invalidCave=-1;
+
     Graphics2D g;
 
     public WumpusViewImpl() {
@@ -171,14 +173,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     private void continueGame(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
         int selectedCave = getSelectedCaveBasedOnMouseClickLocation(mouseClickXAxis, mouseClickYAxis);
-        executeMouseClickActionBasedOnSelectedCave(leftClick, rightClick, selectedCave);
-    }
-
-    private void executeMouseClickActionBasedOnSelectedCave(boolean leftClick, boolean rightClick, int selectedCave) {
-        final int invalidCave = -1;
-        if (selectedCave == invalidCave){
-            return;
-        } else{
+        if(selectedCave != invalidCave){
             executeActionBasedOnMouseButtonClick(leftClick, rightClick, selectedCave);
         }
     }
@@ -192,7 +187,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     }
 
     private int getSelectedCaveBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
-        int selectedCave = -1;
+        int selectedCave = invalidCave;
         for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()]) {
             int xAxisOfCaveLinkedToCurrentCave = getCaves()[link][0];
             int yAxisOfCaveLinkedToCurrentCave = getCaves()[link][1];
