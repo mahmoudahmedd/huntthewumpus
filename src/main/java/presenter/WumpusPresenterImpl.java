@@ -9,8 +9,6 @@ import java.util.*;
 
 public class WumpusPresenterImpl implements WumpusPresenter {
 
-
-
     int[][] links = {{4, 7, 1}, {0, 9, 2}, {1, 11, 3}, {4, 13, 2}, {0, 5, 3},
             {4, 6, 14}, {7, 16, 5}, {6, 0, 8}, {7, 17, 9}, {8, 1, 10}, {9, 18, 11},
             {10, 2, 12}, {13, 19, 11}, {14, 3, 12}, {5, 15, 13}, {14, 16, 19},
@@ -30,10 +28,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-
     final int roomSize = 45;
     final int playerSize = 16;
-
     boolean gameOver = true;
     int currRoom, numArrows, wumpusRoom;
     List<String> messages;

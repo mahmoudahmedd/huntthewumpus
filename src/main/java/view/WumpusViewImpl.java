@@ -48,8 +48,6 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         return rooms;
     }
 
-    // don't place hazards close to the starting room
-
     void drawPlayer() {
         int x = getRooms()[wumpusPresenter.getCurrRoom()][0] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) / 2;
         int y = getRooms()[wumpusPresenter.getCurrRoom()][1] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) - 2;
@@ -184,7 +182,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedRoom) {
         if (leftClick) {
-            // TODO refactor move signature to take a room and setCurrRoom inside move function!
+            //TODO refactor move signature to take a room and setCurrRoom inside move function!
             wumpusPresenter.setCurrRoom(selectedRoom);
             wumpusPresenter.move();
         } else if (rightClick) {

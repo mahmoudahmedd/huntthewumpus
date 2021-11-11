@@ -36,6 +36,7 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToCave() {
+
         final int playNextCave = 7;
         final boolean gameIsNotOver = false;
 
