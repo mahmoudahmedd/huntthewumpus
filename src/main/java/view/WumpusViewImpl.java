@@ -16,7 +16,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
 
-    final int[][] cavesLocations = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
+    final int[][] cavesCoordinates = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
             {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
             {435, 447}, {334, 480}, {232, 447}, {169, 361}, {254, 336}, {285, 238},
             {387, 238}, {418, 336}, {334, 393}};
@@ -49,13 +49,9 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         });
     }
 
-    public int[][] getCaves() {
-        return cavesLocations;
-    }
-
     void drawPlayer() {
-        int x = getCaves()[wumpusPresenter.getCurrentCave()][0] + (getCaveSize() - getPlayerSize()) / 2;
-        int y = getCaves()[wumpusPresenter.getCurrentCave()][1] + (getCaveSize() - getPlayerSize()) - 2;
+        int x = cavesCoordinates[wumpusPresenter.getCurrentCave()][0] + (getCaveSize() - getPlayerSize()) / 2;
+        int y = cavesCoordinates[wumpusPresenter.getCurrentCave()][1] + (getCaveSize() - getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
@@ -91,26 +87,26 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         for (int i = 0; i < wumpusPresenter.getCavesLinks().length; i++) {
             for (int link : wumpusPresenter.getCavesLinks()[i]) {
-                int x1 = getCaves()[i][0] + getCaveSize() / 2;
-                int y1 = getCaves()[i][1] + getCaveSize() / 2;
-                int x2 = getCaves()[link][0] + getCaveSize() / 2;
-                int y2 = getCaves()[link][1] + getCaveSize() / 2;
+                int x1 = cavesCoordinates[i][0] + getCaveSize() / 2;
+                int y1 = cavesCoordinates[i][1] + getCaveSize() / 2;
+                int x2 = cavesCoordinates[link][0] + getCaveSize() / 2;
+                int y2 = cavesCoordinates[link][1] + getCaveSize() / 2;
                 g.drawLine(x1, y1, x2, y2);
             }
         }
 
         g.setColor(Color.orange);
-        for (int[] r : getCaves())
+        for (int[] r : cavesCoordinates)
             g.fillOval(r[0], r[1], getCaveSize(), getCaveSize());
 
         if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
             for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()])
-                g.fillOval(getCaves()[link][0], getCaves()[link][1], getCaveSize(), getCaveSize());
+                g.fillOval(cavesCoordinates[link][0], cavesCoordinates[link][1], getCaveSize(), getCaveSize());
         }
 
         g.setColor(Color.darkGray);
-        for (int[] r : getCaves())
+        for (int[] r : cavesCoordinates)
             g.drawOval(r[0], r[1], getCaveSize(), getCaveSize());
     }
 
@@ -180,8 +176,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     private int getSelectedCaveBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
         int selectedCave = invalidCave;
-        for (int caveNumber=0;caveNumber<getCaves().length;caveNumber++) {
-            int[] cave= getCaves()[caveNumber];
+        for (int caveNumber = 0; caveNumber< cavesCoordinates.length; caveNumber++) {
+            int[] cave= cavesCoordinates[caveNumber];
             int xAxisOfCaveLinkedToCurrentCave = cave[0];
             int yAxisOfCaveLinkedToCurrentCave = cave[1];
             if (isMouseClickWithinCorrectCave(mouseClickXAxis, mouseClickYAxis, xAxisOfCaveLinkedToCurrentCave, yAxisOfCaveLinkedToCurrentCave)) {
