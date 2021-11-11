@@ -9,10 +9,7 @@ import java.util.*;
 
 public class WumpusPresenterImpl implements WumpusPresenter {
 
-    int[][] rooms = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
-            {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
-            {435, 447}, {334, 480}, {232, 447}, {169, 361}, {254, 336}, {285, 238},
-            {387, 238}, {418, 336}, {334, 393}};
+
 
     int[][] links = {{4, 7, 1}, {0, 9, 2}, {1, 11, 3}, {4, 13, 2}, {0, 5, 3},
             {4, 6, 14}, {7, 16, 5}, {6, 0, 8}, {7, 17, 9}, {8, 1, 10}, {9, 18, 11},
@@ -41,6 +38,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     int currRoom, numArrows, wumpusRoom;
     List<String> messages;
     Set<Hazard>[] hazards;
+    final int numberOfRooms=20;
 
     RandomNumberGenerator randomNumberGenerator;
 
@@ -57,7 +55,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
-        final int numberOfRooms = getRooms().length;
+        final int numberOfRooms = getNumberOfRooms();
         setCurrRoom(getRandomRoom(numberOfRooms));
 
         hazards = new Set[numberOfRooms];
@@ -83,6 +81,10 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     }
 
+    private int getNumberOfRooms() {
+        return this.numberOfRooms;
+    }
+
     private int getRandomRoom(int numberOfRooms) {
         return randomNumberGenerator.generateNumber(numberOfRooms);
     }
@@ -105,14 +107,14 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrRoom(getRandomRoom(getRooms().length));
+                setCurrRoom(getRandomRoom(getNumberOfRooms()));
             } while (hazards[getCurrRoom()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player room or a room with a bat
             set.remove(Hazard.Bat);
             int newRoom;
             do {
-                newRoom = getRandomRoom(getRooms().length);
+                newRoom = getRandomRoom(getNumberOfRooms());
             } while (newRoom == getCurrRoom() || hazards[newRoom].contains(Hazard.Bat));
             hazards[newRoom].add(Hazard.Bat);
 
@@ -135,10 +137,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         currRoom = selectedRoom;
     }
 
-    @Override
-    public int[][] getRooms() {
-        return rooms;
-    }
 
     @Override
     public int[][] getLinks() {

@@ -8,8 +8,6 @@ public interface WumpusPresenter {
 
     void setCurrRoom(int selectedRoom);
 
-    int[][] getRooms();
-
     int[][] getLinks();
 
     int getCurrRoom();

@@ -16,6 +16,10 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
 
+    int[][] rooms = {{334, 20}, {609, 220}, {499, 540}, {169, 540}, {62, 220},
+            {169, 255}, {232, 168}, {334, 136}, {435, 168}, {499, 255}, {499, 361},
+            {435, 447}, {334, 480}, {232, 447}, {169, 361}, {254, 336}, {285, 238},
+            {387, 238}, {418, 336}, {334, 393}};
 
     Graphics2D g;
 
@@ -40,12 +44,15 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         });
     }
 
+    public int[][] getRooms() {
+        return rooms;
+    }
 
     // don't place hazards close to the starting room
 
     void drawPlayer() {
-        int x = wumpusPresenter.getRooms()[wumpusPresenter.getCurrRoom()][0] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) / 2;
-        int y = wumpusPresenter.getRooms()[wumpusPresenter.getCurrRoom()][1] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) - 2;
+        int x = getRooms()[wumpusPresenter.getCurrRoom()][0] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) / 2;
+        int y = getRooms()[wumpusPresenter.getCurrRoom()][1] + (wumpusPresenter.getRoomSize() - wumpusPresenter.getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
@@ -81,26 +88,26 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         for (int i = 0; i < wumpusPresenter.getLinks().length; i++) {
             for (int link : wumpusPresenter.getLinks()[i]) {
-                int x1 = wumpusPresenter.getRooms()[i][0] + wumpusPresenter.getRoomSize() / 2;
-                int y1 = wumpusPresenter.getRooms()[i][1] + wumpusPresenter.getRoomSize() / 2;
-                int x2 = wumpusPresenter.getRooms()[link][0] + wumpusPresenter.getRoomSize() / 2;
-                int y2 = wumpusPresenter.getRooms()[link][1] + wumpusPresenter.getRoomSize() / 2;
+                int x1 = getRooms()[i][0] + wumpusPresenter.getRoomSize() / 2;
+                int y1 = getRooms()[i][1] + wumpusPresenter.getRoomSize() / 2;
+                int x2 = getRooms()[link][0] + wumpusPresenter.getRoomSize() / 2;
+                int y2 = getRooms()[link][1] + wumpusPresenter.getRoomSize() / 2;
                 g.drawLine(x1, y1, x2, y2);
             }
         }
 
         g.setColor(Color.orange);
-        for (int[] r : wumpusPresenter.getRooms())
+        for (int[] r : getRooms())
             g.fillOval(r[0], r[1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
 
         if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
             for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()])
-                g.fillOval(wumpusPresenter.getRooms()[link][0], wumpusPresenter.getRooms()[link][1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
+                g.fillOval(getRooms()[link][0], getRooms()[link][1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
         }
 
         g.setColor(Color.darkGray);
-        for (int[] r : wumpusPresenter.getRooms())
+        for (int[] r : getRooms())
             g.drawOval(r[0], r[1], wumpusPresenter.getRoomSize(), wumpusPresenter.getRoomSize());
     }
 
@@ -188,8 +195,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     private int getSelectedRoom(int ex, int ey) {
         int selectedRoom = -1;
         for (int link : wumpusPresenter.getLinks()[wumpusPresenter.getCurrRoom()]) {
-            int cx = wumpusPresenter.getRooms()[link][0];
-            int cy = wumpusPresenter.getRooms()[link][1];
+            int cx = getRooms()[link][0];
+            int cy = getRooms()[link][1];
             if (isMouseClickWithinCorrectRoom(ex, ey, cx, cy)) {
                 selectedRoom = link;
                 break;
