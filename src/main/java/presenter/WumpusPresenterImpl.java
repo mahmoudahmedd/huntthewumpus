@@ -125,12 +125,11 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     @Override
     public void move(int cave) {
-        validateThatCaveIsCorrect(cave);
-        setCurrentCave(cave);
-        move();
-    }
-
-    private void validateThatCaveIsCorrect(int cave) {
+        boolean isCurrentCaveIsConnectedToTargetCave=checkThatCurrentCaveIsConnectedToTargetCave(cave);
+        if(isCurrentCaveIsConnectedToTargetCave){
+            setCurrentCave(cave);
+            move();
+        }
     }
 
     @Override
@@ -202,5 +201,16 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     @Override
     public List<String> getMessages() {
         return messages;
+    }
+
+    private boolean checkThatCurrentCaveIsConnectedToTargetCave(int targetCave) {
+        boolean isCurrentCaveIsConnectedToTargetCave=false;
+        for (int caveLink : getCavesLinks()[getCurrentCave()]) {
+            if (caveLink==targetCave) {
+                isCurrentCaveIsConnectedToTargetCave=true;
+                break;
+            }
+        }
+        return isCurrentCaveIsConnectedToTargetCave;
     }
 }

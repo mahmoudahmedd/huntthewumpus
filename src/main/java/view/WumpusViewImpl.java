@@ -178,30 +178,32 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         }
     }
 
-    private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedCave) {
-        if (leftClick) {
-            wumpusPresenter.move(selectedCave);
-        } else if (rightClick) {
-            wumpusPresenter.shoot(selectedCave);
-        }
-    }
-
     private int getSelectedCaveBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
         int selectedCave = invalidCave;
-        for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()]) {
-            int xAxisOfCaveLinkedToCurrentCave = getCaves()[link][0];
-            int yAxisOfCaveLinkedToCurrentCave = getCaves()[link][1];
+        for (int caveNumber=0;caveNumber<getCaves().length;caveNumber++) {
+            int[] cave= getCaves()[caveNumber];
+            int xAxisOfCaveLinkedToCurrentCave = cave[0];
+            int yAxisOfCaveLinkedToCurrentCave = cave[1];
             if (isMouseClickWithinCorrectCave(mouseClickXAxis, mouseClickYAxis, xAxisOfCaveLinkedToCurrentCave, yAxisOfCaveLinkedToCurrentCave)) {
-                selectedCave = link;
+                selectedCave = caveNumber;
                 break;
             }
         }
         return selectedCave;
     }
 
+
     private boolean isMouseClickWithinCorrectCave(int mouseClickXAxis, int mouseClickYAxis, int caveXAxis, int caveYAxis) {
         return (mouseClickXAxis > caveXAxis && mouseClickXAxis < caveXAxis + getCaveSize())
                 && (mouseClickYAxis > caveYAxis && mouseClickYAxis < caveYAxis + getCaveSize());
+    }
+
+    private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedCave) {
+        if (leftClick) {
+            wumpusPresenter.move(selectedCave);
+        } else if (rightClick) {
+            wumpusPresenter.shoot(selectedCave);
+        }
     }
 
     public int getCaveSize() {
