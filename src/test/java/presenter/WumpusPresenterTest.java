@@ -11,11 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /*
 TODO Test list
-1- move to non connected cave.
-2- room has Wumpus.
-3- room has bat
-4- kill wumpus
-5- cave has pit
+1- Player can sense nearby wumpus
+2- room has bat
+3- kill wumpus
+4- cave has pit
 */
 
 @ExtendWith(MockitoExtension.class)
@@ -23,8 +22,7 @@ class WumpusPresenterTest {
 
     @Mock
     RandomNumberGenerator randomNumberGenerator;
-
-
+    
     final int playerStartingCave = 0;
     final int wumpusStartingCave = 18;
     final int firstBatStartingCave = 19;
@@ -89,7 +87,7 @@ class WumpusPresenterTest {
     }
 
     @Test
-    public void testMovingPlayerToCaveHasWumups() {
+    public void testMovingPlayerToCaveThatHasAWumups() {
         final boolean gameIsOver = true;
         final int[] journeyPath = {1, 9, 10, 18};
 
