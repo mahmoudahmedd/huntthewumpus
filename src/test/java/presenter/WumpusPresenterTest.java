@@ -1,23 +1,23 @@
 package presenter;
 
+import utilities.RandomNumberGenerator;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import utilities.RandomNumberGenerator;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
 TODO Test list
 1- Player can sense nearby wumpus - (Done)
-2- room has bat
-3- kill wumpus
-4- cave has pit
+2- room has bat - (Done)
+3- cave has pit
+4- kill wumpus
 */
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +37,6 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToCave() {
-
         final int playerNextCave = 7;
         final boolean gameIsNotOver = false;
 
@@ -176,4 +175,28 @@ class WumpusPresenterTest {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testThatPlayerEnterRoomWithPit() {
+        final boolean gameIsOver = true;
+        final int[] journeyPath = {4, 3};
+
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+                playerStartingCave,
+                wumpusStartingCave,
+                firstBatStartingCave,
+                secondBatStartingCave,
+                thirdBatStartingCave,
+                firstPitCave,
+                secondPitCave);
+
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        wumpusPresenter.startNewGame();
+
+        for(int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        assertEquals(actualGameState, gameIsOver);
+    }
 }
