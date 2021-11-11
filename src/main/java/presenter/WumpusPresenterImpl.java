@@ -88,7 +88,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         Set<Hazard> set = hazards[getCurrentCave()];
 
         if (set.contains(Hazard.Wumpus)) {
-            messages.add("you've been eaten by the view.Wumpus");
+            messages.add("you've been eaten by the Wumpus");
             gameOver = true;
 
         } else if (set.contains(Hazard.Pit)) {
@@ -161,8 +161,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     @Override
     public void shoot(int cave) {
+        final int maximumNumberForCalculatingWumpusWakeupProbability=4;
         if (hazards[cave].contains(Hazard.Wumpus)) {
-            messages.add("You win! You've killed the view.Wumpus!");
+            messages.add("You win! You've killed the Wumpus!");
             gameOver = true;
 
         } else {
@@ -171,16 +172,17 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 messages.add("You ran out of arrows.");
                 gameOver = true;
 
-            } else if (getRandomCave(4) != 0) { // 75 %
+            } else if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
                 hazards[wumpusCave].remove(Hazard.Wumpus);
-                wumpusCave = getCavesLinks()[wumpusCave][getRandomCave(3)];
+                final int numberOfLinkedCaves=3;
+                wumpusCave = getCavesLinks()[wumpusCave][randomNumberGenerator.generateNumber(numberOfLinkedCaves)];
 
                 if (wumpusCave == getCurrentCave()) {
-                    messages.add("You woke the view.Wumpus and he ate you");
+                    messages.add("You woke the Wumpus and it ate you");
                     gameOver = true;
 
                 } else {
-                    messages.add("You woke the view.Wumpus and he moved");
+                    messages.add("You woke the Wumpus and it moved");
                     hazards[wumpusCave].add(Hazard.Wumpus);
                 }
             }
