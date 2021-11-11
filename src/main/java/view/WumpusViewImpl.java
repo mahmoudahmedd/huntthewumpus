@@ -182,9 +182,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     private void executeActionBasedOnMouseButtonClick(boolean leftClick, boolean rightClick, int selectedRoom) {
         if (leftClick) {
-            //TODO refactor move signature to take a room and setCurrRoom inside move function!
-            wumpusPresenter.setCurrRoom(selectedRoom);
-            wumpusPresenter.move();
+            wumpusPresenter.move(selectedRoom);
         } else if (rightClick) {
             wumpusPresenter.shoot(selectedRoom);
         }

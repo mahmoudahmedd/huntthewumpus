@@ -52,8 +52,7 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter=new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
-        wumpusPresenter.setCurrRoom(playerNextCave);
-        wumpusPresenter.move();
+        wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom=wumpusPresenter.getCurrRoom();
         final boolean isGameOver=wumpusPresenter.isGameOver();
@@ -80,8 +79,7 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
-        wumpusPresenter.setCurrRoom(playerNextCave);
-        wumpusPresenter.move();
+        wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom = wumpusPresenter.getCurrRoom();
         final boolean isGameOver = wumpusPresenter.isGameOver();

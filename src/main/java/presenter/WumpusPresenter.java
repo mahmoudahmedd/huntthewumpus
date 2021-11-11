@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface WumpusPresenter {
     void startNewGame();
-    void move();
+    void move(int room);
     void setCurrRoom(int selectedRoom);
     int[][] getLinks();
     int getCurrRoom();

@@ -85,7 +85,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         return randomNumberGenerator.generateNumber(numberOfRooms);
     }
 
-    @Override
     public void move() {
 
         Set<Hazard> set = hazards[getCurrRoom()];
@@ -126,6 +125,16 @@ public class WumpusPresenterImpl implements WumpusPresenter {
             }
         }
 
+    }
+
+    @Override
+    public void move(int room) {
+        validateThatRoomIsCorrect(room);
+        setCurrRoom(room);
+        move();
+    }
+
+    private void validateThatRoomIsCorrect(int room) {
     }
 
     @Override
