@@ -12,14 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
-TODO
-
-
-(2) Test that player shoots an arrow and does not kill the Wumpus.
-Wumpus should wake up and move to another room but not eat the player
-
- */
 @ExtendWith(MockitoExtension.class)
 class WumpusPresenterTest {
 
