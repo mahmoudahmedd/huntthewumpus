@@ -10,8 +10,6 @@ public interface WumpusPresenter {
     int getCurrentCave();
     boolean isGameOver();
     void shoot(int cave);
-    int getCaveSize();
-    int getPlayerSize();
     int getNumArrows();
     List<String> getMessages();
 }

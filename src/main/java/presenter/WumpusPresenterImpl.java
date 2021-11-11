@@ -26,8 +26,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-    final int caveSize = 45;
-    final int playerSize = 16;
     boolean gameOver = true;
     int currentCave, numArrows, wumpusCave;
     List<String> messages;
@@ -195,15 +193,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         return false;
     }
 
-    @Override
-    public int getCaveSize() {
-        return caveSize;
-    }
-
-    @Override
-    public int getPlayerSize() {
-        return playerSize;
-    }
 
     @Override
     public int getNumArrows() {
