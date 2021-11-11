@@ -49,8 +49,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     }
 
     void drawPlayer() {
-        int x = getCaves()[wumpusPresenter.getCurrentCave()][0] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) / 2;
-        int y = getCaves()[wumpusPresenter.getCurrentCave()][1] + (wumpusPresenter.getCaveCount() - wumpusPresenter.getPlayerSize()) - 2;
+        int x = getCaves()[wumpusPresenter.getCurrentCave()][0] + (wumpusPresenter.getCaveSize() - wumpusPresenter.getPlayerSize()) / 2;
+        int y = getCaves()[wumpusPresenter.getCurrentCave()][1] + (wumpusPresenter.getCaveSize() - wumpusPresenter.getPlayerSize()) - 2;
 
         Path2D player = new Path2D.Double();
         player.moveTo(x, y);
@@ -86,27 +86,27 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         for (int i = 0; i < wumpusPresenter.getCavesLinks().length; i++) {
             for (int link : wumpusPresenter.getCavesLinks()[i]) {
-                int x1 = getCaves()[i][0] + wumpusPresenter.getCaveCount() / 2;
-                int y1 = getCaves()[i][1] + wumpusPresenter.getCaveCount() / 2;
-                int x2 = getCaves()[link][0] + wumpusPresenter.getCaveCount() / 2;
-                int y2 = getCaves()[link][1] + wumpusPresenter.getCaveCount() / 2;
+                int x1 = getCaves()[i][0] + wumpusPresenter.getCaveSize() / 2;
+                int y1 = getCaves()[i][1] + wumpusPresenter.getCaveSize() / 2;
+                int x2 = getCaves()[link][0] + wumpusPresenter.getCaveSize() / 2;
+                int y2 = getCaves()[link][1] + wumpusPresenter.getCaveSize() / 2;
                 g.drawLine(x1, y1, x2, y2);
             }
         }
 
         g.setColor(Color.orange);
         for (int[] r : getCaves())
-            g.fillOval(r[0], r[1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
+            g.fillOval(r[0], r[1], wumpusPresenter.getCaveSize(), wumpusPresenter.getCaveSize());
 
         if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
             for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()])
-                g.fillOval(getCaves()[link][0], getCaves()[link][1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
+                g.fillOval(getCaves()[link][0], getCaves()[link][1], wumpusPresenter.getCaveSize(), wumpusPresenter.getCaveSize());
         }
 
         g.setColor(Color.darkGray);
         for (int[] r : getCaves())
-            g.drawOval(r[0], r[1], wumpusPresenter.getCaveCount(), wumpusPresenter.getCaveCount());
+            g.drawOval(r[0], r[1], wumpusPresenter.getCaveSize(), wumpusPresenter.getCaveSize());
     }
 
     void drawMessage() {
@@ -191,9 +191,9 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     private int getSelectedCaveBasedOnMouseClickLocation(int mouseClickXAxis, int mouseClickYAxis) {
         int selectedCave = -1;
         for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getCurrentCave()]) {
-            int cx = getCaves()[link][0];
-            int cy = getCaves()[link][1];
-            if (isMouseClickWithinCorrectCave(mouseClickXAxis, mouseClickYAxis, cx, cy)) {
+            int xAxisOfCaveLinkedToCurrentCave = getCaves()[link][0];
+            int yAxisOfCaveLinkedToCurrentCave = getCaves()[link][1];
+            if (isMouseClickWithinCorrectCave(mouseClickXAxis, mouseClickYAxis, xAxisOfCaveLinkedToCurrentCave, yAxisOfCaveLinkedToCurrentCave)) {
                 selectedCave = link;
                 break;
             }
@@ -201,8 +201,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         return selectedCave;
     }
 
-    private boolean isMouseClickWithinCorrectCave(int ex, int ey, int cx, int cy) {
-        return (ex > cx && ex < cx + wumpusPresenter.getCaveCount())
-                && (ey > cy && ey < cy + wumpusPresenter.getCaveCount());
+    private boolean isMouseClickWithinCorrectCave(int mouseClickXAxis, int mouseClickYAxis, int caveXAxis, int caveYAxis) {
+        return (mouseClickXAxis > caveXAxis && mouseClickXAxis < caveXAxis + wumpusPresenter.getCaveSize())
+                && (mouseClickYAxis > caveYAxis && mouseClickYAxis < caveYAxis + wumpusPresenter.getCaveSize());
     }
 }

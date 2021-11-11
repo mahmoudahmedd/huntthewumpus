@@ -196,7 +196,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public int getCaveCount() {
+    public int getCaveSize() {
         return caveSize;
     }
 
