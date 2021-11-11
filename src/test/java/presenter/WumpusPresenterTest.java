@@ -12,14 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
-TODO Test list
-1- Player can sense nearby wumpus - (Done)
-2- room has bat - (Done)
-3- cave has pit
-4- kill wumpus
-*/
-
 @ExtendWith(MockitoExtension.class)
 class WumpusPresenterTest {
 
@@ -199,4 +191,33 @@ class WumpusPresenterTest {
         final boolean actualGameState = wumpusPresenter.isGameOver();
         assertEquals(actualGameState, gameIsOver);
     }
+
+    @Test
+    public void testKillingTheWumpus() {
+        final boolean gameIsOver = true;
+        final int[] journeyPath = {1, 9, 10};
+        final int shootToCave = 18;
+
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+                playerStartingCave,
+                wumpusStartingCave,
+                firstBatStartingCave,
+                secondBatStartingCave,
+                thirdBatStartingCave,
+                firstPitCave,
+                secondPitCave);
+
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        wumpusPresenter.startNewGame();
+
+        for(int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
+
+        wumpusPresenter.shoot(shootToCave);
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        assertEquals(actualGameState, gameIsOver);
+    }
+
 }
