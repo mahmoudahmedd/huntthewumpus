@@ -111,4 +111,9 @@ class WumpusPresenterTest {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus(){
+
+    }
+
 }
