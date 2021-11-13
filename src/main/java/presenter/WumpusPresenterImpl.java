@@ -75,10 +75,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     }
 
-    private int getRandomCave(int numberOfCaves) {
-        return randomNumberGenerator.generateNumber(numberOfCaves);
-    }
-
     private int getRandomCave() {
         return randomNumberGenerator.generateNumber(numberOfCaves);
     }
