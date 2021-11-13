@@ -1,5 +1,6 @@
 package presenter;
 
+import model.GameInitialConfigurations;
 import utilities.RandomNumberGenerator;
 
 import java.util.List;
@@ -25,14 +26,11 @@ class WumpusPresenterTest {
     final int thirdBatStartingCave = 14;
     final int firstPitCave = 3;
     final int secondPitCave = 13;
-    final int numberOfCaves = 20;
 
     @Test
     public void testMovingPlayerToCave() {
-        final int playerNextCave = 7;
-        final boolean gameIsNotOver = false;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -44,13 +42,16 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter=new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int playerNextCave = 7;
         wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom=wumpusPresenter.getPlayerCave();
         final boolean isGameOver=wumpusPresenter.isGameOver();
 
         assertEquals(playerNextCave,playerCurrentRoom);
-        assertEquals(isGameOver,gameIsNotOver);
+
+        final boolean expectedStatusOfGameIsOver = false;
+        assertEquals(isGameOver,expectedStatusOfGameIsOver);
 
     }
 
@@ -59,7 +60,7 @@ class WumpusPresenterTest {
         final int playerNextCave = 16;
         final boolean gameIsNotOver = false;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -85,7 +86,7 @@ class WumpusPresenterTest {
         final boolean gameIsOver = true;
         final int[] journeyPath = {1, 9, 10, 18};
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -110,7 +111,7 @@ class WumpusPresenterTest {
         final boolean gameIsOver = false;
         final int[] journeyPath = {1, 9, 10};
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -142,7 +143,7 @@ class WumpusPresenterTest {
         final int playerDropDownCave = 8;
         final int firstBatFinalCave = 2;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -172,7 +173,7 @@ class WumpusPresenterTest {
         final boolean gameIsOver = true;
         final int[] journeyPath = {4, 3};
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -198,7 +199,7 @@ class WumpusPresenterTest {
         final int[] journeyPath = {1, 9, 10};
         final int shootToCave = 18;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -227,7 +228,7 @@ class WumpusPresenterTest {
         final int[] journeyPath = {12, 13};
 
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -258,7 +259,7 @@ class WumpusPresenterTest {
         final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
         final int numberAtWhichWumpusWillRemainSleeping = 0;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
@@ -301,7 +302,7 @@ class WumpusPresenterTest {
         final int wumpusCaveCurrLocation = 17;
         final int wumpusLinkedCaveIndex = 2;
 
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfCaves)).thenReturn(
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
