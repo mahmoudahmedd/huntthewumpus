@@ -27,7 +27,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     boolean gameOver = true;
-    int currentCave;
+    int playerCave;
     int numArrows;
     int wumpusCave;
     List<String> messages;
@@ -51,7 +51,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         numArrows = 5;
         gameOver = false;
 
-        setCurrentCave(getRandomCave());
+        setPlayerCave(getRandomCave());
         initializeHazards();
     }
 
@@ -84,7 +84,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     public void move() {
 
-        Set<Hazard> set = hazards[getCurrentCave()];
+        Set<Hazard> set = hazards[getPlayerCave()];
 
         if (set.contains(Hazard.Wumpus)) {
             messages.add("you've been eaten by the Wumpus");
@@ -99,15 +99,15 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
             // teleport, but avoid 2 teleports in a row
             do {
-                setCurrentCave(getRandomCave());
-            } while (hazards[getCurrentCave()].contains(Hazard.Bat));
+                setPlayerCave(getRandomCave());
+            } while (hazards[getPlayerCave()].contains(Hazard.Bat));
 
             // relocate the bat, but not to the player cave or a cave with a bat
             set.remove(Hazard.Bat);
             int newCave;
             do {
                 newCave = getRandomCave();
-            } while (newCave == getCurrentCave() || hazards[newCave].contains(Hazard.Bat));
+            } while (newCave == getPlayerCave() || hazards[newCave].contains(Hazard.Bat));
             hazards[newCave].add(Hazard.Bat);
 
             // re-evaluate
@@ -116,7 +116,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         } else {
 
             // look around
-            for (int link : getCavesLinks()[getCurrentCave()]) {
+            for (int link : getCavesLinks()[getPlayerCave()]) {
                 for (Hazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
@@ -128,14 +128,14 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void move(int cave) {
         boolean isCurrentCaveIsConnectedToTargetCave=checkThatCurrentCaveIsConnectedToTargetCave(cave);
         if(isCurrentCaveIsConnectedToTargetCave){
-            setCurrentCave(cave);
+            setPlayerCave(cave);
             move();
         }
     }
 
     @Override
-    public void setCurrentCave(int selectedCave) {
-        currentCave = selectedCave;
+    public void setPlayerCave(int selectedCave) {
+        playerCave = selectedCave;
     }
 
     @Override
@@ -149,8 +149,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     @Override
-    public int getCurrentCave() {
-        return currentCave;
+    public int getPlayerCave() {
+        return playerCave;
     }
 
     @Override
@@ -176,7 +176,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 final int numberOfLinkedCaves=3;
                 wumpusCave = getCavesLinks()[wumpusCave][randomNumberGenerator.generateNumber(numberOfLinkedCaves)];
 
-                if (wumpusCave == getCurrentCave()) {
+                if (wumpusCave == getPlayerCave()) {
                     messages.add("You woke the Wumpus and it ate you");
                     gameOver = true;
 
@@ -191,9 +191,9 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     private boolean tooClose(int cave) {
-        if (getCurrentCave() == cave)
+        if (getPlayerCave() == cave)
             return true;
-        for (int link : getCavesLinks()[getCurrentCave()])
+        for (int link : getCavesLinks()[getPlayerCave()])
             if (cave == link)
                 return true;
         return false;
@@ -212,7 +212,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     private boolean checkThatCurrentCaveIsConnectedToTargetCave(int targetCave) {
         boolean isCurrentCaveIsConnectedToTargetCave=false;
-        for (int caveLink : getCavesLinks()[getCurrentCave()]) {
+        for (int caveLink : getCavesLinks()[getPlayerCave()]) {
             if (caveLink==targetCave) {
                 isCurrentCaveIsConnectedToTargetCave=true;
                 break;
