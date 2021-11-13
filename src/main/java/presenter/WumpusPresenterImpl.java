@@ -49,12 +49,17 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     public void startNewGame() {
         messages = new ArrayList<>();
         numArrows = 5;
+        gameOver = false;
 
         setCurrentCave(getRandomCave());
+        initializeHazards();
+    }
 
+    private void initializeHazards() {
         hazards = new Set[numberOfCaves];
-        for (int i = 0; i < numberOfCaves; i++)
+        for (int i = 0; i < numberOfCaves; i++){
             hazards[i] = EnumSet.noneOf(Hazard.class);
+        }
 
         // hazards can share caves (unless they are identical)
         int[] ordinals = {0, 1, 1, 1, 2, 2};
@@ -65,14 +70,12 @@ public class WumpusPresenterImpl implements WumpusPresenter {
                 cave = getRandomCave();
             } while (tooClose(cave) || hazards[cave].contains(values[ord]));
 
-            if (ord == 0)
+            if (ord == 0) {
                 wumpusCave = cave;
+            }
 
             hazards[cave].add(values[ord]);
         }
-
-        gameOver = false;
-
     }
 
     private int getRandomCave() {
