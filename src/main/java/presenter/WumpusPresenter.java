@@ -10,7 +10,7 @@ public interface WumpusPresenter {
     int getPlayerCave();
     boolean isGameOver();
     void shoot(int cave);
-    int getNumArrows();
+    int getNumberOfArrows();
     List<String> getMessages();
 
     int getWumpusCave();

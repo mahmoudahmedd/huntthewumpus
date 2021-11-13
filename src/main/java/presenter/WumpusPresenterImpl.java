@@ -1,5 +1,6 @@
 package presenter;
 
+import model.GameInitialConfigurations;
 import utilities.RandomNumberGenerator;
 
 import java.util.*;
@@ -26,13 +27,13 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
 
-    boolean gameOver = true;
+    boolean gameOver;
     int playerCave;
-    int numArrows;
+    int numberOfArrows;
     int wumpusCave;
     List<String> messages;
     Set<Hazard>[] hazards;
-    final int numberOfCaves =20;
+    int numberOfCaves;
 
     RandomNumberGenerator randomNumberGenerator;
 
@@ -47,12 +48,16 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
     @Override
     public void startNewGame() {
-        messages = new ArrayList<>();
-        numArrows = 5;
-        gameOver = false;
-
+        initializeGameParameters();
         setPlayerCave(getRandomCave());
         initializeHazards();
+    }
+
+    private void initializeGameParameters() {
+        messages = new ArrayList<>();
+        numberOfArrows = GameInitialConfigurations.NUMBER_OF_ARROWS;
+        gameOver = GameInitialConfigurations.GAME_OVER;
+        numberOfCaves=GameInitialConfigurations.NUMBER_OF_CAVES;
     }
 
     private void initializeHazards() {
@@ -166,8 +171,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
             gameOver = true;
 
         } else {
-            numArrows--;
-            if (numArrows == 0) {
+            numberOfArrows--;
+            if (numberOfArrows == 0) {
                 messages.add("You ran out of arrows.");
                 gameOver = true;
 
@@ -201,8 +206,8 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     @Override
-    public int getNumArrows() {
-        return numArrows;
+    public int getNumberOfArrows() {
+        return numberOfArrows;
     }
 
     @Override

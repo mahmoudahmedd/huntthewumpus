@@ -112,7 +112,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     void drawMessage() {
         if (!wumpusPresenter.isGameOver())
-            g.drawString("arrows  " + wumpusPresenter.getNumArrows(), 610, 30);
+            g.drawString("arrows  " + wumpusPresenter.getNumberOfArrows(), 610, 30);
 
         if (wumpusPresenter.getMessages() != null) {
             g.setColor(Color.black);
