@@ -1,6 +1,6 @@
 package presenter;
 
-import model.GameInitialConfigurations;
+import model.LegacyGame;
 import utilities.RandomNumberGenerator;
 
 import java.util.*;
@@ -28,59 +28,29 @@ public class WumpusPresenterImpl implements WumpusPresenter {
 
 
     boolean gameOver;
-    int playerCave;
     int numberOfArrows;
-    int wumpusCave;
     List<String> messages;
-    Set<Hazard>[] hazards;
     int numberOfCaves;
+    int playerCave;
+    int wumpusCave;
+    Set<Hazard>[] hazards;
 
     RandomNumberGenerator randomNumberGenerator;
+    LegacyGame gameModel;
 
     public WumpusPresenterImpl(){
         this.randomNumberGenerator=new RandomNumberGenerator();
+        this.gameModel=new LegacyGame();
     }
 
     public WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
         this.randomNumberGenerator=randomNumberGenerator;
+        this.gameModel=new LegacyGame(randomNumberGenerator);
     }
-
 
     @Override
     public void startNewGame() {
-        initializeGameParameters();
-        setPlayerCave(getRandomCave());
-        initializeHazards();
-    }
-
-    private void initializeGameParameters() {
-        messages = new ArrayList<>();
-        numberOfArrows = GameInitialConfigurations.NUMBER_OF_ARROWS;
-        gameOver = GameInitialConfigurations.GAME_OVER;
-        numberOfCaves=GameInitialConfigurations.NUMBER_OF_CAVES;
-    }
-
-    private void initializeHazards() {
-        hazards = new Set[numberOfCaves];
-        for (int i = 0; i < numberOfCaves; i++){
-            hazards[i] = EnumSet.noneOf(Hazard.class);
-        }
-
-        // hazards can share caves (unless they are identical)
-        int[] ordinals = {0, 1, 1, 1, 2, 2};
-        Hazard[] values = Hazard.values();
-        for (int ord : ordinals) {
-            int cave;
-            do {
-                cave = getRandomCave();
-            } while (tooClose(cave) || hazards[cave].contains(values[ord]));
-
-            if (ord == 0) {
-                wumpusCave = cave;
-            }
-
-            hazards[cave].add(values[ord]);
-        }
+        gameModel.startGame();
     }
 
     private int getRandomCave() {
@@ -192,16 +162,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
             }
         }
 
-    }
-
-
-    private boolean tooClose(int cave) {
-        if (getPlayerCave() == cave)
-            return true;
-        for (int link : getCavesLinks()[getPlayerCave()])
-            if (cave == link)
-                return true;
-        return false;
     }
 
 
