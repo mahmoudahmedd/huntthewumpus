@@ -1,9 +1,13 @@
 package model;
 
+import utilities.RandomNumberGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewGame implements Game{
+
+    GameMap gameMap;
 
     @Override
     public void startGame(){
@@ -52,7 +56,7 @@ public class NewGame implements Game{
 
 
     private void buildGameMap() {
-        GameMap gameMap = new GameMap();
+        gameMap = new GameMap();
         List<Cave> caves = new ArrayList<>();
         buildCaves(caves);
         gameMap.setCaves(caves);
@@ -79,5 +83,9 @@ public class NewGame implements Game{
                 cave.addLink(linkedCave);
             }
         }
+    }
+
+    public GameMap getGameMap() {
+        return this.gameMap;
     }
 }
