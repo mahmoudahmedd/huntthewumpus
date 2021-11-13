@@ -18,5 +18,7 @@ public class NewGameModelTests {
         GameMap gameMap=game.getGameMap();
 
         assertEquals(gameMap.getCaves().size(),GameInitialConfigurations.NUMBER_OF_CAVES);
+
+        //TODO write an assertion to check if cave links are correct
     }
 }
