@@ -10,6 +10,47 @@ public class NewGame implements Game{
         buildGameMap();
     }
 
+    @Override
+    public void playerMovesToCave(int cave) {
+
+    }
+
+    @Override
+    public void playerShootsToCave(int cave) {
+
+    }
+
+    @Override
+    public int[][] getCaveslinks() {
+        return new int[0][];
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
+    public int getNumberOfArrows() {
+        return 0;
+    }
+
+    @Override
+    public List<String> getMessages() {
+        return null;
+    }
+
+    @Override
+    public int getWumpusCave() {
+        return 0;
+    }
+
+    @Override
+    public int getPlayerCave() {
+        return 0;
+    }
+
+
     private void buildGameMap() {
         GameMap gameMap = new GameMap();
         List<Cave> caves = new ArrayList<>();

@@ -1,6 +1,7 @@
 package presenter;
 
 import model.GameInitialConfigurations;
+import model.Hazard;
 import utilities.RandomNumberGenerator;
 
 import java.util.List;
@@ -122,7 +123,7 @@ class WumpusPresenterTest {
         }
 
         List<String> messages = wumpusPresenter.getMessages();
-        assertTrue(messages.contains(WumpusPresenterImpl.Hazard.Wumpus.warning));
+        assertTrue(messages.contains(Hazard.Wumpus.getWarning()));
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
         final boolean gameIsOver = false;
