@@ -39,10 +39,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         return gameModel.getWumpusCave();
     }
 
-    @Override
-    public int[][] getCavesLinks() {
-        return gameModel.getCaveslinks();
-    }
 
     @Override
     public int getPlayerCave() {

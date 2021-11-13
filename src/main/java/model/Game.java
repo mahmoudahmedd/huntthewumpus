@@ -7,7 +7,6 @@ public interface Game {
      void startGame();
      void playerMovesToCave(int cave);
      void playerShootsToCave(int cave);
-     int[][] getCaveslinks();
      boolean isGameOver();
      int getNumberOfArrows();
      List<String> getMessages();

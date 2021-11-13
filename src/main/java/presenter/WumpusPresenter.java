@@ -7,7 +7,6 @@ import java.util.List;
 public interface WumpusPresenter {
     void startNewGame();
     void move(int cave);
-    int[][] getCavesLinks();
     int getPlayerCave();
     boolean isGameOver();
     void shoot(int cave);

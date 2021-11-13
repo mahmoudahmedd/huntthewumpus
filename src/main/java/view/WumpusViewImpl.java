@@ -1,5 +1,6 @@
 package view;
 
+import model.GameInitialConfigurations;
 import presenter.WumpusPresenter;
 import presenter.WumpusPresenterImpl;
 
@@ -85,8 +86,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
         g.setColor(Color.darkGray);
         g.setStroke(new BasicStroke(2));
 
-        for (int i = 0; i < wumpusPresenter.getCavesLinks().length; i++) {
-            for (int link : wumpusPresenter.getCavesLinks()[i]) {
+        for (int i = 0; i < GameInitialConfigurations.CAVE_LINKS.length; i++) {
+            for (int link : GameInitialConfigurations.CAVE_LINKS[i]) {
                 int x1 = cavesCoordinates[i][0] + getCaveSize() / 2;
                 int y1 = cavesCoordinates[i][1] + getCaveSize() / 2;
                 int x2 = cavesCoordinates[link][0] + getCaveSize() / 2;
@@ -101,7 +102,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         if (!wumpusPresenter.isGameOver()) {
             g.setColor(Color.magenta);
-            for (int link : wumpusPresenter.getCavesLinks()[wumpusPresenter.getPlayerCave()])
+            for (int link : GameInitialConfigurations.CAVE_LINKS[wumpusPresenter.getPlayerCave()])
                 g.fillOval(cavesCoordinates[link][0], cavesCoordinates[link][1], getCaveSize(), getCaveSize());
         }
 

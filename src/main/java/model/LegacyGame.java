@@ -10,12 +10,6 @@ import java.util.Set;
 
 public class LegacyGame implements Game{
 
-    int[][] caveslinks = {{4, 7, 1}, {0, 9, 2}, {1, 11, 3}, {4, 13, 2}, {0, 5, 3},
-            {4, 6, 14}, {7, 16, 5}, {6, 0, 8}, {7, 17, 9}, {8, 1, 10}, {9, 18, 11},
-            {10, 2, 12}, {13, 19, 11}, {14, 3, 12}, {5, 15, 13}, {14, 16, 19},
-            {6, 17, 15}, {16, 8, 18}, {19, 10, 17}, {15, 12, 18}};
-
-    
     boolean gameOver;
     int numberOfArrows;
     List<String> messages;
@@ -84,7 +78,7 @@ public class LegacyGame implements Game{
         } else {
 
             // look around
-            for (int link : caveslinks[playerCave]) {
+            for (int link : GameInitialConfigurations.CAVE_LINKS[playerCave]) {
                 for (Hazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
@@ -108,7 +102,7 @@ public class LegacyGame implements Game{
             } else if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
                 hazards[wumpusCave].remove(Hazard.Wumpus);
                 final int numberOfLinkedCaves=3;
-                wumpusCave = caveslinks[wumpusCave][randomNumberGenerator.generateNumber(numberOfLinkedCaves)];
+                wumpusCave = GameInitialConfigurations.CAVE_LINKS[wumpusCave][randomNumberGenerator.generateNumber(numberOfLinkedCaves)];
 
                 if (wumpusCave == playerCave) {
                     messages.add("You woke the Wumpus and it ate you");
@@ -155,7 +149,7 @@ public class LegacyGame implements Game{
     private boolean tooClose(int cave) {
         if (playerCave == cave)
             return true;
-        for (int link : caveslinks[playerCave])
+        for (int link : GameInitialConfigurations.CAVE_LINKS[playerCave])
             if (cave == link)
                 return true;
         return false;
@@ -171,18 +165,13 @@ public class LegacyGame implements Game{
 
     private boolean checkThatCurrentCaveIsConnectedToTargetCave(int targetCave) {
         boolean isCurrentCaveIsConnectedToTargetCave=false;
-        for (int caveLink : caveslinks[playerCave]) {
+        for (int caveLink : GameInitialConfigurations.CAVE_LINKS[playerCave]) {
             if (caveLink==targetCave) {
                 isCurrentCaveIsConnectedToTargetCave=true;
                 break;
             }
         }
         return isCurrentCaveIsConnectedToTargetCave;
-    }
-
-    @Override
-    public int[][] getCaveslinks() {
-        return caveslinks;
     }
 
     @Override
