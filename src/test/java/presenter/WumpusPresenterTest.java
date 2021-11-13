@@ -29,7 +29,6 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToCave() {
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -46,20 +45,16 @@ class WumpusPresenterTest {
         wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom=wumpusPresenter.getPlayerCave();
-        final boolean isGameOver=wumpusPresenter.isGameOver();
-
         assertEquals(playerNextCave,playerCurrentRoom);
 
         final boolean expectedStatusOfGameIsOver = false;
+        final boolean isGameOver=wumpusPresenter.isGameOver();
         assertEquals(isGameOver,expectedStatusOfGameIsOver);
 
     }
 
     @Test
     public void testMoveToNonConnectedCave() {
-        final int playerNextCave = 16;
-        final boolean gameIsNotOver = false;
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -72,20 +67,19 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int playerNextCave = 16;
         wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom = wumpusPresenter.getPlayerCave();
-        final boolean isGameOver = wumpusPresenter.isGameOver();
-
         assertEquals(playerStartingCave, playerCurrentRoom);
+
+        final boolean gameIsNotOver = false;
+        final boolean isGameOver = wumpusPresenter.isGameOver();
         assertEquals(isGameOver, gameIsNotOver);
     }
 
     @Test
     public void testMovingPlayerToCaveThatHasAWumups() {
-        final boolean gameIsOver = true;
-        final int[] journeyPath = {1, 9, 10, 18};
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -97,20 +91,19 @@ class WumpusPresenterTest {
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
-        
+
+        final int[] journeyPath = {1, 9, 10, 18};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = true;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus(){
-        final boolean gameIsOver = false;
-        final int[] journeyPath = {1, 9, 10};
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -123,23 +116,22 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {1, 9, 10};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
-        final boolean actualGameState = wumpusPresenter.isGameOver();
         List<String> messages = wumpusPresenter.getMessages();
-
-        // Assert
         assertTrue(messages.contains(WumpusPresenterImpl.Hazard.Wumpus.warning));
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = false;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testThatPlayerEnterRoomWithBat() {
         final int playerStartingCave = 11;
-        final boolean gameIsOver = false;
-        final int[] journeyPath = {12, 19};
         final int playerDropDownCave = 8;
         final int firstBatFinalCave = 2;
 
@@ -157,22 +149,21 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {12, 19};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
         final int playerCurrentCave = wumpusPresenter.getPlayerCave();
-        final boolean actualGameState = wumpusPresenter.isGameOver();
-
         assertEquals(playerDropDownCave, playerCurrentCave);
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = false;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testThatPlayerEnterRoomWithPit() {
-        final boolean gameIsOver = true;
-        final int[] journeyPath = {4, 3};
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -185,20 +176,18 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {4, 3};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = true;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testKillingTheWumpus() {
-        final boolean gameIsOver = true;
-        final int[] journeyPath = {1, 9, 10};
-        final int shootToCave = 18;
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -211,23 +200,22 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {1, 9, 10};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
+        final int shootToCave = 18;
         wumpusPresenter.shoot(shootToCave);
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = true;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testThatPlayerEnterRoomWithPitAndBat() {
         final int playerStartingCave = 11;
-        final boolean gameIsOver = true;
-        final int[] journeyPath = {12, 13};
-
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -240,21 +228,22 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {12, 13};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
-
+        final boolean gameIsOver = true;
         assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusRemainsSleeping() {
-        final boolean gameIsOver = false;
-        final int[] journeyPath = {1, 9, 10};
-        final int shootToCave = 11;
+
+
+
 
         final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
         final int numberAtWhichWumpusWillRemainSleeping = 0;
@@ -275,33 +264,24 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {1, 9, 10};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
+        final int shootToCave = 11;
         wumpusPresenter.shoot(shootToCave);
 
-        final boolean actualGameState = wumpusPresenter.isGameOver();
         final int wumpusCaveLocation = wumpusPresenter.getWumpusCave();
-
-        assertEquals(actualGameState, gameIsOver);
-
         assertEquals(wumpusCaveLocation, wumpusStartingCave);
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = false;
+        assertEquals(actualGameState, gameIsOver);
     }
 
     @Test
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusMoves() {
-        final boolean gameIsOver = false;
-        final int[] journeyPath = {1, 9, 10};
-        final int shootToCave = 11;
-
-        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
-        final int numberAtWhichWumpusWillRemainSleeping = 1;
-
-        final int numberOfLinkedCaves = 3;
-        final int wumpusCaveCurrLocation = 17;
-        final int wumpusLinkedCaveIndex = 2;
-
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,
@@ -311,27 +291,34 @@ class WumpusPresenterTest {
                 firstPitCave,
                 secondPitCave);
 
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillRemainSleeping = 1;
         Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
                 numberAtWhichWumpusWillRemainSleeping);
 
+        final int numberOfLinkedCaves = 3;
+        final int wumpusLinkedCaveIndex = 2;
         Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
                 wumpusLinkedCaveIndex);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
 
+        final int[] journeyPath = {1, 9, 10};
         for(int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
 
+        final int shootToCave = 11;
         wumpusPresenter.shoot(shootToCave);
 
-        final boolean actualGameState = wumpusPresenter.isGameOver();
         final int wumpusCaveLocation = wumpusPresenter.getWumpusCave();
-
-        assertEquals(actualGameState, gameIsOver);
-
+        final int wumpusCaveCurrLocation = 17;
         assertEquals(wumpusCaveCurrLocation, wumpusCaveLocation);
+
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        final boolean gameIsOver = false;
+        assertEquals(actualGameState, gameIsOver);
     }
 
 }
