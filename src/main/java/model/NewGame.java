@@ -24,8 +24,6 @@ public class NewGame implements Game{
     public void startGame(){
         buildGameMap();
         initializePlayer();
-        setPlayerInitialCave();
-
     }
 
     private void initializePlayer() {
