@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -129,6 +130,8 @@ public class NewGameModelTests {
 
         List<Bat> listOfBats = game.getBats();
 
+        assertEquals(GameInitialConfigurations.NUMBER_OF_BATS,listOfBats.size());
+
         for(int i = 0; i < listOfBats.size(); i++) {
             assertEquals(batsStartingCavesIndexes[i], listOfBats.get(i).getCave().getNumber());
             Cave batCave= game.getGameMap().getCaves().get(batsStartingCavesIndexes[i]);
@@ -162,6 +165,8 @@ public class NewGameModelTests {
         game.startGame();
 
         List<Pit> listOfPits = game.getPits();
+
+        assertEquals(GameInitialConfigurations.NUMBER_OF_PITS,listOfPits.size());
 
         for(int i = 0; i < listOfPits.size(); i++) {
             assertEquals(PitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
