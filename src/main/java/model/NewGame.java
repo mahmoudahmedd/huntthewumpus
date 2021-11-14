@@ -1,15 +1,35 @@
 package model;
 
+import utilities.RandomNumberGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewGame implements Game{
 
     GameMap gameMap;
+    RandomNumberGenerator randomNumberGenerator;
+    Player player;
+
+    public NewGame() {
+
+    }
+
+    public NewGame(RandomNumberGenerator randomNumberGenerator) {
+        this.randomNumberGenerator = randomNumberGenerator;
+    }
 
     @Override
     public void startGame(){
         buildGameMap();
+        setPlayerInitialCave();
+
+    }
+
+    private void setPlayerInitialCave() {
+        player = new Player();
+        Cave cave = new Cave(this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES) + 1);
+        player.setCave(cave);
     }
 
     private void buildGameMap() {
@@ -73,6 +93,6 @@ public class NewGame implements Game{
 
     @Override
     public int getPlayerCave() {
-        return 0;
+        return player.getCave().getNumber();
     }
 }

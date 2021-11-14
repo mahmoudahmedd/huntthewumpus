@@ -31,4 +31,8 @@ public class Cave {
     public Set<Cave> getLinkedCaves() {
         return linkedCaves;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }

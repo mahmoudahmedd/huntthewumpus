@@ -3,7 +3,10 @@ package model;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import utilities.RandomNumberGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class NewGameModelTests {
+
+    @Mock
+    RandomNumberGenerator randomNumberGenerator;
+
 
     @Test
     public void testGameMapInitializationProducedTheCorrectNumberOfCaves() {
@@ -48,4 +55,16 @@ public class NewGameModelTests {
         }
     }
 
+    @Test
+    public void testThatPlayerIsAddedToInitialCave() {
+        final int playerStartingCaveIndex = 9;
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex);
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(playerStartingCaveIndex, actualPlayerCaveIndex);
+    }
 }
