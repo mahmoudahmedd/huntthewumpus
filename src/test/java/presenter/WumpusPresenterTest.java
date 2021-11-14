@@ -350,5 +350,49 @@ class WumpusPresenterTest {
         assertEquals(expectedGameStateGameIsOver, actualGameState);
     }
 
+    @Test
+    public void testThatplayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer() {
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCave,
+                wumpusStartingCave,
+                firstBatStartingCave,
+                secondBatStartingCave,
+                thirdBatStartingCave,
+                firstPitCave,
+                secondPitCave);
+
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillRemainSleeping = 1;
+        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
+                numberAtWhichWumpusWillRemainSleeping);
+
+        final int numberOfLinkedCaves = 3;
+        final int wumpusLinkedCaveIndex = 1;
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
+                wumpusLinkedCaveIndex);
+
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        wumpusPresenter.startNewGame();
+
+        final int[] journeyPath = {1, 9, 10};
+        for (int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
+
+        final int shootToCave = 11;
+        wumpusPresenter.shoot(shootToCave);
+
+        final int wumpusCaveLocation = wumpusPresenter.getWumpusCave();
+        final int wumpusCaveCurrLocation = wumpusPresenter.getPlayerCave();
+        assertEquals(wumpusCaveCurrLocation, wumpusCaveLocation);
+
+        final String wokeTheWumpusMessage = "You woke the Wumpus and it ate you";
+        final List<String> actualGameMessages = wumpusPresenter.getMessages();
+        assertTrue(actualGameMessages.contains(wokeTheWumpusMessage));
+
+        final boolean expectedGameStateGameIsOver = true;
+        final boolean actualGameState = wumpusPresenter.isGameOver();
+        assertEquals(expectedGameStateGameIsOver, actualGameState);
+    }
 
 }
