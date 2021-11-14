@@ -136,4 +136,41 @@ public class NewGameModelTests {
             assertTrue(batCave.getGameObjects().contains(bat));
         }
     }
+
+    @Test
+    public void testThatTwoPitsAreAddedToCaveGameMap(){
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
+        int[] PitsInCavesIndexes = {firstPitCave, secondPitCave};
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
+        );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        List<Pit> listOfPits = game.getPits();
+
+        for(int i = 0; i < listOfPits.size(); i++) {
+            assertEquals(PitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
+            Cave PitInCave= game.getGameMap().getCaves().get(PitsInCavesIndexes[i]);
+            Pit pit = listOfPits.get(i);
+            assertTrue(PitInCave.getGameObjects().contains(pit));
+        }
+
+    }
+
+    
 }
