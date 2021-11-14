@@ -82,6 +82,6 @@ public class NewGameModelTests {
 
         Cave playerCave=game.getGameMap().getCaves().get(playerStartingCaveIndex);
         Player player=game.getPlayer();
-        assertTrue(playerCave.getGameObjects().get(0).equals(player));
+        assertTrue(playerCave.getGameObjects().contains(player));
     }
 }
