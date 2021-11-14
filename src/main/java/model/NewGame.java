@@ -12,7 +12,7 @@ public class NewGame implements Game{
     Player player;
 
     public NewGame() {
-
+        this.randomNumberGenerator=new RandomNumberGenerator();
     }
 
     public NewGame(RandomNumberGenerator randomNumberGenerator) {
@@ -28,7 +28,7 @@ public class NewGame implements Game{
 
     private void setPlayerInitialCave() {
         player = new Player();
-        Cave cave = new Cave(this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES) + 1);
+        Cave cave = new Cave(this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES));
         player.setCave(cave);
     }
 
@@ -41,7 +41,7 @@ public class NewGame implements Game{
     }
 
     private void buildCaves(List<Cave> caves) {
-        for(int i = 1; i <= GameInitialConfigurations.NUMBER_OF_CAVES; i++){
+        for(int i = 0; i < GameInitialConfigurations.NUMBER_OF_CAVES; i++){
             caves.add(new Cave(i));
         }
     }

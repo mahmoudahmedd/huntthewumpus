@@ -50,7 +50,7 @@ public class NewGameModelTests {
             final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[caveLinkIndexToTest];
 
             for(int caveLink:expectedLinkedCavesToFirstCave){
-                assertTrue(actualLinkedCavesToFirstCave.contains(new Cave(caveLink+1)));
+                assertTrue(actualLinkedCavesToFirstCave.contains(new Cave(caveLink)));
             }
         }
     }
