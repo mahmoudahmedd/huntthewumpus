@@ -108,7 +108,7 @@ public class NewGameModelTests {
     }
 
     @Test
-    public void testThatThreeBatsAreAddedToGaveGameMap() {
+    public void testThatThreeBatsAreAddedToCaveGameMap() {
         final int playerStartingCaveIndex = 9;
         final int wumpusStartingCaveIndex = 15;
         final int firstBatStartingCaveIndex = 19;
@@ -127,14 +127,13 @@ public class NewGameModelTests {
         NewGame game = new NewGame(randomNumberGenerator);
         game.startGame();
 
-        List<Bat> listOfBats = game.getThreeBats();
-        for(int i = 0; i < batsStartingCavesIndexes.length; i++) {
-            assertEquals(batsStartingCavesIndexes[i], listOfBats.get(i).getCave().getNumber());
-        }
+        List<Bat> listOfBats = game.getBats();
 
         for(int i = 0; i < listOfBats.size(); i++) {
+            assertEquals(batsStartingCavesIndexes[i], listOfBats.get(i).getCave().getNumber());
             Cave batCave= game.getGameMap().getCaves().get(batsStartingCavesIndexes[i]);
-            assertTrue(batCave.getGameObjects().contains(listOfBats.get(i)));
+            Bat bat = listOfBats.get(i);
+            assertTrue(batCave.getGameObjects().contains(bat));
         }
     }
 }

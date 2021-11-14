@@ -7,9 +7,9 @@ import java.util.List;
 
 public class NewGame implements Game{
 
-    GameMap gameMap;
-    RandomNumberGenerator randomNumberGenerator;
-    Player player;
+    private GameMap gameMap;
+    private RandomNumberGenerator randomNumberGenerator;
+    private Player player;
     private Wumpus wumpus;
     private List<Bat> bats;
 
@@ -33,7 +33,7 @@ public class NewGame implements Game{
         bats = new ArrayList<>();
         for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_BATS; index++) {
             bats.add(new Bat());
-            bats.get(index).setId("The Bat" + " " + index);
+            bats.get(index).setId(GameInitialConfigurations.BAT_ID_PREFIX + index);
             setGameObjectInitialCave(bats.get(index));
         }
     }
@@ -135,7 +135,7 @@ public class NewGame implements Game{
         return this.wumpus;
     }
 
-    public List<Bat> getThreeBats() {
+    public List<Bat> getBats() {
         return this.bats;
     }
 }
