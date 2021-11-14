@@ -21,7 +21,7 @@ public class NewGame implements Game{
     }
 
     private void buildCaves(List<Cave> caves) {
-        for(int i = 1; i <= 20; i++){
+        for(int i = 1; i <= GameInitialConfigurations.NUMBER_OF_CAVES; i++){
             caves.add(new Cave(i));
         }
     }
