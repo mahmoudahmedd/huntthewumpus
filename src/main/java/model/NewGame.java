@@ -29,13 +29,15 @@ public class NewGame implements Game{
     }
 
     private void initializeWumpus() {
-        Wumpus wumpus = new Wumpus();
-        int wumpusRandomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
-        Cave wumpusCave = gameMap.getCaves().get(wumpusRandomCaveIndex);
+        wumpus = new Wumpus();
+        setWumpusInitialCave();
+
+    }
+
+    private void setWumpusInitialCave() {
+        Cave wumpusCave = getInitialRandomCave();
         wumpus.setCave(wumpusCave);
         wumpusCave.addGameObject(wumpus);
-        this.wumpus = wumpus;
-
     }
 
     private void initializePlayer() {
@@ -47,10 +49,14 @@ public class NewGame implements Game{
 
     //TODO: Make this function generic for all GameObjects
     private void setPlayerInitialCave() {
-        int playerRandomCaveIndex=this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
-        Cave playerCave = gameMap.getCaves().get(playerRandomCaveIndex);
+        Cave playerCave = getInitialRandomCave();
         player.setCave(playerCave);
         playerCave.addGameObject(player);
+    }
+
+    private Cave getInitialRandomCave() {
+        int wumpusRandomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
+        return gameMap.getCaves().get(wumpusRandomCaveIndex);
     }
 
     private void buildGameMap() {
