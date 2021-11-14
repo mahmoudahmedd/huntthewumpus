@@ -30,20 +30,22 @@ public class NewGameModelTests {
         GameMap gameMap = game.getGameMap();
         final List<Cave> mapCaves = gameMap.getCaves();
 
-        final int firstCaveIndex = 0;
-        final Cave firstCave = mapCaves.get(
-                firstCaveIndex);
+        final int[] caveLinkIndexesToTest= new int[]{0,9,3,4};
 
-        final int connectedCavesCount = 3;
-        final Set<Cave> actualLinkedCavesToFirstCave = firstCave.getLinkedCaves();
-        assertEquals(actualLinkedCavesToFirstCave.size(), connectedCavesCount);
+        for(int caveLinkIndexToTest:caveLinkIndexesToTest){
+            final Cave firstCave = mapCaves.get(
+                    caveLinkIndexToTest);
 
-        final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[firstCaveIndex];
+            final int connectedCavesCount = 3;
+            final Set<Cave> actualLinkedCavesToFirstCave = firstCave.getLinkedCaves();
+            assertEquals(actualLinkedCavesToFirstCave.size(), connectedCavesCount);
 
-        for(int caveLink:expectedLinkedCavesToFirstCave){
-            assertTrue(actualLinkedCavesToFirstCave.contains(new Cave(caveLink+1)));
+            final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[caveLinkIndexToTest];
+
+            for(int caveLink:expectedLinkedCavesToFirstCave){
+                assertTrue(actualLinkedCavesToFirstCave.contains(new Cave(caveLink+1)));
+            }
         }
-
     }
 
 }
