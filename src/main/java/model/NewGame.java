@@ -23,14 +23,19 @@ public class NewGame implements Game{
     @Override
     public void startGame(){
         buildGameMap();
+        initializePlayer();
         setPlayerInitialCave();
 
     }
 
-    private void setPlayerInitialCave() {
+    private void initializePlayer() {
         player = new Player();
         final String playerId="The Player";
         player.setId(playerId);
+        setPlayerInitialCave();
+    }
+
+    private void setPlayerInitialCave() {
         int playerRandomCaveIndex=this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
         Cave playerCave = gameMap.getCaves().get(playerRandomCaveIndex);
         player.setCave(playerCave);
