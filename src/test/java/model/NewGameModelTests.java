@@ -23,7 +23,6 @@ public class NewGameModelTests {
         assertEquals(gameMap.getCaves().size(), GameInitialConfigurations.NUMBER_OF_CAVES);
     }
 
-    //TODO write a test to check that cave links are correct
     @Test
     public void testThatGameMapInitializationProducedTheCorrectCaveLinks() {
         NewGame game = new NewGame();
@@ -41,6 +40,9 @@ public class NewGameModelTests {
 
         final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[firstCaveIndex];
 
+        for(int caveLink:expectedLinkedCavesToFirstCave){
+            assertTrue(actualLinkedCavesToFirstCave.contains(new Cave(caveLink+1)));
+        }
 
     }
 
