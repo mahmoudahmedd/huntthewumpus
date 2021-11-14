@@ -106,4 +106,35 @@ public class NewGameModelTests {
         assertTrue(wumpusCave.getGameObjects().contains(wumpus));
 
     }
+
+    @Test
+    public void testThatThreeBatsAreAddedToGaveGameMap() {
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
+        int[] batsStartingCavesIndexes = {firstBatStartingCaveIndex, secondBatStartingCaveIndex, thirdBatStartingCaveIndex};
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex
+                );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        List<Bat> listOfBats = game.getThreeBats();
+        for(int i = 0; i < batsStartingCavesIndexes.length; i++) {
+            assertEquals(batsStartingCavesIndexes[i], listOfBats.get(i).getCave().getNumber());
+        }
+
+        for(int i = 0; i < listOfBats.size(); i++) {
+            Cave batCave= game.getGameMap().getCaves().get(batsStartingCavesIndexes[i]);
+            assertTrue(batCave.getGameObjects().contains(listOfBats.get(i)));
+        }
+    }
 }

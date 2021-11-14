@@ -12,4 +12,5 @@ public interface GameInitialConfigurations {
     int NUMBER_OF_CAVES=20;
     String PLAYER_ID = "The player";
     String WUMPUS_ID = "The Wumpus";
+    int NUMBER_OF_BATS = 3;
 }

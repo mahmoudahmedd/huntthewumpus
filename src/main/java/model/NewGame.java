@@ -11,9 +11,10 @@ public class NewGame implements Game{
     RandomNumberGenerator randomNumberGenerator;
     Player player;
     private Wumpus wumpus;
+    private List<Bat> bats;
 
     public NewGame() {
-        this.randomNumberGenerator=new RandomNumberGenerator();
+        this.randomNumberGenerator = new RandomNumberGenerator();
     }
 
     public NewGame(RandomNumberGenerator randomNumberGenerator) {
@@ -25,7 +26,16 @@ public class NewGame implements Game{
         buildGameMap();
         initializePlayer();
         initializeWumpus();
+        initializeBats();
+    }
 
+    private void initializeBats() {
+        bats = new ArrayList<>();
+        for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_BATS; index++) {
+            bats.add(new Bat());
+            bats.get(index).setId("The Bat" + " " + index);
+            setGameObjectInitialCave(bats.get(index));
+        }
     }
 
     private void initializePlayer() {
@@ -123,5 +133,9 @@ public class NewGame implements Game{
 
     public Wumpus getWumpus() {
         return this.wumpus;
+    }
+
+    public List<Bat> getThreeBats() {
+        return this.bats;
     }
 }
