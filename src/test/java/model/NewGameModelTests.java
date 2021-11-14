@@ -67,4 +67,21 @@ public class NewGameModelTests {
         final int actualPlayerCaveIndex = game.getPlayerCave();
         assertEquals(playerStartingCaveIndex, actualPlayerCaveIndex);
     }
+
+    @Test
+    public void testThatPlayerCaveIsAddedToGameMap() {
+        final int playerStartingCaveIndex = 9;
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex);
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(playerStartingCaveIndex, actualPlayerCaveIndex);
+
+        Cave playerCave=game.getGameMap().getCaves().get(playerStartingCaveIndex);
+        Player player=game.getPlayer();
+        assertTrue(playerCave.getGameObjects().get(0).equals(player));
+    }
 }

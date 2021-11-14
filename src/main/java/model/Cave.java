@@ -5,10 +5,12 @@ import java.util.*;
 public class Cave {
     private int number;
     private Set<Cave> linkedCaves;
+    private List<GameObject> gameObjects;
 
     public Cave(int number){
         this.number = number;
         this.linkedCaves = new HashSet<>();
+        this.gameObjects=new ArrayList<>();
     }
 
     @Override
@@ -34,5 +36,13 @@ public class Cave {
 
     public int getNumber() {
         return number;
+    }
+
+    public List<GameObject> getGameObjects() {
+        return this.gameObjects;
+    }
+
+    public void addGameObject(GameObject gameObject) {
+        this.gameObjects.add(gameObject);
     }
 }

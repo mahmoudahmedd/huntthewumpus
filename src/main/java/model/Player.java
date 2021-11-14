@@ -1,6 +1,8 @@
 package model;
 
-public class Player {
+import java.util.Objects;
+
+public class Player extends GameObject{
     private Cave cave;
 
     public void setCave(Cave cave) {
@@ -10,4 +12,5 @@ public class Player {
     public Cave getCave() {
         return cave;
     }
+
 }

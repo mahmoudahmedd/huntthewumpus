@@ -4,6 +4,7 @@ import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class NewGame implements Game{
 
@@ -28,8 +29,12 @@ public class NewGame implements Game{
 
     private void setPlayerInitialCave() {
         player = new Player();
-        Cave cave = new Cave(this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES));
-        player.setCave(cave);
+        final String playerId="The Player";
+        player.setId(playerId);
+        int playerRandomCaveIndex=this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
+        Cave playerCave = gameMap.getCaves().get(playerRandomCaveIndex);
+        player.setCave(playerCave);
+        playerCave.addGameObject(player);
     }
 
     private void buildGameMap() {
@@ -94,5 +99,9 @@ public class NewGame implements Game{
     @Override
     public int getPlayerCave() {
         return player.getCave().getNumber();
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }
