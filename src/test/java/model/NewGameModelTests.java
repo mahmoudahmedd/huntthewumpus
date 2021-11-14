@@ -177,5 +177,10 @@ public class NewGameModelTests {
 
     }
 
+    //TODO Need test for checking that hazard is not in the same cave as player
+    //TODO Need tests for checking that the same hazard is not in the same location
+    //TODO testThatPlayerAndHazardsAreNotLocatedCloseToEachOther
+    //TODO Implement same test cases as those in presenter
+
     
 }
