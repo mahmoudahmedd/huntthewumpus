@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public abstract class GameObject {
     String id;
+    private Cave cave;
 
     public void setId(String id) {
         this.id=id;
@@ -20,5 +21,13 @@ public abstract class GameObject {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void setCave(Cave cave) {
+        this.cave = cave;
+    }
+
+    public Cave getCave() {
+        return cave;
     }
 }

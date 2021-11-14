@@ -101,5 +101,9 @@ public class NewGameModelTests {
         final int actualWumpusCaveIndex = game.getWumpusCave();
         assertEquals(actualWumpusCaveIndex, wumpusStartingCaveIndex);
 
+        Cave wumpusCave=game.getGameMap().getCaves().get(wumpusStartingCaveIndex);
+        Wumpus wumpus=game.getWumpus();
+        assertTrue(wumpusCave.getGameObjects().contains(wumpus));
+
     }
 }
