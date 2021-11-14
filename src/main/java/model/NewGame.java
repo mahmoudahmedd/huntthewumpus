@@ -10,6 +10,7 @@ public class NewGame implements Game{
     GameMap gameMap;
     RandomNumberGenerator randomNumberGenerator;
     Player player;
+    private Wumpus wumpus;
 
     public NewGame() {
         this.randomNumberGenerator=new RandomNumberGenerator();
@@ -23,6 +24,18 @@ public class NewGame implements Game{
     public void startGame(){
         buildGameMap();
         initializePlayer();
+        initializeWumpus();
+
+    }
+
+    private void initializeWumpus() {
+        Wumpus wumpus = new Wumpus();
+        int wumpusRandomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
+        Cave wumpusCave = gameMap.getCaves().get(wumpusRandomCaveIndex);
+        wumpus.setCave(wumpusCave);
+        wumpusCave.addGameObject(wumpus);
+        this.wumpus = wumpus;
+
     }
 
     private void initializePlayer() {
@@ -32,6 +45,7 @@ public class NewGame implements Game{
         setPlayerInitialCave();
     }
 
+    //TODO: Make this function generic for all GameObjects
     private void setPlayerInitialCave() {
         int playerRandomCaveIndex=this.randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
         Cave playerCave = gameMap.getCaves().get(playerRandomCaveIndex);
@@ -95,7 +109,7 @@ public class NewGame implements Game{
 
     @Override
     public int getWumpusCave() {
-        return 0;
+        return wumpus.getCave().getNumber();
     }
 
     @Override

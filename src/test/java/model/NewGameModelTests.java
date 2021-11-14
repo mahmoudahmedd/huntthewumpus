@@ -84,4 +84,22 @@ public class NewGameModelTests {
         Player player=game.getPlayer();
         assertTrue(playerCave.getGameObjects().contains(player));
     }
+
+    @Test
+    public void testThatWumpusIsAddedToCaveGameMap(){
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex);
+
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        assertEquals(actualWumpusCaveIndex, wumpusStartingCaveIndex);
+
+    }
 }
