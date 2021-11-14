@@ -1,9 +1,6 @@
 package model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Cave {
     private int number;
@@ -29,5 +26,9 @@ public class Cave {
 
     public void addLink(Cave linkedCave) {
         this.linkedCaves.add(linkedCave);
+    }
+
+    public Set<Cave> getLinkedCaves() {
+        return linkedCaves;
     }
 }

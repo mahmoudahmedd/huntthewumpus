@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class LegacyGame implements Game{
 
-    boolean gameOver;
+    boolean gameOver= true;
     int numberOfArrows;
     List<String> messages;
     int numberOfCaves;
