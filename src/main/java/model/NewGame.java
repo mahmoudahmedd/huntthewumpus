@@ -159,7 +159,9 @@ public class NewGame implements Game{
 
     @Override
     public void playerMovesToCave(int cave) {
-
+        Cave caveToMoveTo = gameMap.getCaves().get(cave);
+        player.setCave(caveToMoveTo);
+        caveToMoveTo.addGameObject(player);
     }
 
     @Override

@@ -304,6 +304,19 @@ public class NewGameModelTests {
         assertTrue(firstPitCave.getGameObjects().contains(pit));
     }
 
+    @Test
+    public void testThatThePlayerCanMoveToALinkedCave(){
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int caveIndexToMoveTo = 1;
+        game.playerMovesToCave(1);
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(caveIndexToMoveTo, actualPlayerCaveIndex);
+    }
 
     //TODO Implement same test cases as those in presenter
 }
