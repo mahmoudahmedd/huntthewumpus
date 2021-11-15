@@ -281,6 +281,8 @@ public class NewGameModelTests {
         assertTrue(wumpusCave.getGameObjects().contains(wumpus));
     }
 
+
+
     //TODO Write a test to check that hazards are not initialized near the player
     //TODO Implement same test cases as those in presenter
 
