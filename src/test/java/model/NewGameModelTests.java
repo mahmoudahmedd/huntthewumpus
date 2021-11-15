@@ -21,14 +21,13 @@ public class NewGameModelTests {
     @Mock
     RandomNumberGenerator randomNumberGenerator;
 
-
     @Test
     public void testGameMapInitializationProducedTheCorrectNumberOfCaves() {
         NewGame game = new NewGame();
         game.startGame();
         GameMap gameMap = game.getGameMap();
 
-        assertEquals(gameMap.getCaves().size(), GameInitialConfigurations.NUMBER_OF_CAVES);
+        assertEquals(GameInitialConfigurations.NUMBER_OF_CAVES,gameMap.getCaves().size());
     }
 
     @Test
@@ -46,7 +45,7 @@ public class NewGameModelTests {
 
             final int connectedCavesCount = 3;
             final Set<Cave> actualLinkedCavesToFirstCave = firstCave.getLinkedCaves();
-            assertEquals(actualLinkedCavesToFirstCave.size(), connectedCavesCount);
+            assertEquals(connectedCavesCount,actualLinkedCavesToFirstCave.size());
 
             final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[caveLinkIndexToTest];
 
@@ -100,7 +99,7 @@ public class NewGameModelTests {
         game.startGame();
 
         final int actualWumpusCaveIndex = game.getWumpusCave();
-        assertEquals(actualWumpusCaveIndex, wumpusStartingCaveIndex);
+        assertEquals(wumpusStartingCaveIndex,actualWumpusCaveIndex);
 
         Cave wumpusCave=game.getGameMap().getCaves().get(wumpusStartingCaveIndex);
         Wumpus wumpus=game.getWumpus();
@@ -178,6 +177,29 @@ public class NewGameModelTests {
     }
 
     //TODO Need test for checking that hazard is not in the same cave as player
+    @Test public void testThatWumpusIsNotInitializedInSameCaveAsPlayer(){
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingWrongCaveIndex = 9;
+        final int wumpusStartingCorrectCaveIndex = 17;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingWrongCaveIndex,
+                wumpusStartingCorrectCaveIndex
+                );
+
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        assertEquals(wumpusStartingCorrectCaveIndex,actualWumpusCaveIndex);
+
+        Cave wumpusCave=game.getGameMap().getCaves().get(wumpusStartingCorrectCaveIndex);
+        Wumpus wumpus=game.getWumpus();
+        assertTrue(wumpusCave.getGameObjects().contains(wumpus));
+    }
+
     //TODO Need tests for checking that the same hazard is not in the same location
     //TODO testThatPlayerAndHazardsAreNotLocatedCloseToEachOther
     //TODO Implement same test cases as those in presenter
