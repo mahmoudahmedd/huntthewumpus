@@ -1,6 +1,5 @@
 package model;
 
-import presenter.WumpusPresenterImpl;
 import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class LegacyGame implements Game{
     int numberOfArrows;
     List<String> messages;
     int numberOfCaves;
-    Set<Hazard>[] hazards;
+    Set<LegacyHazard>[] hazards;
     int playerCave;
     int wumpusCave;
 
@@ -46,31 +45,31 @@ public class LegacyGame implements Game{
 
     private void move() {
 
-        Set<Hazard> set = hazards[playerCave];
+        Set<LegacyHazard> set = hazards[playerCave];
 
-        if (set.contains(Hazard.Wumpus)) {
+        if (set.contains(LegacyHazard.Wumpus)) {
             messages.add("you've been eaten by the Wumpus");
             gameOver = true;
 
-        } else if (set.contains(Hazard.Pit)) {
+        } else if (set.contains(LegacyHazard.Pit)) {
             messages.add("you fell into a pit");
             gameOver = true;
 
-        } else if (set.contains(Hazard.Bat)) {
+        } else if (set.contains(LegacyHazard.Bat)) {
             messages.add("a bat dropped you in a random cave");
 
             // teleport, but avoid 2 teleports in a row
             do {
                 setPlayerCave(getRandomCave());
-            } while (hazards[playerCave].contains(Hazard.Bat));
+            } while (hazards[playerCave].contains(LegacyHazard.Bat));
 
             // relocate the bat, but not to the player cave or a cave with a bat
-            set.remove(Hazard.Bat);
+            set.remove(LegacyHazard.Bat);
             int newCave;
             do {
                 newCave = getRandomCave();
-            } while (newCave == playerCave || hazards[newCave].contains(Hazard.Bat));
-            hazards[newCave].add(Hazard.Bat);
+            } while (newCave == playerCave || hazards[newCave].contains(LegacyHazard.Bat));
+            hazards[newCave].add(LegacyHazard.Bat);
 
             // re-evaluate
             move();
@@ -79,7 +78,7 @@ public class LegacyGame implements Game{
 
             // look around
             for (int link : GameInitialConfigurations.CAVE_LINKS[playerCave]) {
-                for (Hazard hazard : hazards[link])
+                for (LegacyHazard hazard : hazards[link])
                     messages.add(hazard.warning);
             }
         }
@@ -89,7 +88,7 @@ public class LegacyGame implements Game{
     @Override
     public void playerShootsToCave(int cave) {
         final int maximumNumberForCalculatingWumpusWakeupProbability=4;
-        if (hazards[cave].contains(Hazard.Wumpus)) {
+        if (hazards[cave].contains(LegacyHazard.Wumpus)) {
             messages.add("You win! You've killed the Wumpus!");
             gameOver = true;
 
@@ -100,7 +99,7 @@ public class LegacyGame implements Game{
                 gameOver = true;
 
             } else if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
-                hazards[wumpusCave].remove(Hazard.Wumpus);
+                hazards[wumpusCave].remove(LegacyHazard.Wumpus);
                 final int numberOfLinkedCaves=3;
                 wumpusCave = GameInitialConfigurations.CAVE_LINKS[wumpusCave][randomNumberGenerator.generateNumber(numberOfLinkedCaves)];
 
@@ -110,7 +109,7 @@ public class LegacyGame implements Game{
 
                 } else {
                     messages.add("You woke the Wumpus and it moved");
-                    hazards[wumpusCave].add(Hazard.Wumpus);
+                    hazards[wumpusCave].add(LegacyHazard.Wumpus);
                 }
             }
         }
@@ -126,12 +125,12 @@ public class LegacyGame implements Game{
     private void initializeHazards() {
         hazards = new Set[numberOfCaves];
         for (int i = 0; i < numberOfCaves; i++){
-            hazards[i] = EnumSet.noneOf(Hazard.class);
+            hazards[i] = EnumSet.noneOf(LegacyHazard.class);
         }
 
         // hazards can share caves (unless they are identical)
         int[] ordinals = {0, 1, 1, 1, 2, 2};
-        Hazard[] values = Hazard.values();
+        LegacyHazard[] values = LegacyHazard.values();
         for (int ord : ordinals) {
             int cave;
             do {
