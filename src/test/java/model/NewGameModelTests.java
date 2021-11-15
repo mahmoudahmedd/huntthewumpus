@@ -225,7 +225,6 @@ public class NewGameModelTests {
     @Test
     public void testThatPitsAreNotInitializedAtSameLocation(){
         final int secondWrongPitCave = 3;
-
         final int secondCorrectPitCave = 13;
         int[] correctPitsInCavesIndexes = {FIRST_PIT_CAVE, secondCorrectPitCave};
 

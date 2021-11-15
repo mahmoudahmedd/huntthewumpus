@@ -63,36 +63,40 @@ public class NewGame implements Game{
 
     private void setGameObjectInitialCave(GameObject gameObject) {
         Cave cave = getInitialRandomCave();
-        Cave playerCave=player.getCave();
+
+        if(caveIsNotValidForGameObject(gameObject,cave)){
+            setGameObjectInitialCave(gameObject);
+        } else{
+            gameObject.setCave(cave);
+            cave.addGameObject(gameObject);
+        }
+
+    }
+
+    private boolean caveIsNotValidForGameObject(GameObject gameObject, Cave cave) {
+        boolean isNotCaveValidForGameObject=false;
+
+        Cave playerCave= player.getCave();
+
         if(playerCave!=null){
-            if(cave.equals(playerCave)){
-                setGameObjectInitialCave(gameObject);
-                return;
-            }
+            isNotCaveValidForGameObject=cave.equals(playerCave);
         }
 
         if(gameObject instanceof Bat){
             for(Bat bat:bats){
                 Cave batCave=bat.getCave();
-                if(cave.equals(batCave)){
-                    setGameObjectInitialCave(gameObject);
-                    return;
-                }
+                isNotCaveValidForGameObject=cave.equals(batCave);
+                break;
             }
-        }
-
-        if(gameObject instanceof Pit){
+        } else if(gameObject instanceof Pit){
             for(Pit pit:pits){
                 Cave pitCave=pit.getCave();
-                if(cave.equals(pitCave)){
-                    setGameObjectInitialCave(gameObject);
-                    return;
-                }
+                isNotCaveValidForGameObject=cave.equals(pitCave);
+                break;
             }
         }
 
-        gameObject.setCave(cave);
-        cave.addGameObject(gameObject);
+        return isNotCaveValidForGameObject;
     }
 
 
