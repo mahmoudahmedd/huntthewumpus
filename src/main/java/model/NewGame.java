@@ -3,7 +3,9 @@ package model;
 import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewGame implements Game{
 
@@ -13,6 +15,7 @@ public class NewGame implements Game{
     private Wumpus wumpus;
     private List<Bat> bats;
     private List<Pit> pits;
+    private Map<String,List<? extends GameObject>> hazardsMap=new HashMap<>();
 
     public NewGame() {
         this.randomNumberGenerator = new RandomNumberGenerator();
@@ -31,23 +34,6 @@ public class NewGame implements Game{
         initializePits();
     }
 
-    private void initializeBats() {
-        bats = new ArrayList<>();
-        for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_BATS; index++) {
-            bats.add(new Bat());
-            bats.get(index).setId(GameInitialConfigurations.BAT_ID_PREFIX + index);
-            setGameObjectInitialCave(bats.get(index));
-        }
-    }
-
-    private void initializePits() {
-        pits = new ArrayList<>();
-        for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_PITS; index++) {
-            pits.add(new Pit());
-            pits.get(index).setId(GameInitialConfigurations.PITS_ID_PREFIX + index);
-            setGameObjectInitialCave(pits.get(index));
-        }
-    }
     private void initializePlayer() {
         player = new Player();
         player.setId(GameInitialConfigurations.PLAYER_ID);
@@ -58,7 +44,30 @@ public class NewGame implements Game{
         wumpus = new Wumpus();
         wumpus.setId(GameInitialConfigurations.WUMPUS_ID);
         setGameObjectInitialCave(wumpus);
+        List<Wumpus> wumpusList=new ArrayList<>();
+        wumpusList.add(wumpus);
+        hazardsMap.put(Wumpus.class.getSimpleName(),wumpusList);
+    }
 
+    private void initializeBats() {
+        bats = new ArrayList<>();
+        for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_BATS; index++) {
+            bats.add(new Bat());
+            bats.get(index).setId(GameInitialConfigurations.BAT_ID_PREFIX + index);
+            setGameObjectInitialCave(bats.get(index));
+            hazardsMap.put(Bat.class.getSimpleName(),bats);
+        }
+
+    }
+
+    private void initializePits() {
+        pits = new ArrayList<>();
+        for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_PITS; index++) {
+            pits.add(new Pit());
+            pits.get(index).setId(GameInitialConfigurations.PITS_ID_PREFIX + index);
+            setGameObjectInitialCave(pits.get(index));
+            hazardsMap.put(Pit.class.getSimpleName(),pits);
+        }
     }
 
     private void setGameObjectInitialCave(GameObject gameObject) {
@@ -74,29 +83,35 @@ public class NewGame implements Game{
     }
 
     private boolean caveIsNotValidForGameObject(GameObject gameObject, Cave cave) {
-        boolean isNotCaveValidForGameObject=false;
+        if(!isGameObjectInTheSameCaveAsPlayer(cave)){
+            return isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(gameObject,cave);
+        }
 
+        return true;
+    }
+
+    private boolean isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(GameObject gameObject, Cave cave) {
+            List<? extends GameObject> hazardsList=hazardsMap.get(gameObject.getClass().getSimpleName());
+            if(hazardsList!=null){
+                for(GameObject hazard:hazardsList){
+                    Cave hazardCave=hazard.getCave();
+                    if(cave.equals(hazardCave)){
+                        return true;
+                    }
+                }
+            }
+
+        return false;
+    }
+
+    private boolean isGameObjectInTheSameCaveAsPlayer(Cave cave) {
         Cave playerCave= player.getCave();
 
         if(playerCave!=null){
-            isNotCaveValidForGameObject=cave.equals(playerCave);
+            return cave.equals(playerCave);
         }
 
-        if(gameObject instanceof Bat){
-            for(Bat bat:bats){
-                Cave batCave=bat.getCave();
-                isNotCaveValidForGameObject=cave.equals(batCave);
-                break;
-            }
-        } else if(gameObject instanceof Pit){
-            for(Pit pit:pits){
-                Cave pitCave=pit.getCave();
-                isNotCaveValidForGameObject=cave.equals(pitCave);
-                break;
-            }
-        }
-
-        return isNotCaveValidForGameObject;
+        return false;
     }
 
 
