@@ -254,6 +254,32 @@ public class NewGameModelTests {
         }
 
     }
+    @Test
+    public void testThatWumpusIsNotInitializedInTheCaveLinkedToThePlayer() {
+        final int wumpusStartingWrongCaveIndex = 1;
+        final int wumpusStartingCorrectCaveIndex = 17;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                PLAYER_STARTING_CAVE_INDEX,
+                wumpusStartingWrongCaveIndex,
+                wumpusStartingCorrectCaveIndex,
+                FIRST_BAT_STARTING_CAVE_INDEX,
+                SECOND_BAT_STARTING_CAVE_INDEX,
+                THIRD_BAT_STARTING_CAVE_INDEX,
+                FIRST_PIT_CAVE,
+                SECOND_PIT_CAVE
+        );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        assertEquals(wumpusStartingCorrectCaveIndex,actualWumpusCaveIndex);
+
+        Cave wumpusCave=game.getGameMap().getCaves().get(wumpusStartingCorrectCaveIndex);
+        Wumpus wumpus=game.getWumpus();
+        assertTrue(wumpusCave.getGameObjects().contains(wumpus));
+    }
 
     //TODO Write a test to check that hazards are not initialized near the player
     //TODO Implement same test cases as those in presenter

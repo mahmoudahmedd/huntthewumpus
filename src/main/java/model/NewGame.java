@@ -2,10 +2,7 @@ package model;
 
 import utilities.RandomNumberGenerator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class NewGame implements Game{
 
@@ -84,10 +81,17 @@ public class NewGame implements Game{
 
     private boolean caveIsNotValidForGameObject(GameObject gameObject, Cave cave) {
         if(!isGameObjectInTheSameCaveAsPlayer(cave)){
-            return isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(gameObject,cave);
+            return isHazardousGameObjectLocatedNearPlayerAsItsLikes(cave) ||
+                    isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(gameObject,cave);
         }
 
         return true;
+    }
+
+    private boolean isHazardousGameObjectLocatedNearPlayerAsItsLikes(Cave cave) {
+        Set<Cave> linkedCaves = cave.getLinkedCaves();
+        Cave playeCave = player.getCave();
+        return linkedCaves.contains(playeCave);
     }
 
     private boolean isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(GameObject gameObject, Cave cave) {
