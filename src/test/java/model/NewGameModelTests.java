@@ -316,6 +316,13 @@ public class NewGameModelTests {
 
         final int actualPlayerCaveIndex = game.getPlayerCave();
         assertEquals(caveIndexToMoveTo, actualPlayerCaveIndex);
+
+        Cave currentPlayerCave = game.getGameMap().getCaves().get(caveIndexToMoveTo);
+        Player player = game.getPlayer();
+        assertTrue(currentPlayerCave.getGameObjects().contains(player));
+
+        Cave pastPlayerCave = game.getGameMap().getCaves().get(PLAYER_STARTING_CAVE_INDEX);
+        assertFalse(pastPlayerCave.getGameObjects().contains(player));
     }
 
     //TODO Implement same test cases as those in presenter

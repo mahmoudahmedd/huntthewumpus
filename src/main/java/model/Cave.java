@@ -45,4 +45,8 @@ public class Cave {
     public void addGameObject(GameObject gameObject) {
         this.gameObjects.add(gameObject);
     }
+
+    public void removeGameObject(GameObject gameObject) {
+        this.gameObjects.remove(gameObject);
+    }
 }
