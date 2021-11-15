@@ -313,27 +313,24 @@ public class NewGameModelTests {
         final int actualWumpusCaveIndex = game.getWumpusCave();
         assertEquals(wumpusStartingCorrectCaveIndex,actualWumpusCaveIndex);
 
-        final int actualFirstBatCaveIndex = game.getBats().get(0).getCave().getNumber();
-        assertEquals(firstBatStartingCorrectCaveIndex,actualFirstBatCaveIndex);
-
-        final int actualFirstPitCaveIndex = game.getPits().get(0).getCave().getNumber();
-        assertEquals(firstPitStartingCorrectCaveIndex,actualFirstPitCaveIndex);
-
         Cave wumpusCave =game.getGameMap().getCaves().get(wumpusStartingCorrectCaveIndex);
         Wumpus wumpus= game.getWumpus();
         assertTrue(wumpusCave.getGameObjects().contains(wumpus));
 
+        final int actualFirstBatCaveIndex = game.getBats().get(0).getCave().getNumber();
+        assertEquals(firstBatStartingCorrectCaveIndex,actualFirstBatCaveIndex);
+
         Cave firstBatCave = game.getGameMap().getCaves().get(firstBatStartingCorrectCaveIndex);
         Bat bat = game.getBats().get(0);
         assertTrue(firstBatCave.getGameObjects().contains(bat));
+
+        final int actualFirstPitCaveIndex = game.getPits().get(0).getCave().getNumber();
+        assertEquals(firstPitStartingCorrectCaveIndex,actualFirstPitCaveIndex);
 
         Cave firstPitCave = game.getGameMap().getCaves().get(firstPitStartingCorrectCaveIndex);
         Pit pit = game.getPits().get(0);
         assertTrue(firstPitCave.getGameObjects().contains(pit));
     }
 
-    //TODO Write a test to check that hazards are not initialized near the player
     //TODO Implement same test cases as those in presenter
-
-    
 }

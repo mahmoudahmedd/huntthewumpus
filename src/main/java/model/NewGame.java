@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 public class NewGame implements Game{
 
     private GameMap gameMap;
@@ -95,8 +94,8 @@ public class NewGame implements Game{
 
     private boolean isHazardousGameObjectLocatedNearPlayerAsItsLikes(Cave cave) {
         Set<Cave> linkedCaves = cave.getLinkedCaves();
-        Cave playeCave = player.getCave();
-        return linkedCaves.contains(playeCave);
+        Cave playerCave = player.getCave();
+        return linkedCaves.contains(playerCave);
     }
 
     private boolean isHazardousGameObjectLocatedInTheSameCaveAsItsLikes(GameObject gameObject, Cave cave) {
