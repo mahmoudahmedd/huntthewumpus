@@ -368,6 +368,27 @@ public class NewGameModelTests {
         assertEquals(gameIsOver, actualGameState);
 
     }
+    @Test
+    public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus() {
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        int[] journeyPath = new int[] {10};
+
+        for(int cave:journeyPath){
+            game.playerMovesToCave(cave);
+        }
+
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsNotOver = false;
+        assertEquals(gameIsNotOver, actualGameState);
+
+        List<String> messages = game.getMessages();
+        assertTrue(messages.contains(game.getWumpus().getWarning()));
+    }
 
     //TODO Implement same test cases as those in presenter
 }

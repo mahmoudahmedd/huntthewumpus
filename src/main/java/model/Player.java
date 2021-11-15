@@ -1,7 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 public class Player extends GameObject {
     private boolean dead;
@@ -12,8 +13,22 @@ public class Player extends GameObject {
             this.setCave(caveToMoveTo);
             caveToMoveTo.addGameObject(this);
         }
-
         executePostMoveActions();
+    }
+
+    public List<String> getWarnings() {
+        List<String> warnings = new ArrayList<>();
+        Set<Cave> linkedCaves = this.getCave().getLinkedCaves();
+
+        for(Cave linkedCave: linkedCaves) {
+            List<GameObject> gameObjects = linkedCave.getGameObjects();
+            for(GameObject gameObject : gameObjects){
+                if(gameObject instanceof Wumpus){
+                    warnings.add(((Wumpus) gameObject).warning);
+                }
+            }
+        }
+        return warnings;
     }
 
     private void executePostMoveActions() {

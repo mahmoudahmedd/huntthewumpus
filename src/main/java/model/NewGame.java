@@ -180,7 +180,7 @@ public class NewGame implements Game{
 
     @Override
     public List<String> getMessages() {
-        return null;
+        return player.getWarnings();
     }
 
     @Override
