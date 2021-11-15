@@ -170,7 +170,7 @@ public class NewGame implements Game{
 
     @Override
     public boolean isGameOver() {
-        return false;
+        return player.isDead();
     }
 
     @Override

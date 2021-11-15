@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class NewGameModelTests {
 
     public static final int PLAYER_STARTING_CAVE_INDEX = 9;
-    public static final int WUMPUS_STARTING_CAVE_INDEX = 15;
+    public static final int WUMPUS_STARTING_CAVE_INDEX = 18;
     public static final int FIRST_BAT_STARTING_CAVE_INDEX = 19;
     public static final int SECOND_BAT_STARTING_CAVE_INDEX = 13;
     public static final int THIRD_BAT_STARTING_CAVE_INDEX = 14;
@@ -345,6 +345,28 @@ public class NewGameModelTests {
 
         Cave pastPlayerCave = game.getGameMap().getCaves().get(PLAYER_STARTING_CAVE_INDEX);
         assertTrue(pastPlayerCave.getGameObjects().contains(player));
+    }
+
+
+    @Test
+    public void testMovingPlayerToCaveThatHasAWumups(){
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        int[] journeyPath = new int[] {10, 18};
+
+        for(int cave:journeyPath){
+            game.playerMovesToCave(cave);
+        }
+
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+
+        assertEquals(gameIsOver, actualGameState);
+
     }
 
     //TODO Implement same test cases as those in presenter
