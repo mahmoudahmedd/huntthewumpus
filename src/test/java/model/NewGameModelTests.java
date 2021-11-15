@@ -149,7 +149,7 @@ public class NewGameModelTests {
         final int thirdBatStartingCaveIndex = 14;
         final int firstPitCave = 3;
         final int secondPitCave = 13;
-        int[] PitsInCavesIndexes = {firstPitCave, secondPitCave};
+        int[] pitsInCavesIndexes = {firstPitCave, secondPitCave};
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
@@ -169,8 +169,8 @@ public class NewGameModelTests {
         assertEquals(GameInitialConfigurations.NUMBER_OF_PITS,listOfPits.size());
 
         for(int i = 0; i < listOfPits.size(); i++) {
-            assertEquals(PitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
-            Cave PitInCave= game.getGameMap().getCaves().get(PitsInCavesIndexes[i]);
+            assertEquals(pitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
+            Cave PitInCave= game.getGameMap().getCaves().get(pitsInCavesIndexes[i]);
             Pit pit = listOfPits.get(i);
             assertTrue(PitInCave.getGameObjects().contains(pit));
         }
