@@ -312,7 +312,7 @@ public class NewGameModelTests {
         game.startGame();
 
         final int caveIndexToMoveTo = 1;
-        game.playerMovesToCave(1);
+        game.playerMovesToCave(caveIndexToMoveTo);
 
         final int actualPlayerCaveIndex = game.getPlayerCave();
         assertEquals(caveIndexToMoveTo, actualPlayerCaveIndex);
@@ -323,6 +323,28 @@ public class NewGameModelTests {
 
         Cave pastPlayerCave = game.getGameMap().getCaves().get(PLAYER_STARTING_CAVE_INDEX);
         assertFalse(pastPlayerCave.getGameObjects().contains(player));
+    }
+
+    @Test
+    public void testMoveToNonConnectedCave() {
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int caveIndexToMoveTo = 17;
+        game.playerMovesToCave(caveIndexToMoveTo);
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertNotEquals(caveIndexToMoveTo, actualPlayerCaveIndex);
+        assertEquals(PLAYER_STARTING_CAVE_INDEX, actualPlayerCaveIndex);
+
+        Cave currentPlayerCave = game.getGameMap().getCaves().get(caveIndexToMoveTo);
+        Player player = game.getPlayer();
+        assertFalse(currentPlayerCave.getGameObjects().contains(player));
+
+        Cave pastPlayerCave = game.getGameMap().getCaves().get(PLAYER_STARTING_CAVE_INDEX);
+        assertTrue(pastPlayerCave.getGameObjects().contains(player));
     }
 
     //TODO Implement same test cases as those in presenter
