@@ -81,6 +81,16 @@ public class NewGame implements Game{
             }
         }
 
+        if(gameObject instanceof Pit){
+            for(Pit pit:pits){
+                Cave pitCave=pit.getCave();
+                if(cave.equals(pitCave)){
+                    setGameObjectInitialCave(gameObject);
+                    return;
+                }
+            }
+        }
+
         gameObject.setCave(cave);
         cave.addGameObject(gameObject);
     }

@@ -121,13 +121,17 @@ public class NewGameModelTests {
         final int firstBatStartingCaveIndex = 19;
         final int secondBatStartingCaveIndex = 13;
         final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
                 wumpusStartingCaveIndex,
                 firstBatStartingCaveIndex,
                 secondBatStartingCaveIndex,
-                thirdBatStartingCaveIndex
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
         );
 
 
@@ -150,6 +154,8 @@ public class NewGameModelTests {
         final int firstBatStartingCaveIndex = 19;
         final int secondBatStartingCaveIndex = 13;
         final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
         int[] batsStartingCavesIndexes = {firstBatStartingCaveIndex, secondBatStartingCaveIndex, thirdBatStartingCaveIndex};
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
@@ -157,7 +163,9 @@ public class NewGameModelTests {
                 wumpusStartingCaveIndex,
                 firstBatStartingCaveIndex,
                 secondBatStartingCaveIndex,
-                thirdBatStartingCaveIndex
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
                 );
 
         NewGame game = new NewGame(randomNumberGenerator);
@@ -220,6 +228,9 @@ public class NewGameModelTests {
         final int firstBatStartingCaveIndex = 19;
         final int secondBatStartingCaveIndex = 13;
         final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
+
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
@@ -227,7 +238,9 @@ public class NewGameModelTests {
                 wumpusStartingCorrectCaveIndex,
                 firstBatStartingCaveIndex,
                 secondBatStartingCaveIndex,
-                thirdBatStartingCaveIndex
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
                 );
 
         NewGame game = new NewGame(randomNumberGenerator);
@@ -255,6 +268,8 @@ public class NewGameModelTests {
         final int thirdBatCorrectStartingCaveIndex = 14;
         int[] batsStartingCavesIndexes = {firstBatStartingCaveIndex, secondBatCorrectStartingCaveIndex, thirdBatCorrectStartingCaveIndex};
 
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
@@ -263,7 +278,9 @@ public class NewGameModelTests {
                 secondBatWrongStartingCaveIndex,
                 secondBatCorrectStartingCaveIndex,
                 thirdBatWrongStartingCaveIndex,
-                thirdBatCorrectStartingCaveIndex
+                thirdBatCorrectStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
         );
 
         NewGame game = new NewGame(randomNumberGenerator);
@@ -279,6 +296,48 @@ public class NewGameModelTests {
             Bat bat = listOfBats.get(i);
             assertTrue(batCave.getGameObjects().contains(bat));
         }
+    }
+
+    @Test
+    public void testThatPitsAreNotInitializedAtSameLocation(){
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
+
+        final int firstPitCave = 3;
+
+        final int secondWrongPitCave = 3;
+
+        final int secondCorrectPitCave = 13;
+        int[] correctPitsInCavesIndexes = {firstPitCave, secondCorrectPitCave};
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondWrongPitCave,
+                secondCorrectPitCave
+        );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        List<Pit> listOfPits = game.getPits();
+
+        assertEquals(GameInitialConfigurations.NUMBER_OF_PITS,listOfPits.size());
+
+        for(int i = 0; i < listOfPits.size(); i++) {
+            assertEquals(correctPitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
+            Cave PitInCave= game.getGameMap().getCaves().get(correctPitsInCavesIndexes[i]);
+            Pit pit = listOfPits.get(i);
+            assertTrue(PitInCave.getGameObjects().contains(pit));
+        }
+
     }
 
     //TODO Write a test to check that hazards are not initialized near the player
