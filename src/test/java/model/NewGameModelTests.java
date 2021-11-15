@@ -58,8 +58,22 @@ public class NewGameModelTests {
     @Test
     public void testThatPlayerIsAddedToInitialCave() {
         final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
+
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
-                playerStartingCaveIndex);
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
+        );
 
         NewGame game = new NewGame(randomNumberGenerator);
         game.startGame();
@@ -71,8 +85,23 @@ public class NewGameModelTests {
     @Test
     public void testThatPlayerCaveIsAddedToGameMap() {
         final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
+        final int firstPitCave = 3;
+        final int secondPitCave = 13;
+        int[] pitsInCavesIndexes = {firstPitCave, secondPitCave};
+
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
-                playerStartingCaveIndex);
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave
+        );
 
         NewGame game = new NewGame(randomNumberGenerator);
         game.startGame();
@@ -176,7 +205,6 @@ public class NewGameModelTests {
 
     }
 
-    //TODO Need test for checking that hazard is not in the same cave as player
     @Test public void testThatWumpusIsNotInitializedInSameCaveAsPlayer(){
         final int playerStartingCaveIndex = 9;
         final int wumpusStartingWrongCaveIndex = 9;
@@ -187,7 +215,6 @@ public class NewGameModelTests {
                 wumpusStartingWrongCaveIndex,
                 wumpusStartingCorrectCaveIndex
                 );
-
 
         NewGame game = new NewGame(randomNumberGenerator);
         game.startGame();

@@ -63,6 +63,13 @@ public class NewGame implements Game{
 
     private void setGameObjectInitialCave(GameObject gameObject) {
         Cave cave = getInitialRandomCave();
+        Cave playerCave=player.getCave();
+        if(playerCave!=null){
+            if(cave.equals(playerCave)){
+                setGameObjectInitialCave(gameObject);
+                return;
+            }
+        }
         gameObject.setCave(cave);
         cave.addGameObject(gameObject);
     }
