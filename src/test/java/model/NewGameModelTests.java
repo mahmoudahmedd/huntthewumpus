@@ -118,10 +118,17 @@ public class NewGameModelTests {
     public void testThatWumpusIsAddedToCaveGameMap(){
         final int playerStartingCaveIndex = 9;
         final int wumpusStartingCaveIndex = 15;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
-                wumpusStartingCaveIndex);
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex
+        );
 
 
         NewGame game = new NewGame(randomNumberGenerator);
@@ -205,15 +212,22 @@ public class NewGameModelTests {
 
     }
 
-    @Test public void testThatWumpusIsNotInitializedInSameCaveAsPlayer(){
+    @Test
+    public void testThatWumpusIsNotInitializedInSameCaveAsPlayer(){
         final int playerStartingCaveIndex = 9;
         final int wumpusStartingWrongCaveIndex = 9;
         final int wumpusStartingCorrectCaveIndex = 17;
+        final int firstBatStartingCaveIndex = 19;
+        final int secondBatStartingCaveIndex = 13;
+        final int thirdBatStartingCaveIndex = 14;
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCaveIndex,
                 wumpusStartingWrongCaveIndex,
-                wumpusStartingCorrectCaveIndex
+                wumpusStartingCorrectCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                thirdBatStartingCaveIndex
                 );
 
         NewGame game = new NewGame(randomNumberGenerator);
@@ -227,8 +241,47 @@ public class NewGameModelTests {
         assertTrue(wumpusCave.getGameObjects().contains(wumpus));
     }
 
-    //TODO Need tests for checking that the same hazard is not in the same location
-    //TODO testThatPlayerAndHazardsAreNotLocatedCloseToEachOther
+    @Test
+    public void testThatBatsAreNotInitializedAtSameLocation(){
+        final int playerStartingCaveIndex = 9;
+        final int wumpusStartingCaveIndex = 15;
+
+        final int firstBatStartingCaveIndex = 19;
+
+        final int secondBatWrongStartingCaveIndex = 19;
+        final int thirdBatWrongStartingCaveIndex = 19;
+
+        final int secondBatCorrectStartingCaveIndex = 13;
+        final int thirdBatCorrectStartingCaveIndex = 14;
+        int[] batsStartingCavesIndexes = {firstBatStartingCaveIndex, secondBatCorrectStartingCaveIndex, thirdBatCorrectStartingCaveIndex};
+
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatWrongStartingCaveIndex,
+                secondBatCorrectStartingCaveIndex,
+                thirdBatWrongStartingCaveIndex,
+                thirdBatCorrectStartingCaveIndex
+        );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        List<Bat> listOfBats = game.getBats();
+
+        assertEquals(GameInitialConfigurations.NUMBER_OF_BATS,listOfBats.size());
+
+        for(int i = 0; i < listOfBats.size(); i++) {
+            assertEquals(batsStartingCavesIndexes[i], listOfBats.get(i).getCave().getNumber());
+            Cave batCave= game.getGameMap().getCaves().get(batsStartingCavesIndexes[i]);
+            Bat bat = listOfBats.get(i);
+            assertTrue(batCave.getGameObjects().contains(bat));
+        }
+    }
+
+    //TODO Write a test to check that hazards are not initialized near the player
     //TODO Implement same test cases as those in presenter
 
     

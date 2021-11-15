@@ -70,6 +70,17 @@ public class NewGame implements Game{
                 return;
             }
         }
+
+        if(gameObject instanceof Bat){
+            for(Bat bat:bats){
+                Cave batCave=bat.getCave();
+                if(cave.equals(batCave)){
+                    setGameObjectInitialCave(gameObject);
+                    return;
+                }
+            }
+        }
+
         gameObject.setCave(cave);
         cave.addGameObject(gameObject);
     }
