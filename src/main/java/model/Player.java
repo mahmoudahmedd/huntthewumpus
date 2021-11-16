@@ -2,10 +2,15 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Player extends GameObject {
     private boolean dead;
+    private Arrow arrow;
+
+    public Player(int numberOfArrows) {
+        arrow = new Arrow();
+        this.arrow.initializeNumberOfArrows(numberOfArrows);
+    }
 
     public void move(Cave caveToMoveTo) {
         if (this.isMoveValid(caveToMoveTo)) {
@@ -41,16 +46,20 @@ public class Player extends GameObject {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Pit){
-                this.dead = true;
+                killed();
             }
         }
+    }
+
+    private void killed() {
+        this.dead = true;
     }
 
     private void executeWumpusActions() {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
-                this.dead = true;
+                killed();
             }
         }
     }
@@ -64,11 +73,24 @@ public class Player extends GameObject {
     }
 
     public void shoot(Cave caveToShoot) {
+        this.shootArrow();
         List<GameObject> gameObjects = caveToShoot.getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
-                this.dead = true;
+                killed();
             }
+        }
+    }
+
+    private void shootArrow() {
+        arrow.decrementByOne();
+
+        executePostShootActions();
+    }
+
+    private void executePostShootActions() {
+        if(arrow.getNumberOfArrows() == 0) {
+            this.killed();
         }
     }
 }

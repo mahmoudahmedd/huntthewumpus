@@ -29,6 +29,7 @@ public class NewGame implements Game{
     @Override
     public void startGame(){
         buildGameMap();
+
         initializePlayer();
         initializeWumpus();
         initializeBats();
@@ -36,7 +37,7 @@ public class NewGame implements Game{
     }
 
     private void initializePlayer() {
-        player = new Player();
+        player = new Player(GameInitialConfigurations.NUMBER_OF_ARROWS);
         player.setId(GameInitialConfigurations.PLAYER_ID);
         setGameObjectInitialCave(player);
     }

@@ -480,6 +480,28 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsNotOver);
     }
 
+    @Test
+    public void testThatPlayerRunsOutOfArrowsWithoutKillingWumpus() {
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillWakeUp = 0;
+        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
+                numberAtWhichWumpusWillWakeUp);
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int caveToShoot = 1;
+        for (int i = 0; i < GameInitialConfigurations.NUMBER_OF_ARROWS; i++) {
+            game.playerShootsToCave(caveToShoot);
+        }
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+        assertEquals(actualGameState, gameIsOver);
+    }
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO
