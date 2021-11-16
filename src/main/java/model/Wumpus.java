@@ -6,4 +6,8 @@ public class Wumpus extends GameObject {
     public String getWarning() {
         return this.warning;
     }
+
+    public void wakeup(int randomLinkedCaveIndex) {
+
+    }
 }
