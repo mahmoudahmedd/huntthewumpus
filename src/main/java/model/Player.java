@@ -80,12 +80,12 @@ public class Player extends GameObject {
                 killed();
             }
         }
+
+        executePostShootActions();
     }
 
     private void shootArrow() {
         arrow.decrementByOne();
-
-        executePostShootActions();
     }
 
     private void executePostShootActions() {
