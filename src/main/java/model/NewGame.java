@@ -93,7 +93,7 @@ public class NewGame implements Game{
     }
 
     private boolean isHazardousGameObjectLocatedNearPlayerAsItsLikes(Cave cave) {
-        Set<Cave> linkedCaves = cave.getLinkedCaves();
+        List<Cave> linkedCaves = cave.getLinkedCaves();
         Cave playerCave = player.getCave();
         return linkedCaves.contains(playerCave);
     }

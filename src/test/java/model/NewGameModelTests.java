@@ -63,7 +63,7 @@ public class NewGameModelTests {
                     caveLinkIndexToTest);
 
             final int connectedCavesCount = 3;
-            final Set<Cave> actualLinkedCavesToFirstCave = firstCave.getLinkedCaves();
+            final List<Cave> actualLinkedCavesToFirstCave = firstCave.getLinkedCaves();
             assertEquals(connectedCavesCount,actualLinkedCavesToFirstCave.size());
 
             final int[] expectedLinkedCavesToFirstCave = GameInitialConfigurations.CAVE_LINKS[caveLinkIndexToTest];
@@ -448,6 +448,37 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsNotOver);
     }
 
+    @Test
+    public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusMoves() {
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillWakeUp = 1;
+        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
+                numberAtWhichWumpusWillWakeUp);
+
+        final int numberOfLinkedCaves = 3;
+        final int wumpusLinkedCaveIndex = 2;
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
+                wumpusLinkedCaveIndex);
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int caveToShootTo = 1;
+        game.playerShootsToCave(caveToShootTo);
+
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        final int expectedWumpusCaveIndex = 17;
+        assertEquals(expectedWumpusCaveIndex, actualWumpusCaveIndex);
+
+        final Cave initialWumpusCave = game.getGameMap().getCaves().get(WUMPUS_STARTING_CAVE_INDEX);
+        assertFalse(initialWumpusCave.getGameObjects().contains(game.getWumpus()));
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsNotOver = false;
+        assertEquals(actualGameState, gameIsNotOver);
+    }
 
     //TODO Implement same test cases as those in presenter
     /*

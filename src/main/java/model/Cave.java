@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Cave {
     private int number;
-    private Set<Cave> linkedCaves;
+    private List<Cave> linkedCaves;
     private List<GameObject> gameObjects;
 
     public Cave(int number){
         this.number = number;
-        this.linkedCaves = new HashSet<>();
+        this.linkedCaves = new ArrayList<>();
         this.gameObjects=new ArrayList<>();
     }
 
@@ -30,7 +30,7 @@ public class Cave {
         this.linkedCaves.add(linkedCave);
     }
 
-    public Set<Cave> getLinkedCaves() {
+    public List<Cave> getLinkedCaves() {
         return linkedCaves;
     }
 

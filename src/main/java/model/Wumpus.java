@@ -8,6 +8,10 @@ public class Wumpus extends GameObject {
     }
 
     public void wakeup(int randomLinkedCaveIndex) {
+        this.getCave().removeGameObject(this);
 
+        Cave caveToMoveTo = (Cave) this.getCave().getLinkedCaves().toArray()[randomLinkedCaveIndex];
+        this.setCave(caveToMoveTo);
+        caveToMoveTo.addGameObject(this);
     }
 }

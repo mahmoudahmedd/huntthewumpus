@@ -19,7 +19,7 @@ public class Player extends GameObject {
 
     public List<String> getWarnings() {
         List<String> warnings = new ArrayList<>();
-        Set<Cave> linkedCaves = this.getCave().getLinkedCaves();
+        List<Cave> linkedCaves = this.getCave().getLinkedCaves();
 
         for(Cave linkedCave: linkedCaves) {
             List<GameObject> gameObjects = linkedCave.getGameObjects();
