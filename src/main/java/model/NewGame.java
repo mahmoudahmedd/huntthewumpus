@@ -122,7 +122,6 @@ public class NewGame implements Game{
         return false;
     }
 
-
     private Cave getInitialRandomCave() {
         int randomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
         return gameMap.getCaves().get(randomCaveIndex);
@@ -165,7 +164,8 @@ public class NewGame implements Game{
 
     @Override
     public void playerShootsToCave(int cave) {
-
+        Cave caveToShoot = gameMap.getCaves().get(cave);
+        player.shoot(caveToShoot);
     }
 
     @Override

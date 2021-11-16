@@ -347,7 +347,6 @@ public class NewGameModelTests {
         assertTrue(pastPlayerCave.getGameObjects().contains(player));
     }
 
-
     @Test
     public void testMovingPlayerToCaveThatHasAWumups(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
@@ -368,6 +367,7 @@ public class NewGameModelTests {
         assertEquals(gameIsOver, actualGameState);
 
     }
+
     @Test
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
@@ -407,11 +407,32 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testKillingTheWumpus(){
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        game.playerMovesToCave(10);
+
+        final int caveToShootTo = WUMPUS_STARTING_CAVE_INDEX;
+        game.playerShootsToCave(caveToShootTo);
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+        assertEquals(actualGameState, gameIsOver);
+    }
+
+
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO
     1- Add assert on gameOverMessages for testThatPlayerEnterRoomWithPit & testMovingPlayerToCaveThatHasAWumups
     2- Ask Ahmed to suggest any idea about a good design for coupling random number with player
     3- Add test for Pits & Bats warning
+    4- Re-arrange tests into logical game play order
+    5- Write a test for  shooting non-linked cave
      */
 }

@@ -62,4 +62,13 @@ public class Player extends GameObject {
     public boolean isDead() {
         return dead;
     }
+
+    public void shoot(Cave caveToShoot) {
+        List<GameObject> gameObjects = caveToShoot.getGameObjects();
+        for(GameObject gameObject : gameObjects){
+            if(gameObject instanceof Wumpus){
+                this.dead = true;
+            }
+        }
+    }
 }
