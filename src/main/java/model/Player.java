@@ -14,12 +14,21 @@ public class Player extends GameObject {
 
     public void move(Cave caveToMoveTo) {
         if (this.isMoveValid(caveToMoveTo)) {
-            this.getCave().removeGameObject(this);
-            this.setCave(caveToMoveTo);
-            caveToMoveTo.addGameObject(this);
+            changeTheCaveLocation(caveToMoveTo);
         }
 
         executePostMoveActions();
+    }
+
+    public void fly(Cave caveToMoveTo) {
+        changeTheCaveLocation(caveToMoveTo);
+        executePostMoveActions();
+    }
+
+    private void changeTheCaveLocation(Cave caveToMoveTo) {
+        this.getCave().removeGameObject(this);
+        this.setCave(caveToMoveTo);
+        caveToMoveTo.addGameObject(this);
     }
 
     public List<String> getWarnings() {

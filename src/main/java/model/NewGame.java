@@ -160,6 +160,48 @@ public class NewGame implements Game{
     public void playerMovesToCave(int cave) {
         Cave caveToMoveTo = gameMap.getCaves().get(cave);
         player.move(caveToMoveTo);
+        executeIfTheCaveContainsABat();
+    }
+
+    private void executeIfTheCaveContainsABat() {
+        Cave theCurrentCave = gameMap.getCaves().get(this.getPlayerCave());
+        if(isTheCaveContainsBats(theCurrentCave)) {
+            relocatePlayer();
+            Bat theBatThatWillBeRelocated = getBatInsideTheCaveThatWillBeRelocated(theCurrentCave);
+            relocateBat(theBatThatWillBeRelocated);
+        }
+    }
+
+    private void relocatePlayer() {
+        Cave validRandomCaveToMoveTo = getValidRelocationCave();
+        player.fly(validRandomCaveToMoveTo);
+    }
+
+    private Bat getBatInsideTheCaveThatWillBeRelocated(Cave caveToMoveTo) {
+        Bat batInCave = new Bat();
+        for(Bat bat: this.bats) {
+            if(caveToMoveTo == bat.getCave()) {
+                batInCave = bat;
+            }
+        }
+        return batInCave;
+    }
+
+    private void relocateBat(Bat batInCave) {
+        Cave validRandomCaveToMoveTo = getValidRelocationCave();
+        batInCave.move(validRandomCaveToMoveTo);
+    }
+
+    private Cave getValidRelocationCave() {
+        Cave caveToMoveTo;
+        do {
+            caveToMoveTo = getInitialRandomCave();
+        } while (caveToMoveTo.equals(player.getCave()) || isTheCaveContainsBats(caveToMoveTo));
+        return caveToMoveTo;
+    }
+
+    private boolean isTheCaveContainsBats(Cave caveToMoveTo) {
+        return caveToMoveTo.getGameObjects().stream().anyMatch(gameObject -> gameObject instanceof Bat);
     }
 
     @Override

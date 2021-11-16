@@ -537,6 +537,45 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testThatPlayerEnterRoomWithBat() {
+        final int playerDropDownCaveIndex = 8;
+        final int firstBatFinalCaveIndex = 2;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                PLAYER_STARTING_CAVE_INDEX,
+                WUMPUS_STARTING_CAVE_INDEX,
+                FIRST_BAT_STARTING_CAVE_INDEX,
+                SECOND_BAT_STARTING_CAVE_INDEX,
+                THIRD_BAT_STARTING_CAVE_INDEX,
+                FIRST_PIT_CAVE,
+                SECOND_PIT_CAVE,
+                playerDropDownCaveIndex,
+                firstBatFinalCaveIndex
+        );
+
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int[] journeyPath = {10, 11, 12, FIRST_BAT_STARTING_CAVE_INDEX};
+        for(int cave: journeyPath){
+            game.playerMovesToCave(cave);
+        }
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(playerDropDownCaveIndex, actualPlayerCaveIndex);
+
+
+        final Bat firstBat = game.getBats().get(0);
+        final Cave firstBatActualCave = firstBat.getCave();
+        assertEquals(firstBatFinalCaveIndex, firstBatActualCave.getNumber());
+
+        final Cave previousCave = game.getGameMap().getCaves().get(FIRST_BAT_STARTING_CAVE_INDEX);
+        assertFalse(previousCave.getGameObjects().contains(game.getPlayer()));
+        assertFalse(previousCave.getGameObjects().contains(firstBat));
+    }
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO
