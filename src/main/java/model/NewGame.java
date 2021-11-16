@@ -160,7 +160,10 @@ public class NewGame implements Game{
     public void playerMovesToCave(int cave) {
         Cave caveToMoveTo = gameMap.getCaves().get(cave);
         player.move(caveToMoveTo);
-        executeIfTheCaveContainsABat();
+
+        if(!isGameOver()){
+            executeIfTheCaveContainsABat();
+        }
     }
 
     private void executeIfTheCaveContainsABat() {

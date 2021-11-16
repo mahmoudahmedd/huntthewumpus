@@ -576,6 +576,23 @@ public class NewGameModelTests {
         assertFalse(previousCave.getGameObjects().contains(firstBat));
     }
 
+    @Test
+    public void testThatPlayerEnterRoomWithPitAndBat(){
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int[] journeyPath = {10, 11, 12, 13};
+        for (int caveNumber : journeyPath) {
+            game.playerMovesToCave(caveNumber);
+        }
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+        assertEquals(actualGameState, gameIsOver);
+    }
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO

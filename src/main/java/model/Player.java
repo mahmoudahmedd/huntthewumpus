@@ -51,6 +51,15 @@ public class Player extends GameObject {
         executePitsActions();
     }
 
+    private void executeWumpusActions() {
+        List<GameObject> gameObjects = this.getCave().getGameObjects();
+        for(GameObject gameObject : gameObjects){
+            if(gameObject instanceof Wumpus){
+                killed();
+            }
+        }
+    }
+
     private void executePitsActions() {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
@@ -62,15 +71,6 @@ public class Player extends GameObject {
 
     private void killed() {
         this.dead = true;
-    }
-
-    private void executeWumpusActions() {
-        List<GameObject> gameObjects = this.getCave().getGameObjects();
-        for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Wumpus){
-                killed();
-            }
-        }
     }
 
     private boolean isMoveValid(Cave caveToMoveTo) {
