@@ -390,5 +390,28 @@ public class NewGameModelTests {
         assertTrue(messages.contains(game.getWumpus().getWarning()));
     }
 
+    @Test
+    public void testThatPlayerEnterRoomWithPit() {
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int[] journeyPath = {10, 11, 2, 3};
+        for (int caveNumber : journeyPath) {
+            game.playerMovesToCave(caveNumber);
+        }
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+        assertEquals(actualGameState, gameIsOver);
+    }
+
     //TODO Implement same test cases as those in presenter
+    /*
+    TODO
+    1- Add assert on gameOverMessages for testThatPlayerEnterRoomWithPit & testMovingPlayerToCaveThatHasAWumups
+    2- Ask Ahmed to suggest any idea about a good design for coupling random number with player
+    3- Add test for Pits & Bats warning
+     */
 }

@@ -13,6 +13,7 @@ public class Player extends GameObject {
             this.setCave(caveToMoveTo);
             caveToMoveTo.addGameObject(this);
         }
+
         executePostMoveActions();
     }
 
@@ -32,6 +33,20 @@ public class Player extends GameObject {
     }
 
     private void executePostMoveActions() {
+        executeWumpusActions();
+        executePitsActions();
+    }
+
+    private void executePitsActions() {
+        List<GameObject> gameObjects = this.getCave().getGameObjects();
+        for(GameObject gameObject : gameObjects){
+            if(gameObject instanceof Pit){
+                this.dead = true;
+            }
+        }
+    }
+
+    private void executeWumpusActions() {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
