@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class NewGame implements Game{
 
@@ -178,7 +177,7 @@ public class NewGame implements Game{
 
     @Override
     public boolean isGameOver() {
-        return player.isDead();
+        return player.isDead() || wumpus.hasEatenThePlayer();
     }
 
     @Override

@@ -350,7 +350,7 @@ class WumpusPresenterTest {
     }
 
     @Test
-    public void testThatplayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer() {
+    public void testThatPlayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer() {
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
                 wumpusStartingCave,

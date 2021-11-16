@@ -502,6 +502,41 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testThatPlayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer(){
+        configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
+
+        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
+        final int numberAtWhichWumpusWillWakeUp = 1;
+        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
+                numberAtWhichWumpusWillWakeUp);
+
+        final int numberOfLinkedCaves = 3;
+        final int wumpusLinkedCaveIndex = 1;
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
+                wumpusLinkedCaveIndex);
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        game.playerMovesToCave(10);
+
+
+        final int caveToShootTo = 11;
+        game.playerShootsToCave(caveToShootTo);
+
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        final int expectedWumpusCaveIndex = 10;
+        assertEquals(expectedWumpusCaveIndex, actualWumpusCaveIndex);
+
+        final Cave initialWumpusCave = game.getGameMap().getCaves().get(WUMPUS_STARTING_CAVE_INDEX);
+        assertFalse(initialWumpusCave.getGameObjects().contains(game.getWumpus()));
+
+        final boolean actualGameState = game.isGameOver();
+        final boolean gameIsOver = true;
+        assertEquals(actualGameState, gameIsOver);
+    }
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO
