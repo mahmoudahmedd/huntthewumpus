@@ -26,9 +26,9 @@ public class Wumpus extends GameObject implements Hazard{
 
     public void wakeup(int randomLinkedCaveIndex) {
         this.move(randomLinkedCaveIndex);
-        
-        if(isWumpusInTheSameCaveWithPlayer()){
-            Optional<GameObject> player = this.getCave().getGameObjects().stream().filter(gameObject -> gameObject instanceof Player).findFirst();
+
+        Optional<GameObject> player = this.getCave().getGameObjects().stream().filter(gameObject -> gameObject instanceof Player).findFirst();
+        if(player.isPresent()){
             executeActionOnPlayer((Player) player.get());
         }
     }
@@ -39,10 +39,6 @@ public class Wumpus extends GameObject implements Hazard{
         Cave caveToMoveTo = (Cave) this.getCave().getLinkedCaves().toArray()[randomLinkedCaveIndex];
         this.setCave(caveToMoveTo);
         caveToMoveTo.addGameObject(this);
-    }
-
-    private boolean isWumpusInTheSameCaveWithPlayer() {
-        return this.getCave().getGameObjects().stream().anyMatch(gameObject -> gameObject instanceof Player);
     }
 
     @Override
