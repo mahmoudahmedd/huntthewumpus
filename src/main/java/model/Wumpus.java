@@ -5,7 +5,7 @@ import utilities.RandomNumberGenerator;
 import java.util.Optional;
 
 public class Wumpus extends GameObject implements Hazard{
-    final String warningInTheSameCave = "you've been eaten by the Wumpus";
+    final String warningInTheSameCave = "You woke the Wumpus and it ate you";
     final String warningInTheLinkedCave = "there's an awful smell";
     private final RandomNumberGenerator randomNumberGenerator;
     boolean dead;

@@ -113,6 +113,9 @@ public class Player extends GameObject {
             }
         }
 
+        if(hasNoArrows()){
+            warnings.add("You ran out of arrows");
+        }
     }
 
     public boolean hasNoArrows(){

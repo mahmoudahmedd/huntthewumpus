@@ -340,7 +340,7 @@ class WumpusPresenterTest {
             wumpusPresenter.shoot(caveToShoot);
         }
 
-        final String runningOutOfArrowsMessage = "You ran out of arrows.";
+        final String runningOutOfArrowsMessage = "You ran out of arrows";
         final List<String> actualGameMessages = wumpusPresenter.getMessages();
         assertTrue(actualGameMessages.contains(runningOutOfArrowsMessage));
 

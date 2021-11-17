@@ -79,7 +79,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
         g.setColor(Color.darkGray);
         g.setFont(new Font("SansSerif", Font.BOLD, 48));
-        g.drawString("hunt the wumpus", 160, 240);
+        g.drawString("Hunt the Wumpus", 160, 240);
 
         g.setFont(getFont());
         g.drawString("left-click to move, right-click to shoot", 210, 310);
@@ -119,7 +119,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     void drawMessage() {
         if (!wumpusPresenter.isGameOver())
-            g.drawString("arrows  " + wumpusPresenter.getNumberOfArrows(), 610, 30);
+            g.drawString("Arrows  " + wumpusPresenter.getNumberOfArrows(), 610, 30);
 
         if (wumpusPresenter.getMessages() != null) {
             g.setColor(Color.black);

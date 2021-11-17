@@ -95,7 +95,7 @@ public class LegacyGame implements Game{
         } else {
             numberOfArrows--;
             if (numberOfArrows == 0) {
-                messages.add("You ran out of arrows.");
+                messages.add("You ran out of arrows");
                 gameOver = true;
 
             } else if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %

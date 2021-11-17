@@ -11,7 +11,7 @@ public class  PlayHuntTheWumusGame {
         invokeLater(() -> {
             JFrame f = new JFrame();
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setTitle("Hunt The view.Wumpus");
+            f.setTitle("Hunt the Wumpus");
             f.setResizable(false);
             f.add(new WumpusViewImpl(), BorderLayout.CENTER);
             f.pack();

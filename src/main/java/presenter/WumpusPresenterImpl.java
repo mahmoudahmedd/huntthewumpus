@@ -1,7 +1,6 @@
 package presenter;
 
 import model.Game;
-import model.LegacyGame;
 import model.NewGame;
 import utilities.RandomNumberGenerator;
 
@@ -16,7 +15,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     }
 
     public WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
-        this.gameModel=new LegacyGame(randomNumberGenerator);
+        this.gameModel=new NewGame(randomNumberGenerator);
     }
 
     @Override
