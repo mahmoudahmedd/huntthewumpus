@@ -223,6 +223,7 @@ public class NewGame implements Game{
     @Override
     public boolean isGameOver() {
         if(player!=null&&wumpus!=null){
+            //TODO remove wumpus check and replace with player out of arrows
             return player.isDead()||wumpus.hasEatenThePlayer();
         }
 
