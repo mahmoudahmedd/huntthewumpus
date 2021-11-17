@@ -1,6 +1,6 @@
 package model;
 
-public class Wumpus extends GameObject {
+public class Wumpus extends GameObject implements Hazard{
     final String warningInTheSameCave = "you've been eaten by the Wumpus";
     final String warningInTheLinkedCave = "there's an awful smell";
     private boolean playerEaten;
@@ -39,5 +39,10 @@ public class Wumpus extends GameObject {
 
     public boolean hasEatenThePlayer() {
         return this.playerEaten;
+    }
+
+    @Override
+    public void executeActionOnPlayer(Player player) {
+        player.setDead(true);
     }
 }

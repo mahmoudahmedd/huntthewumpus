@@ -1,6 +1,6 @@
 package model;
 
-public class Pit extends GameObject {
+public class Pit extends GameObject implements Hazard{
     final String warningInTheSameCave = "you fell into a pit";
     final String warningInTheLinkedCave = "you feel a draft";
 
@@ -15,4 +15,8 @@ public class Pit extends GameObject {
     }
 
 
+    @Override
+    public void executeActionOnPlayer(Player player) {
+        player.setDead(true);
+    }
 }

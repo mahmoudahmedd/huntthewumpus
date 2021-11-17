@@ -7,6 +7,10 @@ public class Player extends GameObject {
     private boolean dead;
     private Arrow arrow;
 
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
     public Player(int numberOfArrows) {
         arrow = new Arrow();
         this.arrow.initializeNumberOfArrows(numberOfArrows);
@@ -63,27 +67,14 @@ public class Player extends GameObject {
     }
 
     private void executePostMoveActions() {
-        executeWumpusActions();
-        executePitsActions();
-    }
-
-    private void executeWumpusActions() {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Wumpus){
-                killed();
+            if(gameObject instanceof Hazard){
+                ((Hazard)gameObject).executeActionOnPlayer(this);
             }
         }
     }
 
-    private void executePitsActions() {
-        List<GameObject> gameObjects = this.getCave().getGameObjects();
-        for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Pit){
-                killed();
-            }
-        }
-    }
 
     private void killed() {
         this.dead = true;

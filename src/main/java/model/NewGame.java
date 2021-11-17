@@ -53,7 +53,7 @@ public class NewGame implements Game{
     private void initializeBats() {
         bats = new ArrayList<>();
         for(int index = 0; index < GameInitialConfigurations.NUMBER_OF_BATS; index++) {
-            bats.add(new Bat());
+            bats.add(new Bat(randomNumberGenerator,gameMap));
             bats.get(index).setId(GameInitialConfigurations.BAT_ID_PREFIX + index);
             setGameObjectInitialCave(bats.get(index));
             hazardsMap.put(Bat.class.getSimpleName(),bats);
@@ -181,7 +181,7 @@ public class NewGame implements Game{
     }
 
     private Bat getBatInsideTheCaveThatWillBeRelocated(Cave caveToMoveTo) {
-        Bat batInCave = new Bat();
+        Bat batInCave = new Bat(randomNumberGenerator,gameMap);
         for(Bat bat: this.bats) {
             if(caveToMoveTo == bat.getCave()) {
                 batInCave = bat;
