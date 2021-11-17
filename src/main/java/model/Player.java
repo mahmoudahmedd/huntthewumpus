@@ -29,9 +29,12 @@ public class Player extends GameObject {
         senseWarning();
     }
 
-    public void fly(Cave caveToMoveTo) {
+    public void teleport(Cave caveToMoveTo) {
+        this.warnings.clear();
         changeTheCaveLocation(caveToMoveTo);
+        addWarning("a bat dropped you in a random cave");
         executePostMoveActions();
+        senseWarning();
     }
 
     private void changeTheCaveLocation(Cave caveToMoveTo) {

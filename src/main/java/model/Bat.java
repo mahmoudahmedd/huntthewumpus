@@ -15,7 +15,8 @@ public class Bat extends GameObject implements Hazard{
         this.gameMap=gameMap;
     }
 
-    public void move(Cave caveToMoveTo) {
+    public void move() {
+        Cave caveToMoveTo = getValidRelocationCave();
         this.getCave().removeGameObject(this);
         this.setCave(caveToMoveTo);
         caveToMoveTo.addGameObject(this);
@@ -23,8 +24,30 @@ public class Bat extends GameObject implements Hazard{
 
     @Override
     public void executeActionOnPlayer(Player player) {
-        System.out.println("Bats moved player");
+        move();
+
+        Cave randomCaveToTeleportTo = getValidRelocationCave();
+        player.teleport(randomCaveToTeleportTo);
+
     }
+
+    private Cave getValidRelocationCave() {
+        Cave caveToMoveTo;
+        do {
+            caveToMoveTo = getInitialRandomCave();
+        } while (caveToMoveTo.getGameObjects().stream().anyMatch(gameObject -> gameObject instanceof Player)|| isTheCaveContainsBats(caveToMoveTo));
+        return caveToMoveTo;
+    }
+
+    private boolean isTheCaveContainsBats(Cave caveToMoveTo) {
+        return caveToMoveTo.getGameObjects().stream().anyMatch(gameObject -> gameObject instanceof Bat);
+    }
+
+    private Cave getInitialRandomCave() {
+        int randomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
+        return gameMap.getCaves().get(randomCaveIndex);
+    }
+
 
     @Override
     public String getWarningInTheLinkedCave() {
