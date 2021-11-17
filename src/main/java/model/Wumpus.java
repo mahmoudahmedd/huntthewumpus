@@ -39,10 +39,6 @@ public class Wumpus extends GameObject implements Hazard{
         this.playerEaten = true;
     }
 
-    public boolean hasEatenThePlayer() {
-        return this.playerEaten;
-    }
-
     @Override
     public void executeActionOnPlayer(Player player) {
         player.setDead(true);

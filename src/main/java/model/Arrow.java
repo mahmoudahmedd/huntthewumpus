@@ -11,10 +11,6 @@ public class Arrow {
         this.numberOfArrow--;
     }
 
-    public int getNumberOfArrows() {
-        return this.numberOfArrow;
-    }
-
     public int getNumber() {
         return numberOfArrow;
     }

@@ -95,17 +95,14 @@ public class Player extends GameObject {
             }
         }
 
-        executePostShootActions();
     }
 
     private void shootArrow() {
         arrow.decrementByOne();
     }
 
-    private void executePostShootActions() {
-        if(arrow.getNumberOfArrows() == 0) {
-            this.killed();
-        }
+    public boolean hasNoArrows(){
+        return getArrows().getNumber()==0;
     }
 
     public Arrow getArrows() {
