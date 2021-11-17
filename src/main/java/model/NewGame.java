@@ -77,7 +77,7 @@ public class NewGame implements Game {
     }
 
     private void setGameObjectInitialCave(GameObject gameObject) {
-        Cave cave = getInitialRandomCave();
+        Cave cave = getRandomCave();
 
         if (caveIsNotValidForGameObject(gameObject, cave)) {
             setGameObjectInitialCave(gameObject);
@@ -127,7 +127,7 @@ public class NewGame implements Game {
         return false;
     }
 
-    private Cave getInitialRandomCave() {
+    private Cave getRandomCave() {
         int randomCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES);
         return gameMap.getCaves().get(randomCaveIndex);
     }
@@ -165,6 +165,11 @@ public class NewGame implements Game {
     public void playerMovesToCave(int cave) {
         Cave caveToMoveTo = gameMap.getCaves().get(cave);
         player.move(caveToMoveTo);
+        Teleportation teleportation= player.getTeleportation();
+        if(teleportation!=null){
+            caveToMoveTo= getRandomCave();
+            player.teleport(caveToMoveTo);
+        }
     }
 
     @Override

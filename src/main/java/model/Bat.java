@@ -24,11 +24,9 @@ public class Bat extends GameObject implements Hazard{
 
     @Override
     public void executeActionOnPlayer(Player player) {
-        move();
-
-        Cave randomCaveToTeleportTo = getValidRelocationCave();
-        player.teleport(randomCaveToTeleportTo);
-
+          Teleportation teleportation=new Teleportation();
+          teleportation.setBat(this);
+          player.setTeleportation(teleportation);
     }
 
     private Cave getValidRelocationCave() {
