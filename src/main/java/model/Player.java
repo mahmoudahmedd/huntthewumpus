@@ -50,10 +50,8 @@ public class Player extends GameObject {
         for(Cave linkedCave: linkedCaves) {
             List<GameObject> gameObjects = linkedCave.getGameObjects();
             for(GameObject gameObject : gameObjects){
-                if(gameObject instanceof Wumpus){
-                    warnings.add(((Wumpus) gameObject).getWarningInTheLinkedCave());
-                } else if(gameObject instanceof Pit) {
-                    warnings.add(((Pit) gameObject).getWarningInTheLinkedCave());
+                if(gameObject instanceof Hazard){
+                    warnings.add(((Hazard) gameObject).getWarningInTheLinkedCave());
                 }
             }
         }
@@ -73,10 +71,6 @@ public class Player extends GameObject {
     }
 
 
-    private void killed() {
-        this.dead = true;
-    }
-
     private boolean isMoveValid(Cave caveToMoveTo) {
         return this.getCave().getLinkedCaves().contains(caveToMoveTo);
     }
@@ -91,7 +85,7 @@ public class Player extends GameObject {
         List<GameObject> gameObjects = caveToShoot.getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
-                killed();
+                ((Wumpus)gameObject).setDead(true);
             }
         }
 

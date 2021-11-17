@@ -220,14 +220,14 @@ public class NewGame implements Game{
             int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
             if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
                 int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
-                this.wumpus.wakeup(randomLinkedCaveIndex);
+                this.wumpus.wakeup(player,randomLinkedCaveIndex);
             }
         }
     }
 
     @Override
     public boolean isGameOver() {
-        return player.isDead()||player.hasNoArrows();
+        return player.isDead()||player.hasNoArrows()|| wumpus.isDead();
     }
 
     @Override
