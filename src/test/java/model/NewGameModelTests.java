@@ -539,6 +539,65 @@ public class NewGameModelTests {
     }
 
     @Test
+    public void testThatPlayerEnterRoomWithBatTwice() {
+        final int playerFirstDropDownCaveIndex = 15;
+        final int firstBatFinalCaveIndex = 2;
+
+        final int playerSecondDropDownCaveIndex = 6;
+        final int thirdBatFinalCaveIndex = 0;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                PLAYER_STARTING_CAVE_INDEX,
+                WUMPUS_STARTING_CAVE_INDEX,
+                FIRST_BAT_STARTING_CAVE_INDEX,
+                SECOND_BAT_STARTING_CAVE_INDEX,
+                THIRD_BAT_STARTING_CAVE_INDEX,
+                FIRST_PIT_CAVE,
+                SECOND_PIT_CAVE,
+                playerFirstDropDownCaveIndex,
+                firstBatFinalCaveIndex,
+                playerSecondDropDownCaveIndex,
+                thirdBatFinalCaveIndex
+        );
+
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        final int[] journeyPath = {10, 11, 12, FIRST_BAT_STARTING_CAVE_INDEX};
+        for(int cave: journeyPath){
+            game.playerMovesToCave(cave);
+        }
+
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(playerFirstDropDownCaveIndex, actualPlayerCaveIndex);
+
+
+        final Bat firstBat = game.getBats().get(0);
+        final Cave firstBatActualCave = firstBat.getCave();
+        assertEquals(firstBatFinalCaveIndex, firstBatActualCave.getNumber());
+
+        final Cave previousCave = game.getGameMap().getCaves().get(FIRST_BAT_STARTING_CAVE_INDEX);
+        assertFalse(previousCave.getGameObjects().contains(game.getPlayer()));
+        assertFalse(previousCave.getGameObjects().contains(firstBat));
+
+        game.playerMovesToCave(THIRD_BAT_STARTING_CAVE_INDEX);
+
+        final int actualPlayerSecondCaveIndex = game.getPlayerCave();
+        assertEquals(playerSecondDropDownCaveIndex, actualPlayerSecondCaveIndex);
+
+
+        final Bat thirdBat = game.getBats().get(2);
+        final Cave thirdBatActualCave = thirdBat.getCave();
+        assertEquals(thirdBatFinalCaveIndex, thirdBatActualCave.getNumber());
+
+        final Cave thirdBatPreviousCave = game.getGameMap().getCaves().get(THIRD_BAT_STARTING_CAVE_INDEX);
+        assertFalse(thirdBatPreviousCave.getGameObjects().contains(game.getPlayer()));
+        assertFalse(thirdBatPreviousCave.getGameObjects().contains(thirdBat));
+
+    }
+
+    @Test
     public void testThatPlayerEnterRoomWithBat() {
         final int playerDropDownCaveIndex = 8;
         final int firstBatFinalCaveIndex = 2;
