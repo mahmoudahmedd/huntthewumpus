@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import utilities.RandomNumberGenerator;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -363,9 +362,10 @@ public class NewGameModelTests {
 
         final boolean actualGameState = game.isGameOver();
         final boolean gameIsOver = true;
-
         assertEquals(gameIsOver, actualGameState);
 
+        List<String> messages = game.getMessages();
+        assertTrue(messages.contains(game.getWumpus().getWarningInTheSameCave()));
     }
 
     @Test
@@ -387,7 +387,7 @@ public class NewGameModelTests {
         assertEquals(gameIsNotOver, actualGameState);
 
         List<String> messages = game.getMessages();
-        assertTrue(messages.contains(game.getWumpus().getWarning()));
+        assertTrue(messages.contains(game.getWumpus().getWarningInTheSameCave()));
     }
 
     @Test
@@ -405,6 +405,9 @@ public class NewGameModelTests {
         final boolean actualGameState = game.isGameOver();
         final boolean gameIsOver = true;
         assertEquals(actualGameState, gameIsOver);
+
+        List<String> messages = game.getMessages();
+        assertTrue(messages.contains(game.getPits().get(0).getWarningInTheSameCave()));
     }
 
     @Test

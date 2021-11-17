@@ -1,11 +1,16 @@
 package model;
 
 public class Wumpus extends GameObject {
-    final String warning = "there's an awful smell";
+    final String warningInTheSameCave = "you've been eaten by the Wumpus";
+    final String warningInTheLinkedCave = "there's an awful smell";
     private boolean playerEaten;
 
-    public String getWarning() {
-        return this.warning;
+    public String getWarningInTheLinkedCave() {
+        return this.warningInTheLinkedCave;
+    }
+
+    public String getWarningInTheSameCave() {
+        return this.warningInTheSameCave;
     }
 
     public void wakeup(int randomLinkedCaveIndex) {

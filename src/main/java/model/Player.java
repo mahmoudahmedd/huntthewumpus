@@ -39,10 +39,26 @@ public class Player extends GameObject {
             List<GameObject> gameObjects = linkedCave.getGameObjects();
             for(GameObject gameObject : gameObjects){
                 if(gameObject instanceof Wumpus){
-                    warnings.add(((Wumpus) gameObject).warning);
+                    warnings.add(((Wumpus) gameObject).getWarningInTheLinkedCave());
+                } else if(gameObject instanceof Pit) {
+                    warnings.add(((Pit) gameObject).getWarningInTheLinkedCave());
                 }
             }
         }
+
+
+        List<GameObject> gameObjects = this.getCave().getGameObjects();
+        for(GameObject gameObject : gameObjects){
+            if(gameObject instanceof Wumpus){
+                warnings.add(((Wumpus) gameObject).getWarningInTheSameCave());
+                break;
+            } else if(gameObject instanceof Pit) {
+                warnings.add(((Pit) gameObject).getWarningInTheSameCave());
+                break;
+            }
+        }
+
+
         return warnings;
     }
 
