@@ -42,7 +42,7 @@ public class NewGame implements Game{
     }
 
     private void initializeWumpus() {
-        wumpus = new Wumpus();
+        wumpus = new Wumpus(randomNumberGenerator);
         wumpus.setPrecedence(2);
         wumpus.setId(GameInitialConfigurations.WUMPUS_ID);
         setGameObjectInitialCave(wumpus);
@@ -217,15 +217,9 @@ public class NewGame implements Game{
         Cave caveToShoot = gameMap.getCaves().get(cave);
         player.shoot(caveToShoot);
 
-        if(!this.isGameOver()) {
-            int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
-            if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
-                int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
-                this.wumpus.wakeup(randomLinkedCaveIndex);
-            }
+        if(!wumpus.isDead()){
+            wumpus.attemptToWakeup();
         }
-
-
     }
 
     @Override

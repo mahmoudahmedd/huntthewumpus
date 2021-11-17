@@ -1,11 +1,18 @@
 package model;
 
+import utilities.RandomNumberGenerator;
+
 import java.util.Optional;
 
 public class Wumpus extends GameObject implements Hazard{
     final String warningInTheSameCave = "you've been eaten by the Wumpus";
     final String warningInTheLinkedCave = "there's an awful smell";
+    private final RandomNumberGenerator randomNumberGenerator;
     boolean dead;
+
+    public Wumpus(RandomNumberGenerator randomNumberGenerator) {
+        this.randomNumberGenerator = randomNumberGenerator;
+    }
 
     @Override
     public String getWarningInTheLinkedCave() {
@@ -52,4 +59,11 @@ public class Wumpus extends GameObject implements Hazard{
         this.dead = dead;
     }
 
+    public void attemptToWakeup() {
+            int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
+            if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
+                int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
+                wakeup(randomLinkedCaveIndex);
+        }
+    }
 }
