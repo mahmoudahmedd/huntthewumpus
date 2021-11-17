@@ -6,22 +6,27 @@ import java.util.List;
 public class Player extends GameObject {
     private boolean dead;
     private Arrow arrow;
+    List<String> warnings;
 
     public void setDead(boolean dead) {
         this.dead = dead;
     }
 
     public Player(int numberOfArrows) {
+        warnings = new ArrayList<>();
         arrow = new Arrow();
         this.arrow.initializeNumberOfArrows(numberOfArrows);
     }
 
     public void move(Cave caveToMoveTo) {
+        this.warnings.clear();
+
         if (this.isMoveValid(caveToMoveTo)) {
             changeTheCaveLocation(caveToMoveTo);
         }
 
         executePostMoveActions();
+        senseWarning();
     }
 
     public void fly(Cave caveToMoveTo) {
@@ -36,7 +41,10 @@ public class Player extends GameObject {
     }
 
     public List<String> getWarnings() {
-        List<String> warnings = new ArrayList<>();
+        return warnings;
+    }
+
+    private void senseWarning() {
         List<Cave> linkedCaves = this.getCave().getLinkedCaves();
 
         for(Cave linkedCave: linkedCaves) {
@@ -49,21 +57,10 @@ public class Player extends GameObject {
                 }
             }
         }
+    }
 
-
-        List<GameObject> gameObjects = this.getCave().getGameObjects();
-        for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Wumpus){
-                warnings.add(((Wumpus) gameObject).getWarningInTheSameCave());
-                break;
-            } else if(gameObject instanceof Pit) {
-                warnings.add(((Pit) gameObject).getWarningInTheSameCave());
-                break;
-            }
-        }
-
-
-        return warnings;
+    public void addWarning(String warning) {
+        warnings.add(warning);
     }
 
     private void executePostMoveActions() {
@@ -89,6 +86,7 @@ public class Player extends GameObject {
     }
 
     public void shoot(Cave caveToShoot) {
+        this.warnings.clear();
         this.shootArrow();
         List<GameObject> gameObjects = caveToShoot.getGameObjects();
         for(GameObject gameObject : gameObjects){

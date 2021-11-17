@@ -5,10 +5,12 @@ public class Wumpus extends GameObject implements Hazard{
     final String warningInTheLinkedCave = "there's an awful smell";
     private boolean playerEaten;
 
+    @Override
     public String getWarningInTheLinkedCave() {
         return this.warningInTheLinkedCave;
     }
 
+    @Override
     public String getWarningInTheSameCave() {
         return this.warningInTheSameCave;
     }
@@ -44,5 +46,6 @@ public class Wumpus extends GameObject implements Hazard{
     @Override
     public void executeActionOnPlayer(Player player) {
         player.setDead(true);
+        player.addWarning(this.warningInTheSameCave);
     }
 }
