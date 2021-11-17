@@ -5,7 +5,7 @@ import model.LegacyGame;
 import model.NewGame;
 import utilities.RandomNumberGenerator;
 
-import java.util.*;
+import java.util.List;
 
 
 public class WumpusPresenterImpl implements WumpusPresenter {

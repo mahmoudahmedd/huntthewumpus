@@ -69,10 +69,12 @@ public class Player extends GameObject {
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Hazard){
                 ((Hazard)gameObject).executeActionOnPlayer(this);
+                if(isDead()){
+                    break;
+                }
             }
         }
     }
-
 
     private boolean isMoveValid(Cave caveToMoveTo) {
         return this.getCave().getLinkedCaves().contains(caveToMoveTo);

@@ -2,17 +2,17 @@ package presenter;
 
 import model.GameInitialConfigurations;
 import model.LegacyHazard;
-import utilities.RandomNumberGenerator;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import utilities.RandomNumberGenerator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class WumpusPresenterTest {

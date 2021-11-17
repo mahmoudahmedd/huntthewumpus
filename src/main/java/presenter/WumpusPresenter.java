@@ -1,7 +1,5 @@
 package presenter;
 
-import model.LegacyGame;
-
 import java.util.List;
 
 public interface WumpusPresenter {
