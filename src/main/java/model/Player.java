@@ -81,7 +81,9 @@ public class Player extends GameObject {
 
     public void shoot(Cave caveToShoot) {
         this.warnings.clear();
-        this.shootArrow();
+
+        arrow.decrementByOne();
+
         List<GameObject> gameObjects = caveToShoot.getGameObjects();
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
@@ -89,10 +91,6 @@ public class Player extends GameObject {
             }
         }
 
-    }
-
-    private void shootArrow() {
-        arrow.decrementByOne();
     }
 
     public boolean hasNoArrows(){

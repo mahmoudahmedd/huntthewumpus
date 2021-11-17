@@ -216,13 +216,16 @@ public class NewGame implements Game{
     public void playerShootsToCave(int cave) {
         Cave caveToShoot = gameMap.getCaves().get(cave);
         player.shoot(caveToShoot);
+
         if(!this.isGameOver()) {
             int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
             if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
                 int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
-                this.wumpus.wakeup(player,randomLinkedCaveIndex);
+                this.wumpus.wakeup(randomLinkedCaveIndex);
             }
         }
+
+
     }
 
     @Override

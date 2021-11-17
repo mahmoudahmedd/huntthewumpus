@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Optional;
+
 public class Wumpus extends GameObject implements Hazard{
     final String warningInTheSameCave = "you've been eaten by the Wumpus";
     final String warningInTheLinkedCave = "there's an awful smell";
@@ -15,11 +17,12 @@ public class Wumpus extends GameObject implements Hazard{
         return this.warningInTheSameCave;
     }
 
-    public void wakeup(Player player,int randomLinkedCaveIndex) {
+    public void wakeup(int randomLinkedCaveIndex) {
         this.move(randomLinkedCaveIndex);
         
         if(isWumpusInTheSameCaveWithPlayer()){
-            player.setDead(true);
+            Optional<GameObject> player = this.getCave().getGameObjects().stream().filter(gameObject -> gameObject instanceof Player).findFirst();
+            executeActionOnPlayer((Player) player.get());
         }
     }
 
