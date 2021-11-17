@@ -222,12 +222,16 @@ public class NewGame implements Game{
 
     @Override
     public boolean isGameOver() {
-        return player.isDead() || wumpus.hasEatenThePlayer();
+        if(player!=null&&wumpus!=null){
+            return player.isDead()||wumpus.hasEatenThePlayer();
+        }
+
+        return false;
     }
 
     @Override
     public int getNumberOfArrows() {
-        return 0;
+        return player.getArrows().getNumber();
     }
 
     @Override

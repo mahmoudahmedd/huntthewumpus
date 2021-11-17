@@ -14,4 +14,8 @@ public class Arrow {
     public int getNumberOfArrows() {
         return this.numberOfArrow;
     }
+
+    public int getNumber() {
+        return numberOfArrow;
+    }
 }

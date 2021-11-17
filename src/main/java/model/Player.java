@@ -118,4 +118,8 @@ public class Player extends GameObject {
             this.killed();
         }
     }
+
+    public Arrow getArrows() {
+        return this.arrow;
+    }
 }

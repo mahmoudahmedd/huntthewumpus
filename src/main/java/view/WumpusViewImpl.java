@@ -34,6 +34,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     public WumpusViewImpl() {
 
         wumpusPresenter = new WumpusPresenterImpl();
+        wumpusPresenter.startNewGame();
 
         setPreferredSize(new Dimension(721, 687));
         setBackground(Color.white);
@@ -151,6 +152,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     private void drawMap() {
         if (gameStarting||wumpusPresenter.isGameOver()) {
             drawStartScreen();
+            gameStarting=false;
         } else {
             drawPlayer();
         }
@@ -162,9 +164,8 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
     }
 
     private void handleMouseClick(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
-        if (gameStarting||wumpusPresenter.isGameOver()) {
+        if (wumpusPresenter.isGameOver()) {
             wumpusPresenter.startNewGame();
-            gameStarting=false;
         } else  {
             continueGame(mouseClickXAxis, mouseClickYAxis, leftClick, rightClick) ;
         }

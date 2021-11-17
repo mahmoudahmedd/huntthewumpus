@@ -2,6 +2,7 @@ package presenter;
 
 import model.Game;
 import model.LegacyGame;
+import model.NewGame;
 import utilities.RandomNumberGenerator;
 
 import java.util.*;
@@ -11,7 +12,7 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     Game gameModel;
 
     public WumpusPresenterImpl(){
-        this.gameModel=new LegacyGame();
+        this.gameModel=new NewGame();
     }
 
     public WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
