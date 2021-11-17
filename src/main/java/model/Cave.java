@@ -44,6 +44,7 @@ public class Cave {
 
     public void addGameObject(GameObject gameObject) {
         this.gameObjects.add(gameObject);
+        Collections.sort(this.gameObjects);
     }
 
     public void removeGameObject(GameObject gameObject) {

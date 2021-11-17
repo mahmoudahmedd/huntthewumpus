@@ -2,9 +2,11 @@ package model;
 
 import java.util.Objects;
 
-public abstract class GameObject {
+public abstract class GameObject implements Comparable<GameObject>{
     String id;
     private Cave cave;
+    private int precedence;
+
 
     public void setId(String id) {
         this.id=id;
@@ -29,5 +31,17 @@ public abstract class GameObject {
 
     public Cave getCave() {
         return cave;
+    }
+
+    public void setPrecedence(int precedence) {
+        this.precedence=precedence;
+    }
+
+    public int getPrecedence() {
+        return precedence;
+    }
+
+    public int compareTo(GameObject gameObject){
+        return this.precedence-gameObject.getPrecedence();
     }
 }

@@ -596,6 +596,33 @@ public class NewGameModelTests {
         assertEquals(actualGameState, gameIsOver);
     }
 
+    @Test
+    public void testThatHazardsInASingleCaveAreSortedByPrecedence(){
+        final int WUMPUS_STARTING_CAVE_INDEX = 18;
+        final int FIRST_BAT_STARTING_CAVE_INDEX = 18;
+        final int FIRST_PIT_CAVE = 18;
+
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
+                PLAYER_STARTING_CAVE_INDEX,
+                WUMPUS_STARTING_CAVE_INDEX,
+                FIRST_BAT_STARTING_CAVE_INDEX,
+                SECOND_BAT_STARTING_CAVE_INDEX,
+                THIRD_BAT_STARTING_CAVE_INDEX,
+                FIRST_PIT_CAVE,
+                SECOND_PIT_CAVE
+        );
+
+        NewGame game = new NewGame(randomNumberGenerator);
+        game.startGame();
+
+        Cave cave=game.getGameMap().getCaves().get(WUMPUS_STARTING_CAVE_INDEX);
+
+        assertTrue(cave.getGameObjects().get(0) instanceof Pit);
+        assertTrue(cave.getGameObjects().get(1) instanceof Wumpus);
+        assertTrue(cave.getGameObjects().get(2) instanceof Bat);
+
+    }
+
     //TODO Implement same test cases as those in presenter
     /*
     TODO
