@@ -387,7 +387,7 @@ public class NewGameModelTests {
         assertEquals(gameIsNotOver, actualGameState);
 
         List<String> messages = game.getMessages();
-        assertTrue(messages.contains(game.getWumpus().getWarningInTheSameCave()));
+        assertTrue(messages.contains(game.getWumpus().getWarningInTheLinkedCave()));
     }
 
     @Test
