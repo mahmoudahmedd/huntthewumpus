@@ -1,6 +1,9 @@
-package model;
+package model.gameobjects.hazards;
 
-public class Pit extends GameObject implements Hazard{
+import model.gameobjects.GameObject;
+import model.gameobjects.Player;
+
+public class Pit extends GameObject implements Hazard {
     final String warningInTheSameCave = "you fell into a pit";
     final String warningInTheLinkedCave = "you feel a draft";
 

@@ -1,4 +1,9 @@
-package model;
+package model.gameobjects;
+
+import model.*;
+import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.Hazard;
+import model.gameobjects.hazards.Wumpus;
 
 import java.util.ArrayList;
 import java.util.List;

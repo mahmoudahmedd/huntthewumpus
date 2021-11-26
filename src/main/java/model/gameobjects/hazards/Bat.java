@@ -1,8 +1,11 @@
-package model;
+package model.gameobjects.hazards;
 
+import model.*;
+import model.gameobjects.GameObject;
+import model.gameobjects.Player;
 import utilities.RandomNumberGenerator;
 
-public class Bat extends GameObject implements Hazard{
+public class Bat extends GameObject implements Hazard {
 
     final String warningInTheSameCave = "a bat dropped you in a random cave";
     final String warningInTheLinkedCave = "you hear a rustling";

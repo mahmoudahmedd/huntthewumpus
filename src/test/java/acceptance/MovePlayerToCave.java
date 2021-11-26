@@ -44,6 +44,7 @@ public class MovePlayerToCave {
     public void player_moves_to_cave(Integer caveToMoveTo) {
         wumpusPresenter.move(caveToMoveTo);
     }
+
     @Then("player will be at cave {int}")
     public void player_will_be_at_cave(Integer expectedPlayerCave) {
         final int playerCurrentRoom = wumpusPresenter.getPlayerCave();
