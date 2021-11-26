@@ -1,6 +1,7 @@
 Feature: Player move
-  In order to win the game I would like to go to the linked cave to the Wumpus,
-  I want to be able to move for caves.
+  In order to enjoy the adventure & avoid the danger,
+  As a player,
+  I want to move across the caves.
 
   Scenario Outline: Player moves to cave
     Given player is in cave <PlayerStartingCave>
