@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.GameInitialConfigurations;
+import model.LegacyHazard;
 import org.junit.Assert;
 import org.mockito.Mockito;
 import presenter.WumpusPresenter;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class MovePlayerToCave {
@@ -68,7 +70,7 @@ public class MovePlayerToCave {
     }
 
     @Then("player is {string}")
-    public void playerIsPlayerState(String playerState) {
+    public void playerIs(String playerState) {
         boolean expectedStatusOfGameIsOver;
 
         if (playerState.equals("dead")) {
@@ -79,5 +81,11 @@ public class MovePlayerToCave {
 
         final boolean isGameOver = wumpusPresenter.isGameOver();
         assertEquals(isGameOver, expectedStatusOfGameIsOver);
+    }
+
+    @Then("player sense the warning {string}")
+    public void playerSenseTheWarningWarning(String expectedWarning) {
+        List<String> messages = wumpusPresenter.getMessages();
+        assertTrue(messages.contains(expectedWarning));
     }
 }

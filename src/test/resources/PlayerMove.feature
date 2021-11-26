@@ -14,6 +14,16 @@ Feature: Player move
     | 0                  | [16]           | 0                  | "alive"     |
     | 0                  | [1, 9, 10, 18] | 18                 | "dead"      |
 
+  Scenario Outline: Player moves to a cave near a hazard and sensing the hazard
+    Given player is in cave <PlayerStartingCave>
+    When player moves on the <JourneyPath>
+    Then player is <PlayerState>
+    And player sense the warning <Warning>
+
+    Examples:
+      | PlayerStartingCave | JourneyPath | PlayerState | Warning                  |
+      | 0                  | [1, 9, 10]  | "alive"     | "there's an awful smell" |
+
 
 
 
