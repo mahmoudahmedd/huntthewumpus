@@ -1,5 +1,7 @@
 package acceptance;
 
+import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,6 +11,10 @@ import org.mockito.Mockito;
 import presenter.WumpusPresenter;
 import presenter.WumpusPresenterImpl;
 import utilities.RandomNumberGenerator;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -40,17 +46,37 @@ public class MovePlayerToCave {
         wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
         wumpusPresenter.startNewGame();
     }
-    @When("player moves to cave {int}")
-    public void player_moves_to_cave(Integer caveToMoveTo) {
-        wumpusPresenter.move(caveToMoveTo);
+
+    @ParameterType("\\[([0-9, ]*)\\]")
+    public List<Integer> listOfIntegers(String integers) {
+        return Arrays.stream(integers.split(", ?"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    @When("player moves on the {listOfIntegers}")
+    public void playerMovesOnThe(List<Integer> journeyPath) {
+        for (int caveNumber : journeyPath) {
+            wumpusPresenter.move(caveNumber);
+        }
     }
 
     @Then("player will be at cave {int}")
     public void player_will_be_at_cave(Integer expectedPlayerCave) {
         final int playerCurrentRoom = wumpusPresenter.getPlayerCave();
         assertEquals(expectedPlayerCave, playerCurrentRoom);
+    }
 
-        final boolean expectedStatusOfGameIsOver = false;
+    @Then("player is {string}")
+    public void playerIsPlayerState(String playerState) {
+        boolean expectedStatusOfGameIsOver;
+
+        if (playerState.equals("dead")) {
+            expectedStatusOfGameIsOver = true;
+        } else {
+            expectedStatusOfGameIsOver = false;
+        }
+
         final boolean isGameOver = wumpusPresenter.isGameOver();
         assertEquals(isGameOver, expectedStatusOfGameIsOver);
     }
