@@ -24,7 +24,7 @@ Feature: Player move
     Examples:
       | PlayerStartingCave | JourneyPath | PlayerState | Warning                  |
       | 0                  | [1, 9, 10]  | "alive"     | "there's an awful smell" |
-      | 0                  | [4, 5]      | "alive"     | "you hear a rustling"    |
+      | 0                  | [4, 5, 14]  | "alive"     | "you hear a rustling"    |
       | 0                  | [4]         | "alive"     | "you feel a draft"       |
 
 

@@ -1,13 +1,10 @@
 package acceptance;
 
 import io.cucumber.java.ParameterType;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.GameInitialConfigurations;
-import model.LegacyHazard;
-import org.junit.Assert;
 import org.mockito.Mockito;
 import presenter.WumpusPresenter;
 import presenter.WumpusPresenterImpl;
@@ -29,7 +26,6 @@ public class MovePlayerToCave {
     final int wumpusStartingCave = 18;
     final int firstBatStartingCave = 19;
     final int secondBatStartingCave = 13;
-    final int thirdBatStartingCave = 14;
     final int firstPitCave = 3;
     final int secondPitCave = 13;
 
@@ -41,7 +37,6 @@ public class MovePlayerToCave {
                 wumpusStartingCave,
                 firstBatStartingCave,
                 secondBatStartingCave,
-                thirdBatStartingCave,
                 firstPitCave,
                 secondPitCave);
 
