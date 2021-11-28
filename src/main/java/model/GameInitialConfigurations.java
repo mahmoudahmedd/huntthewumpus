@@ -18,4 +18,6 @@ public interface GameInitialConfigurations {
     int NUMBER_OF_PITS = 2;
     int MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY = 4;
     int NUMBER_OF_LINKED_CAVES = 3;
+    int NUMBER_OF_WUMPUS = 1;
+    Integer NUMBER_OF_PLAYERS = 1;
 }

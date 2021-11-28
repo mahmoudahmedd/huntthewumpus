@@ -14,7 +14,9 @@ import model.gameobjects.hazards.Wumpus;
 import org.mockito.Mockito;
 import utilities.RandomNumberGenerator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,12 +52,6 @@ public class BuildGameMap {
     public void gameStartsWithCaves() {
         game = new NewGame(randomNumberGenerator);
         game.startGame();
-    }
-
-    @Then("number of bats will be {int}")
-    public void numberOfBatsWillBe(int numberOfBats) {
-        List<Bat> listOfBats = game.getBats();
-        assertEquals(numberOfBats, listOfBats.size());
     }
 
     @Then("cave {int} will contain the first bat and cave {int} will contain the second bat")
@@ -96,12 +92,6 @@ public class BuildGameMap {
         assertEquals(expectedWumpusCave,actualWumpusCaveIndex);
     }
 
-    @Then("number of pits will be {int}")
-    public void numberOfPitsWillBe(int expectedNumberOfBats) {
-        List<Pit> listOfPits = game.getPits();
-        assertEquals(expectedNumberOfBats, listOfPits.size());
-    }
-
     @And("cave {int} will contain the first pit and cave {int} will contain the second pit")
     public void caveWillContainTheFirstPitAndCaveWillContainTheSecondPit(Integer expectedFirstPitCave, Integer expectedSecondPitCave) {
         List<Pit> listOfPits = game.getPits();
@@ -115,9 +105,35 @@ public class BuildGameMap {
         }
     }
 
-    @Then("number of arrows will be {int}")
-    public void numberOfArrowsWillBe(int expectedNumberOfArrows) {
-        int actualNumberOfArrows = game.getPlayer().getArrows().getNumber();
-        assertEquals(expectedNumberOfArrows, actualNumberOfArrows);
+    @Then("number of {string} will be {int}")
+    public void numberOfWillBe(String gameObject, Integer expectedNumber) {
+        Map<String, Integer> mapperForTheNumberOfGameObjects  = configureNumberOfTheGameObjects();
+        assertEquals(expectedNumber, mapperForTheNumberOfGameObjects.get(gameObject));
+    }
+
+    private Map configureNumberOfTheGameObjects() {
+        Map<String, Integer> mapperForTheNumberOfGameObjects  = new HashMap<>();
+
+        // Add the actual number of arrows
+        Integer actualNumberOfArrows = game.getPlayer().getArrows().getNumber();
+        mapperForTheNumberOfGameObjects.put("arrows", actualNumberOfArrows);
+
+        // Add the actual number of bats
+        Integer actualNumberOfBats = game.getBats().size();
+        mapperForTheNumberOfGameObjects.put("bats", actualNumberOfBats);
+
+        // Add the actual number of pits
+        Integer actualNumberOfPits = game.getPits().size();
+        mapperForTheNumberOfGameObjects.put("pits", actualNumberOfPits);
+
+        // Add the actual number of wumpus
+        Integer actualNumberOfWumpus = GameInitialConfigurations.NUMBER_OF_WUMPUS;
+        mapperForTheNumberOfGameObjects.put("wumpus", actualNumberOfWumpus);
+
+        // Add the actual number of players
+        Integer actualNumberOfPlayers = GameInitialConfigurations.NUMBER_OF_PLAYERS;
+        mapperForTheNumberOfGameObjects.put("players", actualNumberOfPlayers);
+
+        return mapperForTheNumberOfGameObjects;
     }
 }
