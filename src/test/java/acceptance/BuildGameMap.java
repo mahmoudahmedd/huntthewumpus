@@ -56,7 +56,7 @@ public class BuildGameMap {
         assertEquals(numberOfBats, listOfBats.size());
     }
 
-    @Then("first bat will be at cave {int} and second bat will be at cave {int}")
+    @Then("cave {int} will contain the first bat and cave {int} will contain the second bat")
     public void firstBatWillBeAtCaveAndSecondBatWillBeAtCave(Integer expectedFirstBatCave, Integer expectedSecondBatCave) {
         int[] batsStartingCavesIndexes = {expectedFirstBatCave, expectedSecondBatCave};
         List<Bat> listOfBats = game.getBats();
