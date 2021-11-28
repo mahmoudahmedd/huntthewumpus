@@ -12,4 +12,5 @@ Feature: Build game map
   Scenario: Game map adds one player
     Given location of game objects on map is initialized
     When game starts
-    Then cave 9 will contain the player
+    Then cave 9 will contain the player object
+    And player cave index will be 9

@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import model.Cave;
 import model.GameInitialConfigurations;
 import model.NewGame;
+import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
 import org.mockito.Mockito;
@@ -68,9 +69,16 @@ public class BuildGameMap {
         }
     }
 
-    @And("cave {int} will contain the player")
+    @And("cave {int} will contain the player object")
     public void caveWillContainThePlayer(int expectedPlayerCave) {
+        Cave playerCave=game.getGameMap().getCaves().get(expectedPlayerCave);
+        Player player=game.getPlayer();
+        assertTrue(playerCave.getGameObjects().contains(player));
+    }
+
+    @And("player cave index will be {int}")
+    public void playerCaveIndexWillBe(int expectedPlayerCaveIndex) {
         final int actualPlayerCaveIndex = game.getPlayerCave();
-        assertEquals(expectedPlayerCave, actualPlayerCaveIndex);
+        assertEquals(PLAYER_STARTING_CAVE_INDEX, actualPlayerCaveIndex);
     }
 }
