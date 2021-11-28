@@ -10,6 +10,7 @@ import model.NewGame;
 import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
+import model.gameobjects.hazards.Wumpus;
 import org.mockito.Mockito;
 import utilities.RandomNumberGenerator;
 
@@ -79,6 +80,19 @@ public class BuildGameMap {
     @And("player cave index will be {int}")
     public void playerCaveIndexWillBe(int expectedPlayerCaveIndex) {
         final int actualPlayerCaveIndex = game.getPlayerCave();
-        assertEquals(PLAYER_STARTING_CAVE_INDEX, actualPlayerCaveIndex);
+        assertEquals(expectedPlayerCaveIndex, actualPlayerCaveIndex);
+    }
+
+    @Then("cave {int} will contain the wumpus object")
+    public void caveWillContainTheWumpusObject(int expectedWumpusCave) {
+        Cave wumpusCave = game.getGameMap().getCaves().get(expectedWumpusCave);
+        Wumpus wumpus = game.getWumpus();
+        assertTrue(wumpusCave.getGameObjects().contains(wumpus));
+    }
+
+    @And("wumpus cave index will be {int}")
+    public void wumpusCaveIndexWillBe(int expectedWumpusCave) {
+        final int actualWumpusCaveIndex = game.getWumpusCave();
+        assertEquals(expectedWumpusCave,actualWumpusCaveIndex);
     }
 }

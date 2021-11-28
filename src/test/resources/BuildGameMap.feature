@@ -14,3 +14,9 @@ Feature: Build game map
     When game starts
     Then cave 9 will contain the player object
     And player cave index will be 9
+
+  Scenario: Game map adds one wumpus
+    Given location of game objects on map is initialized
+    When game starts
+    Then cave 18 will contain the wumpus object
+    And wumpus cave index will be 18
