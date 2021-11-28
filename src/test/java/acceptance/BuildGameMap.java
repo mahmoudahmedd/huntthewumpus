@@ -114,4 +114,10 @@ public class BuildGameMap {
             assertTrue(PitInCave.getGameObjects().contains(pit));
         }
     }
+
+    @Then("number of arrows will be {int}")
+    public void numberOfArrowsWillBe(int expectedNumberOfArrows) {
+        int actualNumberOfArrows = game.getPlayer().getArrows().getNumber();
+        assertEquals(expectedNumberOfArrows, actualNumberOfArrows);
+    }
 }
