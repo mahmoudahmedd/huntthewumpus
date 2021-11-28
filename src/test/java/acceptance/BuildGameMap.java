@@ -67,4 +67,10 @@ public class BuildGameMap {
             assertTrue(batCave.getGameObjects().contains(bat));
         }
     }
+
+    @And("cave {int} will contain the player")
+    public void caveWillContainThePlayer(int expectedPlayerCave) {
+        final int actualPlayerCaveIndex = game.getPlayerCave();
+        assertEquals(expectedPlayerCave, actualPlayerCaveIndex);
+    }
 }

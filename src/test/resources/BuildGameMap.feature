@@ -9,3 +9,7 @@ Feature: Build game map
     Then number of bats will be 2
     And cave 19 will contain the first bat and cave 13 will contain the second bat
 
+  Scenario: Game map adds one player
+    Given location of game objects on map is initialized
+    When game starts
+    Then cave 9 will contain the player
