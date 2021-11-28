@@ -30,9 +30,10 @@ public class BuildGameMap {
     final int FIRST_PIT_CAVE = 3;
     final int SECOND_PIT_CAVE = 13;
 
-    @Given("first bat in cave {int} and second bat in cave {int}")
-    public void firstBatInCaveAndSecondBatInCave(Integer firstBatStartingCaveIndex, Integer secondBatStartingCaveIndex) {
-        randomNumberGenerator=mock(RandomNumberGenerator.class);
+
+    @Given("location of game objects on map is initialized")
+    public void locationOfGameObjectsOnMapIsInitialized() {
+        randomNumberGenerator = mock(RandomNumberGenerator.class);
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 PLAYER_STARTING_CAVE_INDEX,
                 WUMPUS_STARTING_CAVE_INDEX,
