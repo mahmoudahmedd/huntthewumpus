@@ -20,3 +20,9 @@ Feature: Build game map
     When game starts
     Then cave 18 will contain the wumpus object
     And wumpus cave index will be 18
+
+  Scenario: Game map adds two pits
+    Given location of game objects on map is initialized
+    When game starts
+    Then number of pits will be 2
+    And cave 3 will contain the first pit and cave 13 will contain the second pit

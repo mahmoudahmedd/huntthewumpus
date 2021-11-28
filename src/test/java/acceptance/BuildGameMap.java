@@ -95,4 +95,23 @@ public class BuildGameMap {
         final int actualWumpusCaveIndex = game.getWumpusCave();
         assertEquals(expectedWumpusCave,actualWumpusCaveIndex);
     }
+
+    @Then("number of pits will be {int}")
+    public void numberOfPitsWillBe(int expectedNumberOfBats) {
+        List<Pit> listOfPits = game.getPits();
+        assertEquals(expectedNumberOfBats, listOfPits.size());
+    }
+
+    @And("cave {int} will contain the first pit and cave {int} will contain the second pit")
+    public void caveWillContainTheFirstPitAndCaveWillContainTheSecondPit(Integer expectedFirstPitCave, Integer expectedSecondPitCave) {
+        List<Pit> listOfPits = game.getPits();
+        int[] pitsInCavesIndexes = {expectedFirstPitCave, expectedSecondPitCave};
+
+        for(int i = 0; i < listOfPits.size(); i++) {
+            assertEquals(pitsInCavesIndexes[i], listOfPits.get(i).getCave().getNumber());
+            Cave PitInCave= game.getGameMap().getCaves().get(pitsInCavesIndexes[i]);
+            Pit pit = listOfPits.get(i);
+            assertTrue(PitInCave.getGameObjects().contains(pit));
+        }
+    }
 }
