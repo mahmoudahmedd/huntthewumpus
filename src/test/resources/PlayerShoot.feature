@@ -3,7 +3,7 @@ Feature: Player shoot
   As a player,
   I want to shoot arrows.
 
-  Scenario Outline: Player moves to a cave near a hazard and sensing the hazard
+  Scenario Outline: Player shoots an arrow
     Given player is in cave <PlayerStartingCave>
     When player moves on the <JourneyPath>
     And player shoots to cave <CaveToShoot>
