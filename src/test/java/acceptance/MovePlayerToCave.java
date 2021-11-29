@@ -58,17 +58,22 @@ public class MovePlayerToCave {
         }
     }
 
+    @When("player shoots to cave {int}")
+    public void playerShootsToCave(Integer caveToShoot) {
+        wumpusPresenter.shoot(caveToShoot);
+    }
+
     @Then("player will be at cave {int}")
     public void player_will_be_at_cave(Integer expectedPlayerCave) {
         final int playerCurrentRoom = wumpusPresenter.getPlayerCave();
         assertEquals(expectedPlayerCave, playerCurrentRoom);
     }
 
-    @Then("player is {string}")
-    public void playerIs(String playerState) {
+    @Then("game state is {string}")
+    public void gameStateIs(String playerState) {
         boolean expectedStatusOfGameIsOver;
 
-        if (playerState.equals("dead")) {
+        if (playerState.equals("game over")) {
             expectedStatusOfGameIsOver = true;
         } else {
             expectedStatusOfGameIsOver = false;
