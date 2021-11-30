@@ -21,7 +21,7 @@ public class MoveSteps {
     }
 
     @Given("player in cave {int}")
-    public void player_is_in_cave(Integer playerStartingCave) {
+    public void playerIsInCave(Integer playerStartingCave) {
         this.world.getRandomNumberGeneratorBuilder().setPlayerStartingCaveIndex(playerStartingCave);
     }
 
@@ -40,7 +40,7 @@ public class MoveSteps {
     }
 
     @Then("player will be at cave {int}")
-    public void player_will_be_at_cave(Integer expectedPlayerCave) {
+    public void playerWillBeAtCave(Integer expectedPlayerCave) {
         final int playerCurrentRoom = world.getWumpusPresenter().getPlayerCave();
         assertEquals(expectedPlayerCave, playerCurrentRoom);
     }
