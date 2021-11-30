@@ -3,7 +3,7 @@ package model.gameobjects.hazards;
 import model.*;
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
-import acceptance.utilities.RandomNumberGenerator;
+import utilities.RandomNumberGenerator;
 
 public class Bat extends GameObject implements Hazard {
 

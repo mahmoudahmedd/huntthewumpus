@@ -2,7 +2,7 @@ package presenter;
 
 import model.Game;
 import model.GameWorld;
-import acceptance.utilities.RandomNumberGenerator;
+import utilities.RandomNumberGenerator;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import model.Cave;
 import model.GameInitialConfigurations;
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
-import acceptance.utilities.RandomNumberGenerator;
+import utilities.RandomNumberGenerator;
 
 import java.util.Optional;
 

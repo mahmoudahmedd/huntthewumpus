@@ -4,7 +4,7 @@ import model.gameobjects.*;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
-import acceptance.utilities.RandomNumberGenerator;
+import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

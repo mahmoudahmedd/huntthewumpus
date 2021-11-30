@@ -1,6 +1,6 @@
 package model;
 
-import acceptance.utilities.RandomNumberGenerator;
+import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
