@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-public class BuildGameMap {
+public class BuildGameMapSteps {
 
     RandomNumberGenerator randomNumberGenerator;
     NewGame game;
