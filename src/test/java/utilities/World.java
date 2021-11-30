@@ -1,10 +1,12 @@
 package utilities;
 
+import model.GameWorld;
 import presenter.WumpusPresenter;
 import presenter.WumpusPresenterImpl;
 
 public class World {
     WumpusPresenter wumpusPresenter;
+    GameWorld gameWorld;
     RandomNumberGeneratorBuilder randomNumberGeneratorBuilder;
 
     public World() {
@@ -22,5 +24,14 @@ public class World {
         }
 
         return this.wumpusPresenter;
+    }
+
+    public GameWorld getGameWorld() {
+        if(this.gameWorld == null) {
+            this.gameWorld = new GameWorld(randomNumberGeneratorBuilder.build());
+            this.gameWorld.startGame();
+        }
+
+        return this.gameWorld;
     }
 }
