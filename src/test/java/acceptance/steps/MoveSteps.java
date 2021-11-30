@@ -20,16 +20,16 @@ public class MoveSteps {
         this.world = world;
     }
 
-    @Given("player in cave {int}")
-    public void playerIsInCave(Integer playerStartingCave) {
-        this.world.getRandomNumberGeneratorBuilder().setPlayerStartingCaveIndex(playerStartingCave);
-    }
-
     @ParameterType("\\[([0-9, ]*)\\]")
     public List<Integer> listOfIntegers(String integers) {
         return Arrays.stream(integers.split(", ?"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
+    }
+
+    @Given("player in cave {int}")
+    public void playerIsInCave(Integer playerStartingCave) {
+        this.world.getRandomNumberGeneratorBuilder().setPlayerStartingCaveIndex(playerStartingCave);
     }
 
     @When("player moves on the {listOfIntegers}")
