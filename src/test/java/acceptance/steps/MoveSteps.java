@@ -1,10 +1,10 @@
-package acceptance;
+package acceptance.steps;
 
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import utilities.World;
+import acceptance.utilities.World;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,11 +43,5 @@ public class MoveSteps {
     public void player_will_be_at_cave(Integer expectedPlayerCave) {
         final int playerCurrentRoom = world.getWumpusPresenter().getPlayerCave();
         assertEquals(expectedPlayerCave, playerCurrentRoom);
-    }
-
-    @Then("player sense the warning {string}")
-    public void playerSenseTheWarningWarning(String expectedWarning) {
-        List<String> messages = world.getWumpusPresenter().getMessages();
-        assertTrue(messages.contains(expectedWarning));
     }
 }

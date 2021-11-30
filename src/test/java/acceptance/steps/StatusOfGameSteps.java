@@ -1,7 +1,7 @@
-package acceptance;
+package acceptance.steps;
 
 import io.cucumber.java.en.Then;
-import utilities.World;
+import acceptance.utilities.World;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

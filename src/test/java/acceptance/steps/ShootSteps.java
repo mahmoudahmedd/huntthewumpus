@@ -1,7 +1,7 @@
-package acceptance;
+package acceptance.steps;
 
 import io.cucumber.java.en.When;
-import utilities.World;
+import acceptance.utilities.World;
 
 public class ShootSteps {
     private World world;

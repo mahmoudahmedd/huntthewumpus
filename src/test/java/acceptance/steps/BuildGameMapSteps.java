@@ -1,4 +1,4 @@
-package acceptance;
+package acceptance.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -6,14 +6,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Cave;
 import model.GameInitialConfigurations;
-import model.GameWorld;
 import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
-import org.mockito.Mockito;
-import utilities.RandomNumberGenerator;
-import utilities.World;
+import acceptance.utilities.World;
 
 import java.util.HashMap;
 import java.util.List;

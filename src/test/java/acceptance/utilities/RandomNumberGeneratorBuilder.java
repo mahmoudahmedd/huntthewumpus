@@ -1,4 +1,4 @@
-package utilities;
+package acceptance.utilities;
 
 import model.GameInitialConfigurations;
 import org.mockito.Mockito;

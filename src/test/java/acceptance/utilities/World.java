@@ -1,4 +1,4 @@
-package utilities;
+package acceptance.utilities;
 
 import model.GameWorld;
 import presenter.WumpusPresenter;
