@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class NewGameModelTests {
+public class GameWorldModelTests {
 
     public static final int PLAYER_STARTING_CAVE_INDEX = 9;
     public static final int WUMPUS_STARTING_CAVE_INDEX = 18;
@@ -41,7 +41,7 @@ public class NewGameModelTests {
 
     @Test
     public void testGameMapInitializationProducedTheCorrectNumberOfCaves() {
-        NewGame game = new NewGame();
+        GameWorld game = new GameWorld();
         game.startGame();
         GameMap gameMap = game.getGameMap();
 
@@ -50,7 +50,7 @@ public class NewGameModelTests {
 
     @Test
     public void testThatGameMapInitializationProducedTheCorrectCaveLinks() {
-        NewGame game = new NewGame();
+        GameWorld game = new GameWorld();
         game.startGame();
         GameMap gameMap = game.getGameMap();
         final List<Cave> mapCaves = gameMap.getCaves();
@@ -77,7 +77,7 @@ public class NewGameModelTests {
     public void testThatPlayerIsAddedToInitialCave() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int actualPlayerCaveIndex = game.getPlayerCave();
@@ -88,7 +88,7 @@ public class NewGameModelTests {
     public void testThatPlayerCaveIsAddedToGameMap() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int actualPlayerCaveIndex = game.getPlayerCave();
@@ -103,7 +103,7 @@ public class NewGameModelTests {
     public void testThatWumpusIsAddedToCaveGameMap(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int actualWumpusCaveIndex = game.getWumpusCave();
@@ -121,7 +121,7 @@ public class NewGameModelTests {
 
         int[] batsStartingCavesIndexes = {FIRST_BAT_STARTING_CAVE_INDEX, SECOND_BAT_STARTING_CAVE_INDEX};
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         List<Bat> listOfBats = game.getBats();
@@ -142,7 +142,7 @@ public class NewGameModelTests {
 
         int[] pitsInCavesIndexes = {FIRST_PIT_CAVE, SECOND_PIT_CAVE};
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         List<Pit> listOfPits = game.getPits();
@@ -173,7 +173,7 @@ public class NewGameModelTests {
                 SECOND_PIT_CAVE
                 );
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int actualWumpusCaveIndex = game.getWumpusCave();
@@ -201,7 +201,7 @@ public class NewGameModelTests {
                 SECOND_PIT_CAVE
         );
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         List<Bat> listOfBats = game.getBats();
@@ -232,7 +232,7 @@ public class NewGameModelTests {
                 secondCorrectPitCave
         );
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         List<Pit> listOfPits = game.getPits();
@@ -271,7 +271,7 @@ public class NewGameModelTests {
                 SECOND_PIT_CAVE
         );
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int actualWumpusCaveIndex = game.getWumpusCave();
@@ -300,7 +300,7 @@ public class NewGameModelTests {
     public void testThatThePlayerCanMoveToALinkedCave(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int caveIndexToMoveTo = 1;
@@ -321,7 +321,7 @@ public class NewGameModelTests {
     public void testMoveToNonConnectedCave() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int caveIndexToMoveTo = 17;
@@ -343,7 +343,7 @@ public class NewGameModelTests {
     public void testMovingPlayerToCaveThatHasAWumups(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         int[] journeyPath = new int[] {10, 18};
@@ -365,7 +365,7 @@ public class NewGameModelTests {
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         int[] journeyPath = new int[] {10};
@@ -387,7 +387,7 @@ public class NewGameModelTests {
     public void testThatPlayerEnterRoomWithPit() {
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int[] journeyPath = {10, 11, 2, 3};
@@ -407,7 +407,7 @@ public class NewGameModelTests {
     public void testKillingTheWumpus(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         game.playerMovesToCave(10);
@@ -429,7 +429,7 @@ public class NewGameModelTests {
         Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
                 numberAtWhichWumpusWillRemainSleeping);
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
         game.playerMovesToCave(10);
 
@@ -458,7 +458,7 @@ public class NewGameModelTests {
         Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
                 wumpusLinkedCaveIndex);
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int caveToShootTo = 1;
@@ -485,7 +485,7 @@ public class NewGameModelTests {
         Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
                 numberAtWhichWumpusWillWakeUp);
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int caveToShoot = 1;
@@ -512,7 +512,7 @@ public class NewGameModelTests {
         Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
                 wumpusLinkedCaveIndex);
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         game.playerMovesToCave(10);
@@ -557,7 +557,7 @@ public class NewGameModelTests {
         );
 
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int[] journeyPath = {10, 11, 12, FIRST_BAT_STARTING_CAVE_INDEX};
@@ -610,7 +610,7 @@ public class NewGameModelTests {
         );
 
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int[] journeyPath = {10, 11, 12, FIRST_BAT_STARTING_CAVE_INDEX};
@@ -635,7 +635,7 @@ public class NewGameModelTests {
     public void testThatPlayerEnterRoomWithPitAndBat(){
         configureMockingBasedOnDefaultLocationOfGameObjectsOnMap();
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         final int[] journeyPath = {10, 11, 12, 13};
@@ -663,7 +663,7 @@ public class NewGameModelTests {
                 SECOND_PIT_CAVE
         );
 
-        NewGame game = new NewGame(randomNumberGenerator);
+        GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
 
         Cave cave=game.getGameMap().getCaves().get(WUMPUS_STARTING_CAVE_INDEX);

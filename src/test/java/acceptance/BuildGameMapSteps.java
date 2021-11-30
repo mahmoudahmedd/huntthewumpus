@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.Cave;
 import model.GameInitialConfigurations;
-import model.NewGame;
+import model.GameWorld;
 import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 public class BuildGameMapSteps {
 
     RandomNumberGenerator randomNumberGenerator;
-    NewGame game;
+    GameWorld game;
 
     final int PLAYER_STARTING_CAVE_INDEX = 9;
     final int WUMPUS_STARTING_CAVE_INDEX = 18;
@@ -50,7 +50,7 @@ public class BuildGameMapSteps {
 
     @When("game starts")
     public void gameStartsWithCaves() {
-        game = new NewGame(randomNumberGenerator);
+        game = new GameWorld(randomNumberGenerator);
         game.startGame();
     }
 

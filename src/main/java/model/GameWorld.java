@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewGame implements Game {
+public class GameWorld implements Game {
 
     private GameMap gameMap;
     private RandomNumberGenerator randomNumberGenerator;
@@ -21,11 +21,11 @@ public class NewGame implements Game {
     private List<Pit> pits;
     private Map<String, List<? extends GameObject>> hazardsMap = new HashMap<>();
 
-    public NewGame() {
+    public GameWorld() {
         this.randomNumberGenerator = new RandomNumberGenerator();
     }
 
-    public NewGame(RandomNumberGenerator randomNumberGenerator) {
+    public GameWorld(RandomNumberGenerator randomNumberGenerator) {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 

@@ -1,7 +1,7 @@
 package presenter;
 
 import model.Game;
-import model.NewGame;
+import model.GameWorld;
 import utilities.RandomNumberGenerator;
 
 import java.util.List;
@@ -11,11 +11,11 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     Game gameModel;
 
     public WumpusPresenterImpl(){
-        this.gameModel=new NewGame();
+        this.gameModel=new GameWorld();
     }
 
     public WumpusPresenterImpl(RandomNumberGenerator randomNumberGenerator){
-        this.gameModel=new NewGame(randomNumberGenerator);
+        this.gameModel=new GameWorld(randomNumberGenerator);
     }
 
     @Override
