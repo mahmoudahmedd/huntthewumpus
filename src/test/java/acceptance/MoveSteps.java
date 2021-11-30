@@ -45,20 +45,6 @@ public class MoveSteps {
         assertEquals(expectedPlayerCave, playerCurrentRoom);
     }
 
-    @Then("^player is dead$|^game state is game over")
-    public void assertOnExpectedStatusOfGameIsOver() {
-        boolean expectedStatusOfGameIsOver = true;
-        final boolean isGameOver = world.getWumpusPresenter().isGameOver();
-        assertEquals(isGameOver, expectedStatusOfGameIsOver);
-    }
-
-    @Then("^player is alive$|^game state is game not over$")
-    public void assertOnExpectedStatusOfGameIsNotOver() {
-        boolean expectedStatusOfGameIsNotOver = false;
-        final boolean isGameOver = world.getWumpusPresenter().isGameOver();
-        assertEquals(isGameOver, expectedStatusOfGameIsNotOver);
-    }
-
     @Then("player sense the warning {string}")
     public void playerSenseTheWarningWarning(String expectedWarning) {
         List<String> messages = world.getWumpusPresenter().getMessages();
