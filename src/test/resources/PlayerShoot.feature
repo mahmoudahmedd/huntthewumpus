@@ -3,6 +3,14 @@ Feature: Player shoot
   As a player,
   I want to shoot arrows.
 
+  Background:
+    Given player in cave 9
+    And wumpus in cave 18
+    And first bat in cave 19
+    And second bat in cave 13
+    And first pit in cave 3
+    And second pit in cave 13
+
   Scenario Outline: Player shoots an arrow to a cave that contains the wumpus
     Given player in cave <PlayerStartingCave>
     When player moves on the <JourneyPath>
@@ -11,4 +19,4 @@ Feature: Player shoot
 
     Examples:
       | PlayerStartingCave | JourneyPath | CaveToShoot | PlayerState |
-      | 0                  | [1, 9, 10]  | 18          | winner       |
+      | 0                  | [1, 9, 10]  | 18          | winner      |

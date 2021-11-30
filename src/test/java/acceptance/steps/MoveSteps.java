@@ -26,10 +26,7 @@ public class MoveSteps {
                 .collect(Collectors.toList());
     }
 
-    @Given("player in cave {int}")
-    public void playerIsInCave(Integer playerStartingCave) {
-        this.world.getRandomNumberGeneratorBuilder().setPlayerStartingCaveIndex(playerStartingCave);
-    }
+
 
     @When("player moves on the {listOfIntegers}")
     public void playerMovesOnThe(List<Integer> journeyPath) {

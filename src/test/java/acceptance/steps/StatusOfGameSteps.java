@@ -12,17 +12,18 @@ public class StatusOfGameSteps {
         this.world = world;
     }
 
-    @Then("^player is dead$|^player is loser$|^game state is game over")
+    @Then("^player is dead$|^player is loser$|^player is winner$|^game state is game over")
     public void assertOnExpectedStatusOfGameIsOver() {
         boolean expectedStatusOfGameIsOver = true;
         final boolean isGameOver = world.getWumpusPresenter().isGameOver();
         assertEquals(isGameOver, expectedStatusOfGameIsOver);
     }
 
-    @Then("^player is alive$|^player is winner$|^game state is game not over$")
+    @Then("^player is alive$|^game state is game not over$")
     public void assertOnExpectedStatusOfGameIsNotOver() {
         boolean expectedStatusOfGameIsNotOver = false;
         final boolean isGameOver = world.getWumpusPresenter().isGameOver();
+        System.out.println(isGameOver);
         assertEquals(isGameOver, expectedStatusOfGameIsNotOver);
     }
 }
