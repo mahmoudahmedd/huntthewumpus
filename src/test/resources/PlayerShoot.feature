@@ -7,8 +7,8 @@ Feature: Player shoot
     Given player in cave <PlayerStartingCave>
     When player moves on the <JourneyPath>
     And player shoots to cave <CaveToShoot>
-    Then player is <GameState>
+    Then player is <PlayerState>
 
     Examples:
-      | PlayerStartingCave | JourneyPath | CaveToShoot | GameState |
-      | 0                  | [1, 9, 10]  | 18          | winner    |
+      | PlayerStartingCave | JourneyPath | CaveToShoot | PlayerState |
+      | 0                  | [1, 9, 10]  | 18          | winner       |
