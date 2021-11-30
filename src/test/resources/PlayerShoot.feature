@@ -4,11 +4,11 @@ Feature: Player shoot
   I want to shoot arrows.
 
   Scenario Outline: Player shoots an arrow
-    Given player is in cave <PlayerStartingCave>
+    Given player in cave <PlayerStartingCave>
     When player moves on the <JourneyPath>
     And player shoots to cave <CaveToShoot>
     Then game state is <GameState>
 
     Examples:
       | PlayerStartingCave | JourneyPath | CaveToShoot | GameState   |
-      | 0                  | [1, 9, 10]  | 18          | "game over" |
+      | 0                  | [1, 9, 10]  | 18          | game over   |
