@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
 
-public class WumpusViewImpl extends JPanel implements WumpusView {
+public class DesktopViewImpl extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
 
@@ -34,7 +34,7 @@ public class WumpusViewImpl extends JPanel implements WumpusView {
 
     private boolean gameStarting=true;
 
-    public WumpusViewImpl() {
+    public DesktopViewImpl() {
 
         wumpusPresenter = new WumpusPresenterImpl();
         wumpusPresenter.startNewGame();

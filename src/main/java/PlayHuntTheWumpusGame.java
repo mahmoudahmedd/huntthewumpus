@@ -1,4 +1,4 @@
-import view.WumpusViewImpl;
+import view.DesktopViewImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class PlayHuntTheWumpusGame {
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setTitle("Hunt the Wumpus");
             f.setResizable(false);
-            f.add(new WumpusViewImpl(), BorderLayout.CENTER);
+            f.add(new DesktopViewImpl(), BorderLayout.CENTER);
             f.pack();
             f.setLocationRelativeTo(null);
             f.setVisible(true);
