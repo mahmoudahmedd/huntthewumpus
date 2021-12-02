@@ -92,5 +92,12 @@ Feature: Player move
     When player moves on the [4, 3]
     Then player is dead
 
+  Scenario: Player moves to a cave that has a pit and bat
+    Given player in cave 11
+    And first bat in cave 19
+    And first pit in cave 3
+    When player moves on the [12, 13]
+    Then player is dead
+
 
 
