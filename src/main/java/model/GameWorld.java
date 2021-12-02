@@ -177,9 +177,11 @@ public class GameWorld implements Game {
     }
 
     @Override
-    public void playerShootsToCave(int cave) {
-        Cave caveToShoot = gameMap.getCaves().get(cave);
-        player.shoot(caveToShoot);
+    public void playerShootsToCave(Integer... caves) {
+        for(Integer cave: caves) {
+            Cave caveToShoot = gameMap.getCaves().get(cave);
+            player.shoot(caveToShoot);
+        }
 
         if (!wumpus.isDead()) {
             wumpus.attemptToWakeup();

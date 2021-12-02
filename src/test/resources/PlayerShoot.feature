@@ -19,14 +19,14 @@ Feature: Player shoot
 
     Examples:
       | PlayerStartingCave | JourneyPath | CaveToShoot | PlayerState |
-      | 0                  | [1, 9, 10]  | 18          | winner      |
+      | 0                  | [1, 9, 10]  | [18]        | winner      |
 
   Scenario: Player shoots an arrow that misses the wumpus and wumpus remains sleeping
     Given player in cave 5
     And wumpus in cave 18
     And wumpus not attempt to wakeup
     When player moves on the [1, 9, 10]
-    And player shoots to cave 11
+    And player shoots to cave [11]
     Then game state is game not over
     And wumpus will be at cave 18
 
@@ -37,6 +37,13 @@ Feature: Player shoot
     And third linked cave to cave 18 is 17
     When wumpus attempts to wake up wumpus moves to third linked cave
     And player moves on the [1, 9, 10]
-    And player shoots to cave 11
+    And player shoots to cave [11]
     Then game state is game not over
     And wumpus will be at cave 17
+
+  Scenario: Player runs out of arrows with out killing wumpus
+    Given player in cave 0
+    And wumpus in cave 18
+    And wumpus not attempt to wakeup
+    When player shoots to cave [7, 7, 7, 7, 7]
+    Then game state is game over
