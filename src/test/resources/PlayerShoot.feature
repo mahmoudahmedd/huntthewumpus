@@ -47,3 +47,4 @@ Feature: Player shoot
     And wumpus not attempt to wakeup
     When player shoots to cave [7, 7, 7, 7, 7]
     Then game state is game over
+    And game messages contains "You ran out of arrows"
