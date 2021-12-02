@@ -23,7 +23,6 @@ public class StatusOfGameSteps {
     public void assertOnExpectedStatusOfGameIsNotOver() {
         boolean expectedStatusOfGameIsNotOver = false;
         final boolean isGameOver = world.getWumpusPresenter().isGameOver();
-        System.out.println(isGameOver);
         assertEquals(isGameOver, expectedStatusOfGameIsNotOver);
     }
 }
