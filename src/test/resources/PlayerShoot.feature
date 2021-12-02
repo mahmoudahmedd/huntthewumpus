@@ -34,6 +34,7 @@ Feature: Player shoot
     Given player in cave 5
     And wumpus in cave 18
     And wumpus attempt to wakeup
+    And third linked cave to cave 18 is 17
     When wumpus attempts to wake up wumpus moves to third linked cave
     And player moves on the [1, 9, 10]
     And player shoots to cave 11
