@@ -86,5 +86,11 @@ Feature: Player move
     Then player is alive
     And player will be at cave 8
 
+  Scenario: Player moves to a cave that has a pit
+    Given player in cave 0
+    And first pit in cave 3
+    When player moves on the [4, 3]
+    Then player is dead
+
 
 
