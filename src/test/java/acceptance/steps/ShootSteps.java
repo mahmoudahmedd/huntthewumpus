@@ -1,13 +1,13 @@
 package acceptance.steps;
 
 import io.cucumber.java.en.When;
-import acceptance.utilities.World;
+import acceptance.utilities.ScenarioWorld;
 import java.util.List;
 
 public class ShootSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public ShootSteps(World world) {
+    public ShootSteps(ScenarioWorld world) {
         this.world = world;
     }
 

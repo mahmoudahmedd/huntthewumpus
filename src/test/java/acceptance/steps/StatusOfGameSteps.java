@@ -1,14 +1,14 @@
 package acceptance.steps;
 
 import io.cucumber.java.en.Then;
-import acceptance.utilities.World;
+import acceptance.utilities.ScenarioWorld;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatusOfGameSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public StatusOfGameSteps(World world) {
+    public StatusOfGameSteps(ScenarioWorld world) {
         this.world = world;
     }
 

@@ -10,7 +10,7 @@ import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
-import acceptance.utilities.World;
+import acceptance.utilities.ScenarioWorld;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class BuildGameMapSteps {
-    World world;
+    ScenarioWorld world;
 
-    public BuildGameMapSteps(World world) {
+    public BuildGameMapSteps(ScenarioWorld world) {
         this.world = world;
     }
     @Given("location of game objects on map is initialized")

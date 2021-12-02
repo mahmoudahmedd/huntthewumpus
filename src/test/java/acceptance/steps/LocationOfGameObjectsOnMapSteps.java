@@ -1,16 +1,15 @@
 package acceptance.steps;
 
-import acceptance.utilities.World;
-import io.cucumber.java.en.And;
+import acceptance.utilities.ScenarioWorld;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LocationOfGameObjectsOnMapSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public LocationOfGameObjectsOnMapSteps(World world) {
+    public LocationOfGameObjectsOnMapSteps(ScenarioWorld world) {
         this.world = world;
     }
 

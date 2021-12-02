@@ -1,11 +1,8 @@
 package acceptance.steps;
 
 import io.cucumber.java.ParameterType;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import acceptance.utilities.World;
+import acceptance.utilities.ScenarioWorld;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +11,9 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoveSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public MoveSteps(World world) {
+    public MoveSteps(ScenarioWorld world) {
         this.world = world;
     }
 

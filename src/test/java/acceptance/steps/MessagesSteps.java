@@ -1,7 +1,6 @@
 package acceptance.steps;
 
-import acceptance.utilities.World;
-import io.cucumber.java.en.And;
+import acceptance.utilities.ScenarioWorld;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
@@ -9,9 +8,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MessagesSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public MessagesSteps(World world) {
+    public MessagesSteps(ScenarioWorld world) {
         this.world = world;
     }
 

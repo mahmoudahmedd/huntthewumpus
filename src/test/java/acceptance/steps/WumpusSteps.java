@@ -1,15 +1,13 @@
 package acceptance.steps;
 
-import acceptance.utilities.World;
-import io.cucumber.java.en.And;
+import acceptance.utilities.ScenarioWorld;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import sun.awt.image.IntegerComponentRaster;
 
 public class WumpusSteps {
-    private World world;
+    private ScenarioWorld world;
 
-    public WumpusSteps(World world) {
+    public WumpusSteps(ScenarioWorld world) {
         this.world = world;
     }
 

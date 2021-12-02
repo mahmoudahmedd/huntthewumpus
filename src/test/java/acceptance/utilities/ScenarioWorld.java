@@ -4,12 +4,12 @@ import model.GameWorld;
 import presenter.WumpusPresenter;
 import presenter.WumpusPresenterImpl;
 
-public class World {
+public class ScenarioWorld {
     WumpusPresenter wumpusPresenter;
     GameWorld gameWorld;
     RandomNumberGeneratorBuilder randomNumberGeneratorBuilder;
 
-    public World() {
+    public ScenarioWorld() {
         this.randomNumberGeneratorBuilder = new RandomNumberGeneratorBuilder();
     }
 
