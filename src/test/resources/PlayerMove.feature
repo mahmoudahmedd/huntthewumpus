@@ -77,4 +77,14 @@ Feature: Player move
     | 0                  | 3                    | 13                    | [4]         | alive       | "you feel a draft"       |
     | 0                  | 3                    | 13                    | [4, 5, 14]  | alive       | "you feel a draft"       |
 
+  Scenario: Player moves to a cave that has a bat
+    Given player in cave 11
+    And first bat in cave 19
+    And player drop down cave 8
+    And first bat in final cave 2
+    When player moves on the [12, 19]
+    Then player is alive
+    And player will be at cave 8
+
+
 

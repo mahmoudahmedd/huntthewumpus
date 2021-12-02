@@ -74,4 +74,12 @@ public class RandomNumberGeneratorBuilder {
     public void setSecondPitCave(int secondPitCave) {
         this.secondPitCave = secondPitCave;
     }
+
+    public void setPlayerDropDownCave(Integer playerDropDownCave) {
+        appendItemsForMocito.add(playerDropDownCave);
+    }
+
+    public void setFirstBatFinalCave(Integer firstBatFinalCave) {
+        appendItemsForMocito.add(firstBatFinalCave);
+    }
 }

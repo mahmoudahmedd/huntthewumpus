@@ -40,4 +40,14 @@ public class LocationOfGameObjectsOnMapSteps {
     public void secondPitInCave(Integer secondPitStartingCave) {
         this.world.getRandomNumberGeneratorBuilder().setSecondPitCave(secondPitStartingCave);
     }
+
+    @Given("player drop down cave {int}")
+    public void playerDropDownCave(Integer playerDropDownCave) {
+        this.world.getRandomNumberGeneratorBuilder().setPlayerDropDownCave(playerDropDownCave);
+    }
+
+    @Given("first bat in final cave {int}")
+    public void firstBatInFinalCave(Integer firstBatFinalCave) {
+        this.world.getRandomNumberGeneratorBuilder().setFirstBatFinalCave(firstBatFinalCave);
+    }
 }
