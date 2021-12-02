@@ -1,22 +1,13 @@
+import view.ConsoleViewImpl;
 import view.DesktopViewImpl;
-
-import javax.swing.*;
-import java.awt.*;
-
-import static javax.swing.SwingUtilities.invokeLater;
+import view.WumpusView;
 
 public class PlayHuntTheWumpusGame {
     public static void main(String[] args) {
-        // Main function
-        invokeLater(() -> {
-            JFrame f = new JFrame();
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setTitle("Hunt the Wumpus");
-            f.setResizable(false);
-            f.add(new DesktopViewImpl(), BorderLayout.CENTER);
-            f.pack();
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
-        });
+        WumpusView desktopViewImpl = new DesktopViewImpl();
+        desktopViewImpl.startTheGame();
+
+        WumpusView consoleViewImpl = new ConsoleViewImpl();
+        consoleViewImpl.startTheGame();
     }
 }

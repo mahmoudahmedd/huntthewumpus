@@ -16,6 +16,8 @@ import static java.util.stream.Collectors.toList;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
 
+import static javax.swing.SwingUtilities.invokeLater;
+
 public class DesktopViewImpl extends JPanel implements WumpusView {
 
     WumpusPresenter wumpusPresenter;
@@ -164,6 +166,20 @@ public class DesktopViewImpl extends JPanel implements WumpusView {
     @Override
     public void render() {
         repaint();
+    }
+
+    @Override
+    public void startTheGame() {
+        invokeLater(() -> {
+            JFrame f = new JFrame();
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            f.setTitle("Hunt the Wumpus");
+            f.setResizable(false);
+            f.add(new DesktopViewImpl(), BorderLayout.CENTER);
+            f.pack();
+            f.setLocationRelativeTo(null);
+            f.setVisible(true);
+        });
     }
 
     private void handleMouseClick(int mouseClickXAxis, int mouseClickYAxis, boolean leftClick, boolean rightClick) {
