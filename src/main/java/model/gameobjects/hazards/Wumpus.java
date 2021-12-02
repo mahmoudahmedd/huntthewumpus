@@ -60,8 +60,9 @@ public class Wumpus extends GameObject implements Hazard {
     }
 
     public void attemptToWakeup() {
-            int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
-            if (randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability) != 0) { // 75 %
+        int maximumNumberForCalculatingWumpusWakeupProbability = GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY;
+        int probabilityAtWhichWumpusWillRemainSleeping = randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability);
+        if (probabilityAtWhichWumpusWillRemainSleeping != 0) { // 75 %
                 int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
                 wakeup(randomLinkedCaveIndex);
         }

@@ -20,3 +20,11 @@ Feature: Player shoot
     Examples:
       | PlayerStartingCave | JourneyPath | CaveToShoot | PlayerState |
       | 0                  | [1, 9, 10]  | 18          | winner      |
+
+  Scenario: Player shoots an arrow that misses the wumpus and wumpus remains sleeping
+    Given player in cave 5
+    And wumpus in cave 18
+    When player moves on the [1, 9, 10]
+    And player shoots to cave 11
+    Then game state is game not over
+    And wumpus will be at cave 18

@@ -1,6 +1,7 @@
 package acceptance.steps;
 
 import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,18 +27,10 @@ public class MoveSteps {
                 .collect(Collectors.toList());
     }
 
-
-
     @When("player moves on the {listOfIntegers}")
     public void playerMovesOnThe(List<Integer> journeyPath) {
         for (int caveNumber : journeyPath) {
             world.getWumpusPresenter().move(caveNumber);
         }
-    }
-
-    @Then("player will be at cave {int}")
-    public void playerWillBeAtCave(Integer expectedPlayerCave) {
-        final int playerCurrentRoom = world.getWumpusPresenter().getPlayerCave();
-        assertEquals(expectedPlayerCave, playerCurrentRoom);
     }
 }

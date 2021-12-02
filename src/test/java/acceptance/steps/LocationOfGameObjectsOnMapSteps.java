@@ -3,6 +3,9 @@ package acceptance.steps;
 import acceptance.utilities.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LocationOfGameObjectsOnMapSteps {
     private World world;
@@ -49,5 +52,17 @@ public class LocationOfGameObjectsOnMapSteps {
     @Given("first bat in final cave {int}")
     public void firstBatInFinalCave(Integer firstBatFinalCave) {
         this.world.getRandomNumberGeneratorBuilder().setFirstBatFinalCave(firstBatFinalCave);
+    }
+
+    @Then("player will be at cave {int}")
+    public void playerWillBeAtCave(Integer expectedPlayerCave) {
+        final int playerCurrentRoom = world.getWumpusPresenter().getPlayerCave();
+        assertEquals(expectedPlayerCave, playerCurrentRoom);
+    }
+
+    @Then("wumpus will be at cave {int}")
+    public void wumpusWillBeAtCave(Integer expectedWumpusCave) {
+        final int wumpusCurrentRoom = world.getWumpusPresenter().getWumpusCave();
+        assertEquals(expectedWumpusCave, wumpusCurrentRoom);
     }
 }

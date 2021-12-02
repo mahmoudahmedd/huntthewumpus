@@ -15,8 +15,9 @@ import static org.mockito.Mockito.mock;
 public class RandomNumberGeneratorBuilder {
     public RandomNumberGenerator randomNumberGenerator = mock(RandomNumberGenerator.class);
 
-    List<Integer> defaultItemsForMocito = new ArrayList<>();
-    List<Integer> appendItemsForMocito = new ArrayList<>();
+    List<Integer> defaultNumbersForDefaultLocationMocito = new ArrayList<>();
+    List<Integer> appendedNumbersForDefaultLocationMocito = new ArrayList<>();
+    List<Integer> defaultNumbersForWumpusWakeupProbabilityMocito = new ArrayList<>();
 
     public int playerStartingCaveIndex = 9;
     public int wumpusStartingCaveIndex = 18;
@@ -25,30 +26,57 @@ public class RandomNumberGeneratorBuilder {
     public int firstPitCave = 3;
     public int secondPitCave = 13;
 
+    public int numberAtWhichWumpusWillRemainSleeping = 0;
+
     public RandomNumberGenerator build() {
+        addDefaultNumbersForDefaultLocationMocito();
+        addDefaultNumbersForWumpusWakeupProbabilityMocito();
 
-        defaultItemsForMocito.addAll(Arrays.asList(
-                playerStartingCaveIndex,
-                wumpusStartingCaveIndex,
-                firstBatStartingCaveIndex,
-                secondBatStartingCaveIndex,
-                firstPitCave,
-                secondPitCave));
+        defaultNumbersForDefaultLocationMocito.addAll(appendedNumbersForDefaultLocationMocito);
 
-        defaultItemsForMocito.addAll(appendItemsForMocito);
+        configureDefaultNumbersForDefaultLocationMocito();
+        configureDefaultNumbersForWumpusWakeupProbabilityMocito();
 
+        return randomNumberGenerator;
+    }
+
+    private void configureDefaultNumbersForWumpusWakeupProbabilityMocito() {
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.MAXIMUM_NUMBER_FOR_CALCULATING_WUMPUS_WAKEUP_PROBABILITY))
+                .thenAnswer(new Answer<Integer>() {
+                    int counter = 0;
+
+                    @Override
+                    public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+                        return defaultNumbersForWumpusWakeupProbabilityMocito.get(counter++);
+                    }
+                });
+    }
+
+    private void configureDefaultNumbersForDefaultLocationMocito() {
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES))
                 .thenAnswer(new Answer<Integer>() {
                     int counter = 0;
 
                     @Override
                     public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        return defaultItemsForMocito.get(counter++);
+                        return defaultNumbersForDefaultLocationMocito.get(counter++);
                     }
                 });
+    }
 
+    private void addDefaultNumbersForWumpusWakeupProbabilityMocito() {
+        defaultNumbersForWumpusWakeupProbabilityMocito.addAll(Arrays.asList(
+                numberAtWhichWumpusWillRemainSleeping));
+    }
 
-        return randomNumberGenerator;
+    private void addDefaultNumbersForDefaultLocationMocito() {
+        defaultNumbersForDefaultLocationMocito.addAll(Arrays.asList(
+                playerStartingCaveIndex,
+                wumpusStartingCaveIndex,
+                firstBatStartingCaveIndex,
+                secondBatStartingCaveIndex,
+                firstPitCave,
+                secondPitCave));
     }
 
     public void setPlayerStartingCaveIndex(int playerStartingCaveIndex) {
@@ -76,10 +104,10 @@ public class RandomNumberGeneratorBuilder {
     }
 
     public void setPlayerDropDownCave(Integer playerDropDownCave) {
-        appendItemsForMocito.add(playerDropDownCave);
+        appendedNumbersForDefaultLocationMocito.add(playerDropDownCave);
     }
 
     public void setFirstBatFinalCave(Integer firstBatFinalCave) {
-        appendItemsForMocito.add(firstBatFinalCave);
+        appendedNumbersForDefaultLocationMocito.add(firstBatFinalCave);
     }
 }
