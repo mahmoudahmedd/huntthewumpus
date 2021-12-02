@@ -24,7 +24,18 @@ Feature: Player shoot
   Scenario: Player shoots an arrow that misses the wumpus and wumpus remains sleeping
     Given player in cave 5
     And wumpus in cave 18
+    And wumpus not attempt to wakeup
     When player moves on the [1, 9, 10]
     And player shoots to cave 11
     Then game state is game not over
     And wumpus will be at cave 18
+
+  Scenario: Player shoots an arrow that misses the wumpus and wumpus moves
+    Given player in cave 5
+    And wumpus in cave 18
+    And wumpus attempt to wakeup
+    When wumpus attempts to wake up wumpus moves to third linked cave
+    And player moves on the [1, 9, 10]
+    And player shoots to cave 11
+    Then game state is game not over
+    And wumpus will be at cave 17

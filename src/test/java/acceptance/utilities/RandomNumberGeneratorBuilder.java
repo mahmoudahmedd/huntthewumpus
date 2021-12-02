@@ -18,6 +18,7 @@ public class RandomNumberGeneratorBuilder {
     List<Integer> defaultNumbersForDefaultLocationMocito = new ArrayList<>();
     List<Integer> appendedNumbersForDefaultLocationMocito = new ArrayList<>();
     List<Integer> defaultNumbersForWumpusWakeupProbabilityMocito = new ArrayList<>();
+    List<Integer> defaultNumbersForWumpusLinkedCaveIndexMocito = new ArrayList<>();
 
     public int playerStartingCaveIndex = 9;
     public int wumpusStartingCaveIndex = 18;
@@ -28,16 +29,38 @@ public class RandomNumberGeneratorBuilder {
 
     public int numberAtWhichWumpusWillRemainSleeping = 0;
 
+    public int wumpusLinkedCaveIndex = 2;
+
     public RandomNumberGenerator build() {
         addDefaultNumbersForDefaultLocationMocito();
         addDefaultNumbersForWumpusWakeupProbabilityMocito();
+        addDefaultNumbersForWumpusLinkedCaveIndexMocito();
 
         defaultNumbersForDefaultLocationMocito.addAll(appendedNumbersForDefaultLocationMocito);
 
         configureDefaultNumbersForDefaultLocationMocito();
         configureDefaultNumbersForWumpusWakeupProbabilityMocito();
+        configureDefaultNumbersForWumpusLinkedCaveIndexMocito();
 
         return randomNumberGenerator;
+    }
+
+    private void configureDefaultNumbersForWumpusLinkedCaveIndexMocito() {
+        int numberOfLinkedCaves = 3;
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves))
+                .thenAnswer(new Answer<Integer>() {
+                    int counter = 0;
+
+                    @Override
+                    public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+                        return defaultNumbersForWumpusLinkedCaveIndexMocito.get(counter++);
+                    }
+                });
+    }
+
+    private void addDefaultNumbersForWumpusLinkedCaveIndexMocito() {
+        defaultNumbersForWumpusLinkedCaveIndexMocito.addAll(Arrays.asList(
+                wumpusLinkedCaveIndex));
     }
 
     private void configureDefaultNumbersForWumpusWakeupProbabilityMocito() {
@@ -109,5 +132,13 @@ public class RandomNumberGeneratorBuilder {
 
     public void setFirstBatFinalCave(Integer firstBatFinalCave) {
         appendedNumbersForDefaultLocationMocito.add(firstBatFinalCave);
+    }
+
+    public void setNumberAtWhichWumpusWillRemainSleeping(Integer numberAtWhichWumpusWillRemainSleeping) {
+        this.numberAtWhichWumpusWillRemainSleeping = numberAtWhichWumpusWillRemainSleeping;
+    }
+
+    public void setWumpusLinkedCaveIndex(int wumpusLinkedCaveIndex) {
+        this.wumpusLinkedCaveIndex = wumpusLinkedCaveIndex;
     }
 }
