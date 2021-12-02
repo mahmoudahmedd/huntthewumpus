@@ -7,4 +7,8 @@ public class CaveSteps {
     public void thirdLinkedCaveToCaveIs(int arg0, int arg1) {
 
     }
+
+    @And("second linked cave to cave {int} is {int}")
+    public void secondLinkedCaveToCaveIs(int arg0, int arg1) {
+    }
 }

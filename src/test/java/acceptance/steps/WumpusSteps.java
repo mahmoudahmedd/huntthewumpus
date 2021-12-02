@@ -30,4 +30,10 @@ public class WumpusSteps {
         int  thirdLinkedCaveIndex = 2;
         this.world.getRandomNumberGeneratorBuilder().setWumpusLinkedCaveIndex(thirdLinkedCaveIndex);
     }
+
+    @When("wumpus attempts to wake up wumpus moves to second linked cave")
+    public void wumpusAttemptsToWakeUpWumpusMovesToSecondLinkedCave() {
+        int  secondLinkedCaveIndex = 1;
+        this.world.getRandomNumberGeneratorBuilder().setWumpusLinkedCaveIndex(secondLinkedCaveIndex);
+    }
 }

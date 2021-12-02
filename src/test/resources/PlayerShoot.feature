@@ -48,3 +48,15 @@ Feature: Player shoot
     When player shoots to cave [7, 7, 7, 7, 7]
     Then game state is game over
     And game messages contains "You ran out of arrows"
+
+  Scenario: Player shoots an arrow misses wumpus and wumpus wakes up and move to eat the player
+    Given player in cave 0
+    And wumpus in cave 18
+    And wumpus attempt to wakeup
+    And second linked cave to cave 18 is 10
+    When wumpus attempts to wake up wumpus moves to second linked cave
+    And player moves on the [1, 9, 10]
+    And player shoots to cave [11]
+    Then player is dead
+    And game messages contains "You woke the Wumpus and it ate you"
+    And wumpus in cave 10
