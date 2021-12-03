@@ -11,6 +11,7 @@ public interface GameInitialConfigurations {
     boolean GAME_OVER=false;
     int NUMBER_OF_CAVES=20;
     String PLAYER_ID = "The player";
+    String ENEMY_PLAYER_ID = "The enemy player";
     String WUMPUS_ID = "The Wumpus";
     String BAT_ID_PREFIX = "Bat ";
     String PITS_ID_PREFIX = "The pit ";

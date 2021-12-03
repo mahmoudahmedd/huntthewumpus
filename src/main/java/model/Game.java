@@ -1,5 +1,8 @@
 package model;
 
+import model.gameobjects.Player;
+import model.gameobjects.hazards.Wumpus;
+
 import java.util.List;
 
 public interface Game {
@@ -11,4 +14,6 @@ public interface Game {
      List<String> getMessages();
      int getWumpusCave();
      int getPlayerCave();
+
+     Player getEnemyPlayer();
 }

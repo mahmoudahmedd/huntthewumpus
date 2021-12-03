@@ -21,6 +21,7 @@ public class RandomNumberGeneratorBuilder {
     List<Integer> defaultNumbersForWumpusLinkedCaveIndexMocito = new ArrayList<>();
 
     public int playerStartingCaveIndex = 9;
+    public int enemyPlayerStartingCaveIndex = 6;
     public int wumpusStartingCaveIndex = 18;
     public int firstBatStartingCaveIndex = 19;
     public int secondBatStartingCaveIndex = 13;
@@ -95,6 +96,7 @@ public class RandomNumberGeneratorBuilder {
     private void addDefaultNumbersForDefaultLocationMocito() {
         defaultNumbersForDefaultLocationMocito.addAll(Arrays.asList(
                 playerStartingCaveIndex,
+                enemyPlayerStartingCaveIndex,
                 wumpusStartingCaveIndex,
                 firstBatStartingCaveIndex,
                 secondBatStartingCaveIndex,
@@ -140,5 +142,9 @@ public class RandomNumberGeneratorBuilder {
 
     public void setWumpusLinkedCaveIndex(int wumpusLinkedCaveIndex) {
         this.wumpusLinkedCaveIndex = wumpusLinkedCaveIndex;
+    }
+
+    public void setEnemyPlayerStartingCaveIndex(Integer enemyPlayerStartingCaveIndex) {
+        this.enemyPlayerStartingCaveIndex = enemyPlayerStartingCaveIndex;
     }
 }

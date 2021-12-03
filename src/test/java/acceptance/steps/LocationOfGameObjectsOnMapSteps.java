@@ -1,6 +1,7 @@
 package acceptance.steps;
 
 import acceptance.utilities.ScenarioWorld;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -63,5 +64,10 @@ public class LocationOfGameObjectsOnMapSteps {
     public void wumpusWillBeAtCave(Integer expectedWumpusCave) {
         final int wumpusCurrentRoom = world.getWumpusPresenter().getWumpusCave();
         assertEquals(expectedWumpusCave, wumpusCurrentRoom);
+    }
+
+    @And("enemy player in cave {int}")
+    public void enemyPlayerInCave(Integer enemyPlayerStartingCave) {
+        this.world.getRandomNumberGeneratorBuilder().setEnemyPlayerStartingCaveIndex(enemyPlayerStartingCave);
     }
 }

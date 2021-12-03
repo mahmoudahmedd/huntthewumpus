@@ -5,6 +5,7 @@ Feature: Player move
 
   Background:
     Given player in cave 9
+    And enemy player in cave 6
     And wumpus in cave 18
     And first bat in cave 19
     And second bat in cave 13
@@ -39,7 +40,7 @@ Feature: Player move
     Examples:
     | PlayerStartingCave | WumpusStartingCave | JourneyPath    | ExpectedPlayerCave | PlayerState |
     | 0                  | 18                 | [1, 9, 10, 18] | 18                 | dead        |
-    | 16                 | 9                  | [17, 8, 9]     | 9                  | dead        |
+    | 11                  | 9                 | [10, 9]        | 9                  | dead        |
 
   Scenario Outline: Player moves to a cave near a wumpus and sensing that there's an awful smell
     Given player in cave <PlayerStartingCave>
@@ -51,7 +52,7 @@ Feature: Player move
     | PlayerStartingCave | WumpusStartingCave | JourneyPath | PlayerState | Warning                  |
     | 0                  | 18                 | [1, 9, 10]  | alive       | "there's an awful smell" |
     | 0                  | 18                 | [7, 8, 17]  | alive       | "there's an awful smell" |
-    | 16                 | 9                  | [17, 8]     | alive       | "there's an awful smell" |
+    | 11                 | 9                  | [10]        | alive       | "there's an awful smell" |
 
   Scenario Outline: Player moves to a cave near a bat and sensing that the player hear a rustling
     Given player in cave <PlayerStartingCave>

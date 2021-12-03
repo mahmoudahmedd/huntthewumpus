@@ -36,3 +36,9 @@ Feature: Build game map
       | "pits"     | 2                      |
       | "wumpus"   | 1                      |
       | "players"  | 1                      |
+
+  Scenario: Game map adds enemy player
+    Given location of game objects on map is initialized
+    When game starts
+    Then cave 6 will contain the enemy player object
+    And enemy player cave index will be 6

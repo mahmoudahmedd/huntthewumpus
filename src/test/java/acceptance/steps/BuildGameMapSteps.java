@@ -118,4 +118,17 @@ public class BuildGameMapSteps {
 
         return mapperForTheNumberOfGameObjects;
     }
+
+    @Then("cave {int} will contain the enemy player object")
+    public void caveWillContainTheEnemyPlayerObject(Integer expectedEnemyPlayerCave) {
+        Cave enemyPlayerCave = this.world.getGameWorld().getGameMap().getCaves().get(expectedEnemyPlayerCave);
+        Player enemyPlayer = this.world.getGameWorld().getEnemyPlayer();
+        assertTrue(enemyPlayerCave.getGameObjects().contains(enemyPlayer));
+    }
+
+    @And("enemy player cave index will be {int}")
+    public void enemyPlayerCaveIndexWillBe(Integer expectedEnemyPlayerCaveIndex) {
+        final int actualEnemyPlayerCaveIndex = this.world.getGameWorld().getEnemyPlayer().getCave().getNumber();
+        assertEquals(expectedEnemyPlayerCaveIndex, actualEnemyPlayerCaveIndex);
+    }
 }

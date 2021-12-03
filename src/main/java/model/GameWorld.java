@@ -20,6 +20,7 @@ public class GameWorld implements Game {
     private List<Bat> bats;
     private List<Pit> pits;
     private Map<String, List<? extends GameObject>> hazardsMap = new HashMap<>();
+    private Player enemyPlayer;
 
     public GameWorld() {
         this.randomNumberGenerator = new RandomNumberGenerator();
@@ -34,6 +35,7 @@ public class GameWorld implements Game {
         buildGameMap();
 
         initializePlayer();
+        initializeEnemyPlayer();
         initializeWumpus();
         initializeBats();
         initializePits();
@@ -43,6 +45,12 @@ public class GameWorld implements Game {
         player = new Player(GameInitialConfigurations.NUMBER_OF_ARROWS);
         player.setId(GameInitialConfigurations.PLAYER_ID);
         setGameObjectInitialCave(player);
+    }
+
+    private void initializeEnemyPlayer() {
+        this.enemyPlayer = new Player(GameInitialConfigurations.NUMBER_OF_ARROWS);
+        this.enemyPlayer.setId(GameInitialConfigurations.ENEMY_PLAYER_ID);
+        setGameObjectInitialCave(this.enemyPlayer);
     }
 
     private void initializeWumpus() {
@@ -211,6 +219,11 @@ public class GameWorld implements Game {
     @Override
     public int getPlayerCave() {
         return player.getCave().getNumber();
+    }
+
+    @Override
+    public Player getEnemyPlayer() {
+        return this.enemyPlayer;
     }
 
     public Player getPlayer() {

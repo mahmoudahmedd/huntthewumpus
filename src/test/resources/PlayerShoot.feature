@@ -5,6 +5,7 @@ Feature: Player shoot
 
   Background:
     Given player in cave 9
+    And enemy player in cave 6
     And wumpus in cave 18
     And first bat in cave 19
     And second bat in cave 13
@@ -22,7 +23,7 @@ Feature: Player shoot
       | 0                  | [1, 9, 10]  | [18]        | winner      |
 
   Scenario: Player shoots an arrow that misses the wumpus and wumpus remains sleeping
-    Given player in cave 5
+    Given player in cave 0
     And wumpus in cave 18
     And wumpus not attempt to wakeup
     When player moves on the [1, 9, 10]
@@ -31,7 +32,7 @@ Feature: Player shoot
     And wumpus will be at cave 18
 
   Scenario: Player shoots an arrow that misses the wumpus and wumpus moves
-    Given player in cave 5
+    Given player in cave 0
     And wumpus in cave 18
     And wumpus attempt to wakeup
     And third linked cave to cave 18 is 17

@@ -21,6 +21,7 @@ class WumpusPresenterTest {
     RandomNumberGenerator randomNumberGenerator;
 
     final int playerStartingCave = 0;
+    final int enemyPlayerStartingCave = 6;
     final int wumpusStartingCave = 18;
     final int firstBatStartingCave = 19;
     final int secondBatStartingCave = 13;
@@ -30,6 +31,7 @@ class WumpusPresenterTest {
     private void configureMockingBasedOnDefaultLocation() {
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
+                enemyPlayerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
                 secondBatStartingCave,
@@ -119,6 +121,7 @@ class WumpusPresenterTest {
 
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
+                enemyPlayerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
                 secondBatStartingCave,
@@ -185,6 +188,7 @@ class WumpusPresenterTest {
         final int playerStartingCave = 11;
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 playerStartingCave,
+                enemyPlayerStartingCave,
                 wumpusStartingCave,
                 firstBatStartingCave,
                 secondBatStartingCave,
