@@ -135,6 +135,22 @@ Feature: Player move
     | JourneyPathIndices | EnemyPlayerState| ExpectedEnemyPlayerCave | Warning                  |
     | [1, 1]             | alive           | 17                      | "there's an awful smell" |
 
+  Scenario Outline: Enemy player moves to a cave near a bat and sensing that the enemy player hear a rustling
+    Given enemy player in cave 6
+    And first bat in cave 19
+    And second bat in cave 13
+    And cave with index 1 to cave 6 is 16
+    And cave with index 2 to cave 16 is 15
+    And cave with index 0 to cave 15 is 14
+    When enemy player moves on the <JourneyPathIndices>
+    Then enemy player is <EnemyPlayerState>
+    And enemy player will be at cave <ExpectedEnemyPlayerCave>
+    And game messages contains <Warning>
+    Examples:
+      | JourneyPathIndices | EnemyPlayerState| ExpectedEnemyPlayerCave | Warning               |
+      | [1, 2]             | alive           | 15                      | "you hear a rustling" |
+      | [1, 2, 0]          | alive           | 14                      | "you hear a rustling" |
+
 
 
 
