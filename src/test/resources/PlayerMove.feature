@@ -201,6 +201,17 @@ Feature: Player move
     When enemy player moves on the [1, 2, 0, 2]
     Then enemy player is dead
 
+  Scenario: Enemy player moves to a cave that has a player and enemy player will not die as case with the player
+    Given enemy player in cave 6
+    And player in cave 8
+    And cave with index 0 to cave 6 is 7
+    And cave with index 2 to cave 7 is 8
+    When enemy player moves on the [0, 2]
+    Then enemy player is alive
+    And player is alive
+    And enemy player will be at cave 8
+    And player will be at cave 8
+
 
 
 
