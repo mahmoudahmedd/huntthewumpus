@@ -39,6 +39,16 @@ public class WumpusPresenterImpl implements WumpusPresenter {
         return gameModel.getWumpusCave();
     }
 
+    @Override
+    public int getEnemyPlayerCave() {
+        return gameModel.getEnemyPlayer().getCave().getNumber();
+    }
+
+    @Override
+    public void moveEnemyPlayer() {
+        gameModel.enemyPlayerMovesToCave();
+    }
+
 
     @Override
     public int getPlayerCave() {

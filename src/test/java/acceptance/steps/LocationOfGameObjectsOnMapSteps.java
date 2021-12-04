@@ -70,4 +70,10 @@ public class LocationOfGameObjectsOnMapSteps {
     public void enemyPlayerInCave(Integer enemyPlayerStartingCave) {
         this.world.getRandomNumberGeneratorBuilder().setEnemyPlayerStartingCaveIndex(enemyPlayerStartingCave);
     }
+
+    @Then("enemy player will be at cave {int}")
+    public void enemyPlayerWillBeAtCaveExpectedPlayerCave(Integer expectedEnemyPlayerCave) {
+        final int enemyPlayerCurrentCave = world.getWumpusPresenter().getEnemyPlayerCave();
+        assertEquals(expectedEnemyPlayerCave, enemyPlayerCurrentCave);
+    }
 }

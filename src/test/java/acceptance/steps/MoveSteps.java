@@ -30,4 +30,16 @@ public class MoveSteps {
             world.getWumpusPresenter().move(caveNumber);
         }
     }
+
+    @When("enemy player moves on the {listOfIntegers}")
+    public void enemyPlayerMovesOnTheJourneyPath(List<Integer> journeyPathIndices) {
+        for (int cavesToMoveIndex : journeyPathIndices) {
+            this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(cavesToMoveIndex);
+        }
+
+        for(int numberOfCavesToMove = 0; numberOfCavesToMove < journeyPathIndices.size(); numberOfCavesToMove++) {
+            world.getWumpusPresenter().moveEnemyPlayer();
+        }
+
+    }
 }

@@ -226,6 +226,22 @@ public class GameWorld implements Game {
         return this.enemyPlayer;
     }
 
+    @Override
+    public void enemyPlayerMovesToCave() {
+        Cave caveToMoveTo = getRandomLinkedCaveForEnemyPlayer();
+        this.enemyPlayer.move(caveToMoveTo);
+        Teleportation teleportation = this.enemyPlayer.getTeleportation();
+        if(teleportation != null) {
+            caveToMoveTo = getRandomCave();
+            this.enemyPlayer.teleport(caveToMoveTo);
+        }
+    }
+
+    private Cave getRandomLinkedCaveForEnemyPlayer() {
+        int randomLinkedCaveIndex = randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES);
+        return this.enemyPlayer.getCave().getLinkedCaves().get(randomLinkedCaveIndex);
+    }
+
     public Player getPlayer() {
         return this.player;
     }

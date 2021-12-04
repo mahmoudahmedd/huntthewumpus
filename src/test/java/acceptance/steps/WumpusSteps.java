@@ -26,12 +26,12 @@ public class WumpusSteps {
     @When("wumpus attempts to wake up wumpus moves to third linked cave")
     public void wumpusAttemptsToWakeUpWumpusMovesToThirdLinkedCave() {
         int  thirdLinkedCaveIndex = 2;
-        this.world.getRandomNumberGeneratorBuilder().setWumpusLinkedCaveIndex(thirdLinkedCaveIndex);
+        this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(thirdLinkedCaveIndex);
     }
 
     @When("wumpus attempts to wake up wumpus moves to second linked cave")
     public void wumpusAttemptsToWakeUpWumpusMovesToSecondLinkedCave() {
         int  secondLinkedCaveIndex = 1;
-        this.world.getRandomNumberGeneratorBuilder().setWumpusLinkedCaveIndex(secondLinkedCaveIndex);
+        this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(secondLinkedCaveIndex);
     }
 }

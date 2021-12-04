@@ -100,5 +100,15 @@ Feature: Player move
     When player moves on the [12, 13]
     Then player is dead
 
+  Scenario Outline: Enemy player moves to connected cave
+    Given enemy player in cave <PlayerStartingCave>
+    And cave with index 1 to cave 6 is 16
+    When enemy player moves on the <JourneyPathIndices>
+    Then enemy player will be at cave <ExpectedPlayerCave>
+    Examples:
+      | PlayerStartingCave | JourneyPathIndices | ExpectedPlayerCave |
+      | 6                  | [1]                | 16                 |
+
+
 
 

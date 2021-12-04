@@ -18,7 +18,7 @@ public class RandomNumberGeneratorBuilder {
     List<Integer> defaultNumbersForDefaultLocationMocito = new ArrayList<>();
     List<Integer> appendedNumbersForDefaultLocationMocito = new ArrayList<>();
     List<Integer> defaultNumbersForWumpusWakeupProbabilityMocito = new ArrayList<>();
-    List<Integer> defaultNumbersForWumpusLinkedCaveIndexMocito = new ArrayList<>();
+    List<Integer> defaultNumbersForLinkedCaveIndicesMocito = new ArrayList<>();
 
     public int playerStartingCaveIndex = 9;
     public int enemyPlayerStartingCaveIndex = 6;
@@ -28,40 +28,28 @@ public class RandomNumberGeneratorBuilder {
     public int firstPitCave = 3;
     public int secondPitCave = 13;
 
-    public int numberAtWhichWumpusWillRemainSleeping = 0;
-
-    public int wumpusLinkedCaveIndex = 2;
-
     public RandomNumberGenerator build() {
         addDefaultNumbersForDefaultLocationMocito();
-        addDefaultNumbersForWumpusWakeupProbabilityMocito();
-        addDefaultNumbersForWumpusLinkedCaveIndexMocito();
 
         defaultNumbersForDefaultLocationMocito.addAll(appendedNumbersForDefaultLocationMocito);
 
         configureDefaultNumbersForDefaultLocationMocito();
         configureDefaultNumbersForWumpusWakeupProbabilityMocito();
-        configureDefaultNumbersForWumpusLinkedCaveIndexMocito();
+        configureDefaultNumbersForLinkedCaveIndicesMocito();
 
         return randomNumberGenerator;
     }
 
-    private void configureDefaultNumbersForWumpusLinkedCaveIndexMocito() {
-        int numberOfLinkedCaves = 3;
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves))
+    private void configureDefaultNumbersForLinkedCaveIndicesMocito() {
+        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_LINKED_CAVES))
                 .thenAnswer(new Answer<Integer>() {
                     int counter = 0;
 
                     @Override
                     public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
-                        return defaultNumbersForWumpusLinkedCaveIndexMocito.get(counter++);
+                        return defaultNumbersForLinkedCaveIndicesMocito.get(counter++);
                     }
                 });
-    }
-
-    private void addDefaultNumbersForWumpusLinkedCaveIndexMocito() {
-        defaultNumbersForWumpusLinkedCaveIndexMocito.addAll(Arrays.asList(
-                wumpusLinkedCaveIndex));
     }
 
     private void configureDefaultNumbersForWumpusWakeupProbabilityMocito() {
@@ -86,11 +74,6 @@ public class RandomNumberGeneratorBuilder {
                         return defaultNumbersForDefaultLocationMocito.get(counter++);
                     }
                 });
-    }
-
-    private void addDefaultNumbersForWumpusWakeupProbabilityMocito() {
-        defaultNumbersForWumpusWakeupProbabilityMocito.addAll(Arrays.asList(
-                numberAtWhichWumpusWillRemainSleeping));
     }
 
     private void addDefaultNumbersForDefaultLocationMocito() {
@@ -137,11 +120,11 @@ public class RandomNumberGeneratorBuilder {
     }
 
     public void setNumberAtWhichWumpusWillRemainSleeping(Integer numberAtWhichWumpusWillRemainSleeping) {
-        this.numberAtWhichWumpusWillRemainSleeping = numberAtWhichWumpusWillRemainSleeping;
+        defaultNumbersForWumpusWakeupProbabilityMocito.add(numberAtWhichWumpusWillRemainSleeping);
     }
 
-    public void setWumpusLinkedCaveIndex(int wumpusLinkedCaveIndex) {
-        this.wumpusLinkedCaveIndex = wumpusLinkedCaveIndex;
+    public void addLinkedCaveIndex(int linkedCaveIndex) {
+        defaultNumbersForLinkedCaveIndicesMocito.add(linkedCaveIndex);
     }
 
     public void setEnemyPlayerStartingCaveIndex(Integer enemyPlayerStartingCaveIndex) {
