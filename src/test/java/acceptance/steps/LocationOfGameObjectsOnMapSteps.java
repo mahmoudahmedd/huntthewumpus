@@ -76,4 +76,9 @@ public class LocationOfGameObjectsOnMapSteps {
         final int enemyPlayerCurrentCave = world.getWumpusPresenter().getEnemyPlayerCave();
         assertEquals(expectedEnemyPlayerCave, enemyPlayerCurrentCave);
     }
+
+    @Given("enemy player drop down cave {int}")
+    public void enemyPlayerDropDownCave(Integer enemyPlayerDropDownCave) {
+        this.world.getRandomNumberGeneratorBuilder().setPlayerDropDownCave(enemyPlayerDropDownCave);
+    }
 }

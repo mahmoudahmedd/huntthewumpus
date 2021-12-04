@@ -169,6 +169,18 @@ Feature: Player move
     | [2, 0]             | alive           | 4                       | "you feel a draft" |
     | [1, 2, 0]          | alive           | 14                      | "you feel a draft" |
 
+  Scenario: Enemy player moves to a cave that has a bat
+    Given enemy player in cave 6
+    And first bat in cave 19
+    And enemy player drop down cave 8
+    And first bat in final cave 2
+    And cave with index 1 to cave 6 is 16
+    And cave with index 2 to cave 16 is 15
+    And cave with index 2 to cave 15 is 19
+    When enemy player moves on the [1, 2, 2]
+    Then enemy player is alive
+    And enemy player will be at cave 8
+
 
 
 
