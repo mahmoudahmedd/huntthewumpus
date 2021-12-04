@@ -208,7 +208,10 @@ public class GameWorld implements Game {
 
     @Override
     public List<String> getMessages() {
-        return player.getWarnings();
+        List<String> allMessage = new ArrayList<>();
+        allMessage.addAll(this.player.getWarnings());
+        allMessage.addAll(this.enemyPlayer.getWarnings());
+        return allMessage;
     }
 
     @Override

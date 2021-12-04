@@ -14,8 +14,15 @@ public class EnemyPlayerSteps {
 
     @Then("^enemy player is dead$")
     public void enemyPlayerIsPlayerState() {
-        boolean isEnemyPlayerIsPlayerState = true;
+        boolean isEnemyPlayerIsDead = true;
         boolean actualIsEnemyPlayerDead = world.getWumpusPresenter().isEnemyPlayerDead();
-        assertEquals(isEnemyPlayerIsPlayerState, actualIsEnemyPlayerDead);
+        assertEquals(isEnemyPlayerIsDead, actualIsEnemyPlayerDead);
+    }
+
+    @Then("^enemy player is alive")
+    public void enemyPlayerIsEnemyPlayerState() {
+        boolean isEnemyPlayerIsDead = false;
+        boolean actualIsEnemyPlayerDead = world.getWumpusPresenter().isEnemyPlayerDead();
+        assertEquals(isEnemyPlayerIsDead, actualIsEnemyPlayerDead);
     }
 }

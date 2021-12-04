@@ -122,6 +122,20 @@ Feature: Player move
     | PlayerStartingCave | WumpusStartingCave | JourneyPathIndices | ExpectedEnemyPlayerCave | EnemyPlayerState |
     | 6                  | 18                 | [1, 1, 2]          | 18                      | dead             |
 
+  Scenario Outline: Enemy player moves to a cave near a wumpus and sensing that there's an awful smell
+    Given enemy player in cave 6
+    And wumpus in cave 18
+    And cave with index 1 to cave 6 is 16
+    And cave with index 1 to cave 16 is 17
+    When enemy player moves on the <JourneyPathIndices>
+    Then enemy player is <EnemyPlayerState>
+    And enemy player will be at cave <ExpectedEnemyPlayerCave>
+    And game messages contains <Warning>
+    Examples:
+    | JourneyPathIndices | EnemyPlayerState| ExpectedEnemyPlayerCave | Warning                  |
+    | [1, 1]             | alive           | 17                      | "there's an awful smell" |
+
+
 
 
 
