@@ -181,6 +181,17 @@ Feature: Player move
     Then enemy player is alive
     And enemy player will be at cave 8
 
+  Scenario: Enemy player moves to a cave that has a pit
+    Given enemy player in cave 6
+    And first pit in cave 3
+    And cave with index 2 to cave 6 is 5
+    And cave with index 0 to cave 5 is 4
+    And cave with index 2 to cave 4 is 3
+    When enemy player moves on the [2, 0, 2]
+    Then enemy player is dead
+
+
+
 
 
 
