@@ -109,6 +109,20 @@ Feature: Player move
       | PlayerStartingCave | JourneyPathIndices | ExpectedPlayerCave |
       | 6                  | [1]                | 16                 |
 
+  Scenario Outline: Enemy player moves to cave that has a wumpus and the enemy player will die
+    Given enemy player in cave <PlayerStartingCave>
+    And wumpus in cave <WumpusStartingCave>
+    And cave with index 1 to cave 6 is 16
+    And cave with index 1 to cave 16 is 17
+    And cave with index 2 to cave 17 is 18
+    When enemy player moves on the <JourneyPathIndices>
+    Then enemy player will be at cave <ExpectedEnemyPlayerCave>
+    And enemy player is <EnemyPlayerState>
+    Examples:
+    | PlayerStartingCave | WumpusStartingCave | JourneyPathIndices | ExpectedEnemyPlayerCave | EnemyPlayerState |
+    | 6                  | 18                 | [1, 1, 2]          | 18                      | dead             |
+
+
 
 
 
