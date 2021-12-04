@@ -190,6 +190,16 @@ Feature: Player move
     When enemy player moves on the [2, 0, 2]
     Then enemy player is dead
 
+  Scenario: Enemy player moves to a cave that has a pit and bat
+    Given enemy player in cave 6
+    And first bat in cave 19
+    And first pit in cave 3
+    And cave with index 1 to cave 6 is 16
+    And cave with index 2 to cave 16 is 15
+    And cave with index 0 to cave 15 is 14
+    And cave with index 2 to cave 14 is 13
+    When enemy player moves on the [1, 2, 0, 2]
+    Then enemy player is dead
 
 
 
