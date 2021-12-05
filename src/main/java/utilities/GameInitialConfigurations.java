@@ -1,4 +1,4 @@
-package model;
+package utilities;
 
 public interface GameInitialConfigurations {
 

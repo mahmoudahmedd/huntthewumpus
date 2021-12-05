@@ -5,6 +5,7 @@ import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.EnemyPlayer;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
+import utilities.GameInitialConfigurations;
 import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;

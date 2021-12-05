@@ -3,6 +3,7 @@ package model.gameobjects.hazards;
 import model.*;
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
+import utilities.GameInitialConfigurations;
 import utilities.RandomNumberGenerator;
 
 public class Bat extends GameObject implements WarnableHazard {

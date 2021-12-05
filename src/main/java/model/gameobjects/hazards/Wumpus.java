@@ -1,7 +1,7 @@
 package model.gameobjects.hazards;
 
 import model.Cave;
-import model.GameInitialConfigurations;
+import utilities.GameInitialConfigurations;
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
 import model.gameobjects.ShootableGameObject;

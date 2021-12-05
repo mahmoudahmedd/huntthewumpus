@@ -21,7 +21,6 @@ public class WumpusPresenterImpl implements WumpusPresenter {
     @Override
     public void startNewGame() {
         gameModel.startGame();
-        System.out.println(gameModel.getEnemyPlayer().getCave().getNumber());
     }
 
     @Override

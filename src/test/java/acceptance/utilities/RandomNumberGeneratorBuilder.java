@@ -1,6 +1,6 @@
 package acceptance.utilities;
 
-import model.GameInitialConfigurations;
+import utilities.GameInitialConfigurations;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;

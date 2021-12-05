@@ -1,6 +1,6 @@
 package presenter;
 
-import model.GameInitialConfigurations;
+import utilities.GameInitialConfigurations;
 import model.LegacyHazard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
