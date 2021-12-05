@@ -1,6 +1,6 @@
 package presenter;
 
-import acceptance.utilities.RandomNumberGeneratorBuilder;
+import utilities.RandomNumberGeneratorBuilder;
 import utilities.GameInitialConfigurations;
 import org.junit.jupiter.api.Test;
 

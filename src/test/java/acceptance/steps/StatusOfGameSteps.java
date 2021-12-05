@@ -1,8 +1,7 @@
 package acceptance.steps;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import acceptance.utilities.ScenarioWorld;
+import utilities.ScenarioWorld;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

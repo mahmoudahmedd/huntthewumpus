@@ -2,7 +2,7 @@ package acceptance.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
-import acceptance.utilities.ScenarioWorld;
+import utilities.ScenarioWorld;
 import java.util.List;
 
 public class ShootSteps {
@@ -23,9 +23,8 @@ public class ShootSteps {
             this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(caveToShoot);
         }
 
-        for (int caveToShoot : cavesToShoot) {
+        for (int numberOfCavesToShoot = 0; numberOfCavesToShoot < cavesToShoot.size(); numberOfCavesToShoot++) {
             world.getWumpusPresenter().enemyPlayerShootsToCave();
         }
-
     }
 }

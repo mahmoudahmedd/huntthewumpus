@@ -1,6 +1,6 @@
 package acceptance.steps;
 
-import acceptance.utilities.ScenarioWorld;
+import utilities.ScenarioWorld;
 import io.cucumber.java.en.Then;
 
 import java.util.List;

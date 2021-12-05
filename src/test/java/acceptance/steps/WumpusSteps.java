@@ -1,6 +1,6 @@
 package acceptance.steps;
 
-import acceptance.utilities.ScenarioWorld;
+import utilities.ScenarioWorld;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
@@ -31,7 +31,7 @@ public class WumpusSteps {
 
     @When("wumpus attempts to wake up wumpus moves to second linked cave")
     public void wumpusAttemptsToWakeUpWumpusMovesToSecondLinkedCave() {
-        int  secondLinkedCaveIndex = 1;
+        int secondLinkedCaveIndex = 1;
         this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(secondLinkedCaveIndex);
     }
 }

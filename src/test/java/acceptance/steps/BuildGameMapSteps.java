@@ -11,7 +11,7 @@ import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.EnemyPlayer;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
-import acceptance.utilities.ScenarioWorld;
+import utilities.ScenarioWorld;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 
 public class BuildGameMapSteps {
     ScenarioWorld world;
@@ -27,15 +26,12 @@ public class BuildGameMapSteps {
     public BuildGameMapSteps(ScenarioWorld world) {
         this.world = world;
     }
-    @Given("location of game objects on map is initialized")
-    public void locationOfGameObjectsOnMapIsInitialized() {
 
-    }
+    @Given("location of game objects on map is initialized")
+    public void locationOfGameObjectsOnMapIsInitialized() {}
 
     @When("game starts")
-    public void gameStartsWithCaves() {
-
-    }
+    public void gameStartsWithCaves() {}
 
     @Then("cave {int} will contain the first bat and cave {int} will contain the second bat")
     public void firstBatWillBeAtCaveAndSecondBatWillBeAtCave(Integer expectedFirstBatCave, Integer expectedSecondBatCave) {
