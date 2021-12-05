@@ -1,10 +1,10 @@
 package model;
 
 import model.gameobjects.*;
-import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.warnablehazard.Bat;
 import model.gameobjects.hazards.EnemyPlayer;
-import model.gameobjects.hazards.Pit;
-import model.gameobjects.hazards.Wumpus;
+import model.gameobjects.hazards.warnablehazard.Pit;
+import model.gameobjects.hazards.warnablehazard.Wumpus;
 import utilities.RandomNumberGenerator;
 
 import java.util.ArrayList;

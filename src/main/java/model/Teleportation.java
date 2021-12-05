@@ -1,6 +1,6 @@
 package model;
 
-import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.warnablehazard.Bat;
 
 public class Teleportation {
     private Bat bat;

@@ -1,4 +1,4 @@
-package model.gameobjects.hazards;
+package model.gameobjects.hazards.warnablehazard;
 
 import model.Cave;
 import model.GameInitialConfigurations;
@@ -8,7 +8,7 @@ import utilities.RandomNumberGenerator;
 
 import java.util.Optional;
 
-public class Wumpus extends GameObject implements Hazard {
+public class Wumpus extends GameObject implements WarnableHazard {
     final String warningInTheSameCave = "You woke the Wumpus and it ate you";
     final String warningInTheLinkedCave = "there's an awful smell";
     private final RandomNumberGenerator randomNumberGenerator;

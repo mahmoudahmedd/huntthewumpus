@@ -1,9 +1,10 @@
 package model.gameobjects;
 
 import model.*;
-import model.gameobjects.hazards.Bat;
-import model.gameobjects.hazards.Hazard;
-import model.gameobjects.hazards.Wumpus;
+import model.gameobjects.hazards.*;
+import model.gameobjects.hazards.warnablehazard.Bat;
+import model.gameobjects.hazards.warnablehazard.WarnableHazard;
+import model.gameobjects.hazards.warnablehazard.Wumpus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +76,8 @@ public class Player extends GameObject {
         for(Cave linkedCave: linkedCaves) {
             List<GameObject> gameObjects = linkedCave.getGameObjects();
             for(GameObject gameObject : gameObjects){
-                if(gameObject instanceof Hazard){
-                    warnings.add(((Hazard) gameObject).getWarningInTheLinkedCave());
+                if(gameObject instanceof WarnableHazard){
+                    warnings.add(((WarnableHazard) gameObject).getWarningInTheLinkedCave());
                 }
             }
         }
@@ -89,8 +90,8 @@ public class Player extends GameObject {
     private void executePostMoveActions() {
         List<GameObject> gameObjects = this.getCave().getGameObjects();
         for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Hazard){
-                ((Hazard)gameObject).executeActionOnPlayer(this);
+            if(gameObject instanceof WarnableHazard){
+                ((WarnableHazard)gameObject).executeActionOnPlayer(this);
                 if(isDead()){
                     break;
                 }
@@ -115,6 +116,8 @@ public class Player extends GameObject {
         for(GameObject gameObject : gameObjects){
             if(gameObject instanceof Wumpus){
                 ((Wumpus)gameObject).setDead(true);
+            } else {
+                ((Player)gameObject).setDead(true);
             }
         }
 

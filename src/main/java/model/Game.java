@@ -1,8 +1,6 @@
 package model;
 
-import model.gameobjects.Player;
 import model.gameobjects.hazards.EnemyPlayer;
-import model.gameobjects.hazards.Wumpus;
 
 import java.util.List;
 

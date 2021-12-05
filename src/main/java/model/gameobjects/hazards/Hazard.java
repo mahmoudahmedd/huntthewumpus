@@ -4,6 +4,4 @@ import model.gameobjects.Player;
 
 public interface Hazard {
     void executeActionOnPlayer(Player player);
-    String getWarningInTheLinkedCave();
-    String getWarningInTheSameCave();
 }
