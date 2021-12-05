@@ -14,4 +14,5 @@ public interface WumpusPresenter {
     int getEnemyPlayerCave();
     void moveEnemyPlayer();
     boolean isEnemyPlayerDead();
+    void enemyPlayerShootsToCave();
 }

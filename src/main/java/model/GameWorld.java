@@ -2,6 +2,7 @@ package model;
 
 import model.gameobjects.*;
 import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.EnemyPlayer;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
 import utilities.RandomNumberGenerator;
@@ -20,7 +21,7 @@ public class GameWorld implements Game {
     private List<Bat> bats;
     private List<Pit> pits;
     private Map<String, List<? extends GameObject>> hazardsMap = new HashMap<>();
-    private Player enemyPlayer;
+    private EnemyPlayer enemyPlayer;
 
     public GameWorld() {
         this.randomNumberGenerator = new RandomNumberGenerator();
@@ -48,7 +49,7 @@ public class GameWorld implements Game {
     }
 
     private void initializeEnemyPlayer() {
-        this.enemyPlayer = new Player(GameInitialConfigurations.NUMBER_OF_ARROWS);
+        this.enemyPlayer = new EnemyPlayer(GameInitialConfigurations.NUMBER_OF_ARROWS);
         this.enemyPlayer.setId(GameInitialConfigurations.ENEMY_PLAYER_ID);
         setGameObjectInitialCave(this.enemyPlayer);
     }
@@ -225,7 +226,7 @@ public class GameWorld implements Game {
     }
 
     @Override
-    public Player getEnemyPlayer() {
+    public EnemyPlayer getEnemyPlayer() {
         return this.enemyPlayer;
     }
 
@@ -237,6 +238,16 @@ public class GameWorld implements Game {
         if(teleportation != null) {
             caveToMoveTo = getRandomCave();
             this.enemyPlayer.teleport(caveToMoveTo);
+        }
+    }
+
+    @Override
+    public void enemyPlayerShootsToCave() {
+        Cave caveToShoot = getRandomLinkedCaveForEnemyPlayer();
+        this.enemyPlayer.shoot(caveToShoot);
+        
+        if (!wumpus.isDead()) {
+            wumpus.attemptToWakeup();
         }
     }
 

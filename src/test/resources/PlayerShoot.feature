@@ -61,3 +61,13 @@ Feature: Player shoot
     Then player is dead
     And game messages contains "You woke the Wumpus and it ate you"
     And wumpus in cave 10
+
+  Scenario: Enemy player shoots an arrow to a cave that contains the wumpus
+    Given enemy player in cave 6
+    And wumpus in cave 18
+    And cave with index 1 to cave 6 is 16
+    And cave with index 1 to cave 16 is 17
+    And cave with index 2 to cave 17 is 18
+    When enemy player moves on the [1, 1]
+    And enemy player shoots to cave [2]
+    Then game state is game over

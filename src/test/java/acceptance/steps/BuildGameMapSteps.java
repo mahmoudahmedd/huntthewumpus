@@ -8,6 +8,7 @@ import model.Cave;
 import model.GameInitialConfigurations;
 import model.gameobjects.Player;
 import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.EnemyPlayer;
 import model.gameobjects.hazards.Pit;
 import model.gameobjects.hazards.Wumpus;
 import acceptance.utilities.ScenarioWorld;
@@ -122,7 +123,7 @@ public class BuildGameMapSteps {
     @Then("cave {int} will contain the enemy player object")
     public void caveWillContainTheEnemyPlayerObject(Integer expectedEnemyPlayerCave) {
         Cave enemyPlayerCave = this.world.getGameWorld().getGameMap().getCaves().get(expectedEnemyPlayerCave);
-        Player enemyPlayer = this.world.getGameWorld().getEnemyPlayer();
+        EnemyPlayer enemyPlayer = this.world.getGameWorld().getEnemyPlayer();
         assertTrue(enemyPlayerCave.getGameObjects().contains(enemyPlayer));
     }
 
