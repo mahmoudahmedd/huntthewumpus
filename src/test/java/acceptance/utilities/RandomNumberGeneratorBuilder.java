@@ -130,4 +130,12 @@ public class RandomNumberGeneratorBuilder {
     public void setEnemyPlayerStartingCaveIndex(Integer enemyPlayerStartingCaveIndex) {
         this.enemyPlayerStartingCaveIndex = enemyPlayerStartingCaveIndex;
     }
+
+    public int getPlayerStartingCaveIndex() {
+        return this.playerStartingCaveIndex;
+    }
+
+    public int getWumpusStartingCaveIndex() {
+        return this.wumpusStartingCaveIndex;
+    }
 }

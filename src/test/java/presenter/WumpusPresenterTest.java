@@ -1,49 +1,34 @@
 package presenter;
 
+import acceptance.utilities.RandomNumberGeneratorBuilder;
 import utilities.GameInitialConfigurations;
-import model.LegacyHazard;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import utilities.RandomNumberGenerator;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(MockitoExtension.class)
+
 class WumpusPresenterTest {
+    private RandomNumberGeneratorBuilder randomNumberGeneratorBuilder;
 
-    @Mock
-    RandomNumberGenerator randomNumberGenerator;
-
-    final int playerStartingCave = 0;
-    final int enemyPlayerStartingCave = 6;
-    final int wumpusStartingCave = 18;
-    final int firstBatStartingCave = 19;
-    final int secondBatStartingCave = 13;
-    final int firstPitCave = 3;
-    final int secondPitCave = 13;
-
-    private void configureMockingBasedOnDefaultLocation() {
-        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
-                playerStartingCave,
-                enemyPlayerStartingCave,
-                wumpusStartingCave,
-                firstBatStartingCave,
-                secondBatStartingCave,
-                firstPitCave,
-                secondPitCave);
+    private void configureRandomNumberGeneratorBuilderBasedOnDefaultLocation() {
+        randomNumberGeneratorBuilder = new RandomNumberGeneratorBuilder();
+        randomNumberGeneratorBuilder.setPlayerStartingCaveIndex(0);
+        randomNumberGeneratorBuilder.setEnemyPlayerStartingCaveIndex(6);
+        randomNumberGeneratorBuilder.setWumpusStartingCaveIndex(18);
+        randomNumberGeneratorBuilder.setFirstBatStartingCaveIndex(19);
+        randomNumberGeneratorBuilder.setSecondBatStartingCaveIndex(13);
+        randomNumberGeneratorBuilder.setFirstPitCave(3);
+        randomNumberGeneratorBuilder.setSecondPitCave(13);
     }
 
     @Test
     public void testMovingPlayerToCave() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int playerNextCave = 7;
@@ -60,16 +45,16 @@ class WumpusPresenterTest {
 
     @Test
     public void testMoveToNonConnectedCave() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int playerNextCave = 16;
         wumpusPresenter.move(playerNextCave);
 
         final int playerCurrentRoom = wumpusPresenter.getPlayerCave();
-        assertEquals(playerStartingCave, playerCurrentRoom);
+        assertEquals(randomNumberGeneratorBuilder.getPlayerStartingCaveIndex(), playerCurrentRoom);
 
         final boolean gameIsNotOver = false;
         final boolean isGameOver = wumpusPresenter.isGameOver();
@@ -78,9 +63,9 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToCaveThatHasAWumups() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10, 18};
@@ -95,9 +80,9 @@ class WumpusPresenterTest {
 
     @Test
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10};
@@ -106,7 +91,7 @@ class WumpusPresenterTest {
         }
 
         List<String> messages = wumpusPresenter.getMessages();
-        assertTrue(messages.contains(LegacyHazard.Wumpus.getWarning()));
+        assertTrue(messages.contains("there's an awful smell"));
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
         final boolean gameIsOver = false;
@@ -115,22 +100,14 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerEnterRoomWithBat() {
-        final int playerStartingCave = 11;
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
         final int playerDropDownCave = 8;
-        final int firstBatFinalCave = 2;
 
-        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
-                playerStartingCave,
-                enemyPlayerStartingCave,
-                wumpusStartingCave,
-                firstBatStartingCave,
-                secondBatStartingCave,
-                firstPitCave,
-                secondPitCave,
-                playerDropDownCave,
-                firstBatFinalCave);
+        randomNumberGeneratorBuilder.setPlayerStartingCaveIndex(11);
+        randomNumberGeneratorBuilder.setPlayerDropDownCave(playerDropDownCave);
+        randomNumberGeneratorBuilder.setFirstBatFinalCave(2);
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {12, 19};
@@ -148,9 +125,9 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerEnterRoomWithPit() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {4, 3};
@@ -165,9 +142,9 @@ class WumpusPresenterTest {
 
     @Test
     public void testKillingTheWumpus() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10};
@@ -185,24 +162,15 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerEnterRoomWithPitAndBat() {
-        final int playerStartingCave = 11;
-        Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
-                playerStartingCave,
-                enemyPlayerStartingCave,
-                wumpusStartingCave,
-                firstBatStartingCave,
-                secondBatStartingCave,
-                firstPitCave,
-                secondPitCave);
-
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        randomNumberGeneratorBuilder.setPlayerStartingCaveIndex(11);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {12, 13};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
-
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
         final boolean gameIsOver = true;
@@ -211,14 +179,10 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusRemainsSleeping() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(0);
 
-        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
-        final int numberAtWhichWumpusWillRemainSleeping = 0;
-        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
-                numberAtWhichWumpusWillRemainSleeping);
-
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10};
@@ -230,7 +194,7 @@ class WumpusPresenterTest {
         wumpusPresenter.shoot(shootToCave);
 
         final int wumpusCaveLocation = wumpusPresenter.getWumpusCave();
-        assertEquals(wumpusCaveLocation, wumpusStartingCave);
+        assertEquals(wumpusCaveLocation, randomNumberGeneratorBuilder.getWumpusStartingCaveIndex());
 
         final boolean actualGameState = wumpusPresenter.isGameOver();
         final boolean gameIsOver = false;
@@ -239,19 +203,12 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusMoves() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
-        final int numberAtWhichWumpusWillRemainSleeping = 1;
-        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
-                numberAtWhichWumpusWillRemainSleeping);
+        randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(1);
+        randomNumberGeneratorBuilder.addLinkedCaveIndex(2);
 
-        final int numberOfLinkedCaves = 3;
-        final int wumpusLinkedCaveIndex = 2;
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
-                wumpusLinkedCaveIndex);
-
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10};
@@ -273,14 +230,13 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerRunsOutOfArrowsWithoutKillingWumpus() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
-        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
-        final int numberAtWhichWumpusWillRemainSleeping = 0;
-        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
-                numberAtWhichWumpusWillRemainSleeping);
+        for (int i = 0; i < GameInitialConfigurations.NUMBER_OF_ARROWS; i++) {
+            randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(0);
+        }
 
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int caveToShoot = 7;
@@ -299,19 +255,11 @@ class WumpusPresenterTest {
 
     @Test
     public void testThatPlayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer() {
-        configureMockingBasedOnDefaultLocation();
+        configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(1);
+        randomNumberGeneratorBuilder.addLinkedCaveIndex(1);
 
-        final int maximumNumberForCalculatingWumpusWakeupProbability = 4;
-        final int numberAtWhichWumpusWillRemainSleeping = 1;
-        Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
-                numberAtWhichWumpusWillRemainSleeping);
-
-        final int numberOfLinkedCaves = 3;
-        final int wumpusLinkedCaveIndex = 1;
-        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
-                wumpusLinkedCaveIndex);
-
-        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGenerator);
+        WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
         final int[] journeyPath = {1, 9, 10};
@@ -334,5 +282,4 @@ class WumpusPresenterTest {
         final boolean actualGameState = wumpusPresenter.isGameOver();
         assertEquals(expectedGameStateGameIsOver, actualGameState);
     }
-
 }
