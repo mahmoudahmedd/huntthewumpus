@@ -7,10 +7,10 @@ import io.cucumber.java.en.When;
 import model.Cave;
 import model.GameInitialConfigurations;
 import model.gameobjects.Player;
-import model.gameobjects.hazards.warnablehazard.Bat;
+import model.gameobjects.hazards.Bat;
 import model.gameobjects.hazards.EnemyPlayer;
-import model.gameobjects.hazards.warnablehazard.Pit;
-import model.gameobjects.hazards.warnablehazard.Wumpus;
+import model.gameobjects.hazards.Pit;
+import model.gameobjects.hazards.Wumpus;
 import acceptance.utilities.ScenarioWorld;
 
 import java.util.HashMap;

@@ -2,15 +2,20 @@ package model.gameobjects.hazards;
 
 import model.gameobjects.Player;
 
-public class EnemyPlayer extends Player implements Hazard  {
+public class EnemyPlayer extends Player implements Hazard {
+    private boolean dead;
 
     public EnemyPlayer(int numberOfArrows) {
         super(numberOfArrows);
     }
 
+    @Override
+    public boolean isDead() {
+        return dead;
+    }
 
-    public void executeActionOnPlayer(Player player) {
-        player.setDead(true);
-        player.addWarning("this.warningInTheSameCave");
+    @Override
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 }

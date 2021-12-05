@@ -1,14 +1,15 @@
-package model.gameobjects.hazards.warnablehazard;
+package model.gameobjects.hazards;
 
 import model.Cave;
 import model.GameInitialConfigurations;
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
+import model.gameobjects.ShootableGameObject;
 import utilities.RandomNumberGenerator;
 
 import java.util.Optional;
 
-public class Wumpus extends GameObject implements WarnableHazard {
+public class Wumpus extends GameObject implements WarnableHazard, ShootableGameObject {
     final String warningInTheSameCave = "You woke the Wumpus and it ate you";
     final String warningInTheLinkedCave = "there's an awful smell";
     private final RandomNumberGenerator randomNumberGenerator;
@@ -51,10 +52,12 @@ public class Wumpus extends GameObject implements WarnableHazard {
         player.addWarning(this.warningInTheSameCave);
     }
 
+    @Override
     public boolean isDead() {
         return dead;
     }
 
+    @Override
     public void setDead(boolean dead) {
         this.dead = dead;
     }

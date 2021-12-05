@@ -1,9 +1,9 @@
 package model;
 
-import model.gameobjects.hazards.warnablehazard.Bat;
-import model.gameobjects.hazards.warnablehazard.Pit;
+import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.Pit;
 import model.gameobjects.Player;
-import model.gameobjects.hazards.warnablehazard.Wumpus;
+import model.gameobjects.hazards.Wumpus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

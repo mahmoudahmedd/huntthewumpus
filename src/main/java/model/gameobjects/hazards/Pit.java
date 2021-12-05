@@ -1,4 +1,4 @@
-package model.gameobjects.hazards.warnablehazard;
+package model.gameobjects.hazards;
 
 import model.gameobjects.GameObject;
 import model.gameobjects.Player;
@@ -11,12 +11,9 @@ public class Pit extends GameObject implements WarnableHazard {
         return warningInTheLinkedCave;
     }
 
-
-
     public String getWarningInTheSameCave() {
         return warningInTheSameCave;
     }
-
 
     @Override
     public void executeActionOnPlayer(Player player) {

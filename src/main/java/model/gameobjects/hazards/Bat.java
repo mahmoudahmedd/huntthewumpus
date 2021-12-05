@@ -1,4 +1,4 @@
-package model.gameobjects.hazards.warnablehazard;
+package model.gameobjects.hazards;
 
 import model.*;
 import model.gameobjects.GameObject;

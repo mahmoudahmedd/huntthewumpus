@@ -1,15 +1,13 @@
 package model.gameobjects;
 
 import model.*;
-import model.gameobjects.hazards.*;
-import model.gameobjects.hazards.warnablehazard.Bat;
-import model.gameobjects.hazards.warnablehazard.WarnableHazard;
-import model.gameobjects.hazards.warnablehazard.Wumpus;
+import model.gameobjects.hazards.Bat;
+import model.gameobjects.hazards.WarnableHazard;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements ShootableGameObject {
     private boolean dead;
     private Arrow arrow;
     private List<String> warnings;
@@ -24,6 +22,7 @@ public class Player extends GameObject {
 
     private Teleportation teleportation;
 
+    @Override
     public void setDead(boolean dead) {
         this.dead = dead;
     }
@@ -103,6 +102,7 @@ public class Player extends GameObject {
         return this.getCave().getLinkedCaves().contains(caveToMoveTo);
     }
 
+    @Override
     public boolean isDead() {
         return dead;
     }
@@ -114,10 +114,9 @@ public class Player extends GameObject {
 
         List<GameObject> gameObjects = caveToShoot.getGameObjects();
         for(GameObject gameObject : gameObjects){
-            if(gameObject instanceof Wumpus){
-                ((Wumpus)gameObject).setDead(true);
-            } else {
-                ((Player)gameObject).setDead(true);
+            if(gameObject instanceof ShootableGameObject){
+                ((ShootableGameObject)gameObject).setDead(true);
+                warnings.add("You killed " + gameObject.id);
             }
         }
 
