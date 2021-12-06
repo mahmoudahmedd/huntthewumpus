@@ -27,6 +27,7 @@ public class ConsoleViewImpl implements WumpusView {
         while (!wumpusPresenter.isGameOver()) {
             this.render();
             this.drawPlayer();
+            this.drawEnemyPlayer();
             this.drawCaves();
             this.drawMessage();
 
@@ -53,6 +54,12 @@ public class ConsoleViewImpl implements WumpusView {
         System.out.println("--------Player--------");
         int playerCave = wumpusPresenter.getPlayerCave();
         System.out.println("Player Cave: " + playerCave);
+    }
+
+    void drawEnemyPlayer() {
+        System.out.println("--------Enemy Player--------");
+        int enemyPlayerCave = wumpusPresenter.getEnemyPlayerCave();
+        System.out.println("Enemy Player Cave: " + enemyPlayerCave);
     }
 
     void drawCaves() {
