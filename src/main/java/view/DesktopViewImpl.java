@@ -241,6 +241,7 @@ public class DesktopViewImpl extends JPanel implements WumpusView {
             wumpusPresenter.move(selectedCave);
         } else if (rightClick) {
             wumpusPresenter.shoot(selectedCave);
+            wumpusPresenter.enemyPlayerShootsToCave();
         }
     }
 
