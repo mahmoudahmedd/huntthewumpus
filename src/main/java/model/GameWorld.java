@@ -180,10 +180,11 @@ public class GameWorld implements Game {
         Cave caveToMoveTo = gameMap.getCaves().get(cave);
         player.move(caveToMoveTo);
         Teleportation teleportation= player.getTeleportation();
-        if(teleportation!=null){
+        if(teleportation != null) {
             caveToMoveTo= getRandomCave();
             player.teleport(caveToMoveTo);
         }
+        enemyPlayerMovesToCave();
     }
 
     @Override

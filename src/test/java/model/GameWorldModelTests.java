@@ -175,7 +175,7 @@ public class GameWorldModelTests {
                 SECOND_BAT_STARTING_CAVE_INDEX,
                 FIRST_PIT_CAVE,
                 SECOND_PIT_CAVE
-                );
+        );
 
         GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
@@ -436,6 +436,11 @@ public class GameWorldModelTests {
         Mockito.when(randomNumberGenerator.generateNumber(maximumNumberForCalculatingWumpusWakeupProbability)).thenReturn(
                 numberAtWhichWumpusWillRemainSleeping);
 
+        final int numberOfLinkedCaves = 3;
+        final int wumpusLinkedCaveIndex = 2;
+        Mockito.when(randomNumberGenerator.generateNumber(numberOfLinkedCaves)).thenReturn(
+                wumpusLinkedCaveIndex);
+
         GameWorld game = new GameWorld(randomNumberGenerator);
         game.startGame();
         game.playerMovesToCave(10);
@@ -549,7 +554,7 @@ public class GameWorldModelTests {
         final int secondBatFinalCaveIndex = 0;
 
         final int SECOND_PIT_CAVE = 2;
-        
+
         Mockito.when(randomNumberGenerator.generateNumber(GameInitialConfigurations.NUMBER_OF_CAVES)).thenReturn(
                 PLAYER_STARTING_CAVE_INDEX,
                 ENEMY_PLAYER_STARTING_CAVE_INDEX,
@@ -683,14 +688,4 @@ public class GameWorldModelTests {
         assertTrue(cave.getGameObjects().get(2) instanceof Bat);
 
     }
-
-    //TODO Implement same test cases as those in presenter
-    /*
-    TODO
-    1- Add assert on gameOverMessages for testThatPlayerEnterRoomWithPit & testMovingPlayerToCaveThatHasAWumups
-    2- Ask Ahmed to suggest any idea about a good design for coupling random number with player
-    3- Add test for Pits & Bats warning
-    4- Re-arrange tests into logical game play order
-    5- Write a test for  shooting non-linked cave
-     */
 }

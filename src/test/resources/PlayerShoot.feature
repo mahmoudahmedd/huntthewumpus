@@ -36,8 +36,8 @@ Feature: Player shoot
     And wumpus in cave 18
     And wumpus attempt to wakeup
     And third linked cave to cave 18 is 17
-    When wumpus attempts to wake up wumpus moves to third linked cave
-    And player moves on the [1, 9, 10]
+    When player moves on the [1, 9, 10]
+    And wumpus attempts to wake up wumpus moves to third linked cave
     And player shoots to cave [11]
     Then game state is game not over
     And wumpus will be at cave 17
@@ -55,8 +55,8 @@ Feature: Player shoot
     And wumpus in cave 18
     And wumpus attempt to wakeup
     And second linked cave to cave 18 is 10
-    When wumpus attempts to wake up wumpus moves to second linked cave
-    And player moves on the [1, 9, 10]
+    When player moves on the [1, 9, 10]
+    And wumpus attempts to wake up wumpus moves to second linked cave
     And player shoots to cave [11]
     Then player is dead
     And game messages contains "You woke the Wumpus and it ate you"

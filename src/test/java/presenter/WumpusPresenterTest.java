@@ -27,6 +27,8 @@ class WumpusPresenterTest {
     @Test
     public void testMovingPlayerToCave() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(1,linkedCaveIndex);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
@@ -46,6 +48,8 @@ class WumpusPresenterTest {
     @Test
     public void testMoveToNonConnectedCave() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(1,linkedCaveIndex);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
@@ -65,10 +69,13 @@ class WumpusPresenterTest {
     public void testMovingPlayerToCaveThatHasAWumups() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
+        final int[] journeyPath = {1, 9, 10, 18};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10, 18};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -82,10 +89,13 @@ class WumpusPresenterTest {
     public void testMovingPlayerToACaveNearAWumpusAndSensingTheWumpus() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
+        final int[] journeyPath = {1, 9, 10};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -103,6 +113,10 @@ class WumpusPresenterTest {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
         final int playerDropDownCave = 8;
 
+        final int[] journeyPath = {12, 19};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         randomNumberGeneratorBuilder.setPlayerStartingCaveIndex(11);
         randomNumberGeneratorBuilder.setPlayerDropDownCave(playerDropDownCave);
         randomNumberGeneratorBuilder.setFirstBatFinalCave(2);
@@ -110,7 +124,6 @@ class WumpusPresenterTest {
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {12, 19};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -127,10 +140,13 @@ class WumpusPresenterTest {
     public void testThatPlayerEnterRoomWithPit() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
+        final int[] journeyPath = {4, 3};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {4, 3};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -144,10 +160,13 @@ class WumpusPresenterTest {
     public void testKillingTheWumpus() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
+        final int[] journeyPath = {1, 9, 10};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -163,11 +182,16 @@ class WumpusPresenterTest {
     @Test
     public void testThatPlayerEnterRoomWithPitAndBat() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+
+        final int[] journeyPath = {12, 13};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         randomNumberGeneratorBuilder.setPlayerStartingCaveIndex(11);
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {12, 13};
+
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -180,12 +204,16 @@ class WumpusPresenterTest {
     @Test
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusRemainsSleeping() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+
+        final int[] journeyPath = {1, 9, 10};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(0);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -205,13 +233,16 @@ class WumpusPresenterTest {
     public void testThatPlayerShootsAnArrowThatMissesTheWumpusAndWumpusMoves() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
 
+        final int[] journeyPath = {1, 9, 10};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(1);
         randomNumberGeneratorBuilder.addLinkedCaveIndex(2);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }
@@ -231,6 +262,7 @@ class WumpusPresenterTest {
     @Test
     public void testThatPlayerRunsOutOfArrowsWithoutKillingWumpus() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+
 
         for (int i = 0; i < GameInitialConfigurations.NUMBER_OF_ARROWS; i++) {
             randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(0);
@@ -256,13 +288,16 @@ class WumpusPresenterTest {
     @Test
     public void testThatPlayerShootsAnArrowMissesWumpusAndWumpusWakesUpAndMoveToEatThePlayer() {
         configureRandomNumberGeneratorBuilderBasedOnDefaultLocation();
+        final int[] journeyPath = {1, 9, 10};
+        int linkedCaveIndex = 0;
+        randomNumberGeneratorBuilder.addNumberOfMovesToTheEnemyPlayer(journeyPath.length,linkedCaveIndex);
+
         randomNumberGeneratorBuilder.setNumberAtWhichWumpusWillRemainSleeping(1);
         randomNumberGeneratorBuilder.addLinkedCaveIndex(1);
 
         WumpusPresenter wumpusPresenter = new WumpusPresenterImpl(randomNumberGeneratorBuilder.build());
         wumpusPresenter.startNewGame();
 
-        final int[] journeyPath = {1, 9, 10};
         for (int caveNumber : journeyPath) {
             wumpusPresenter.move(caveNumber);
         }

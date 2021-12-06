@@ -138,4 +138,34 @@ public class RandomNumberGeneratorBuilder {
     public int getWumpusStartingCaveIndex() {
         return this.wumpusStartingCaveIndex;
     }
+
+    public void addNumberOfMovesToTheEnemyPlayer(int numberOfMoves, int linkedCaveIndex) {
+        for (int numberOfCavesToMOveTo = 0; numberOfCavesToMOveTo < numberOfMoves; numberOfCavesToMOveTo++) {
+            defaultNumbersForLinkedCaveIndicesMocito.add(linkedCaveIndex);
+        }
+    }
+
+    public int getEnemyPlayerStartingCaveIndex() {
+        return enemyPlayerStartingCaveIndex;
+    }
+
+    public int getFirstBatStartingCaveIndex() {
+        return firstBatStartingCaveIndex;
+    }
+
+    public int getSecondBatStartingCaveIndex() {
+        return secondBatStartingCaveIndex;
+    }
+
+    public int getFirstPitCave() {
+        return firstPitCave;
+    }
+
+    public int getSecondPitCave() {
+        return secondPitCave;
+    }
+
+    public void addNumberForDefaultLocationMocito(Integer numberForDefaultLocationMocito) {
+        appendedNumbersForDefaultLocationMocito.add(numberForDefaultLocationMocito);
+    }
 }

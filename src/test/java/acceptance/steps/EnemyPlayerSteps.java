@@ -1,7 +1,10 @@
 package acceptance.steps;
 
+import io.cucumber.java.en.When;
 import utilities.ScenarioWorld;
 import io.cucumber.java.en.Then;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,5 +27,16 @@ public class EnemyPlayerSteps {
         boolean isEnemyPlayerIsDead = false;
         boolean actualIsEnemyPlayerDead = world.getWumpusPresenter().isEnemyPlayerDead();
         assertEquals(isEnemyPlayerIsDead, actualIsEnemyPlayerDead);
+    }
+
+    @When("enemy player moves on the {listOfIntegers}")
+    public void enemyPlayerMovesOnTheJourneyPath(List<Integer> journeyPathIndices) {
+        for (int cavesToMoveIndex : journeyPathIndices) {
+            this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(cavesToMoveIndex);
+        }
+
+        for(int numberOfCavesToMove = 0; numberOfCavesToMove < journeyPathIndices.size(); numberOfCavesToMove++) {
+            world.getWumpusPresenter().moveEnemyPlayer();
+        }
     }
 }

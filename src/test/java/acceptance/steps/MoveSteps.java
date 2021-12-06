@@ -15,19 +15,11 @@ public class MoveSteps {
 
     @When("player moves on the {listOfIntegers}")
     public void playerMovesOnThe(List<Integer> journeyPath) {
+        int linkedCaveIndex = 0;
+        world.getRandomNumberGeneratorBuilder().addNumberOfMovesToTheEnemyPlayer(journeyPath.size(), linkedCaveIndex);
+
         for (int caveNumber : journeyPath) {
             world.getWumpusPresenter().move(caveNumber);
-        }
-    }
-
-    @When("enemy player moves on the {listOfIntegers}")
-    public void enemyPlayerMovesOnTheJourneyPath(List<Integer> journeyPathIndices) {
-        for (int cavesToMoveIndex : journeyPathIndices) {
-            this.world.getRandomNumberGeneratorBuilder().addLinkedCaveIndex(cavesToMoveIndex);
-        }
-
-        for(int numberOfCavesToMove = 0; numberOfCavesToMove < journeyPathIndices.size(); numberOfCavesToMove++) {
-            world.getWumpusPresenter().moveEnemyPlayer();
         }
     }
 }
