@@ -75,6 +75,23 @@ public class DesktopViewImpl extends JPanel implements WumpusView {
         g.draw(player);
     }
 
+    void drawEnemyPlayer() {
+        int x = cavesCoordinates[wumpusPresenter.getEnemyPlayerCave()][0] + (getCaveSize() - getPlayerSize()) / 2;
+        int y = cavesCoordinates[wumpusPresenter.getEnemyPlayerCave()][1] + (getCaveSize() - getPlayerSize()) - 2;
+
+        Path2D enemyPlayer = new Path2D.Double();
+        enemyPlayer.moveTo(x, y);
+        enemyPlayer.lineTo(x + getPlayerSize(), y);
+        enemyPlayer.lineTo(x + getPlayerSize() / 2, y - getPlayerSize());
+        enemyPlayer.closePath();
+
+        g.setColor(Color.red);
+        g.fill(enemyPlayer);
+        g.setStroke(new BasicStroke(1));
+        g.setColor(Color.black);
+        g.draw(enemyPlayer);
+    }
+
     void drawStartScreen() {
         g.setColor(new Color(0xDDFFFFFF, true));
         g.fillRect(0, 0, getWidth(), getHeight() - 60);
@@ -160,6 +177,7 @@ public class DesktopViewImpl extends JPanel implements WumpusView {
             gameStarting=false;
         } else {
             drawPlayer();
+            drawEnemyPlayer();
         }
     }
 
